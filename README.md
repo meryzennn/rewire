@@ -1,16 +1,16 @@
 # Rewire
 
-Aplikasi Android gamifikasi pemulihan berbasis Flutter. Membantu pengguna berhenti dari kebiasaan PMO melalui tiga pilar: streak tracking, meditasi audio ambient, dan latihan tubuh sendiri.
+A gamified Android recovery app built with Flutter. Helps users quit PMO through three pillars: streak tracking, ambient audio meditation, and bodyweight exercise.
 
 ## Status
 
-Sedang dikembangkan — Task 1-2 selesai dari 14 task.
+In development — Tasks 1–2 of 14 complete.
 
-| Task | Deskripsi | Status |
-|------|-----------|--------|
-| 1 | Scaffold, dependencies, tema | ✅ |
-| 2 | XP, level, stage, utilitas tanggal | ✅ |
-| 3–14 | Database, repositories, screens, dll. | ⏳ |
+| Task | Description | Status |
+|------|-------------|--------|
+| 1 | Scaffold, dependencies, theme | ✅ |
+| 2 | XP, levels, brain stages, date utilities | ✅ |
+| 3–14 | Database, repositories, screens, etc. | ⏳ |
 
 ## Tech Stack
 
@@ -20,9 +20,9 @@ Sedang dikembangkan — Task 1-2 selesai dari 14 task.
 - SharedPreferences
 - audioplayers, flutter_local_notifications, fl_chart, lottie
 
-## Arsitektur
+## Architecture
 
-Offline-first, seluruh data lokal. Tidak ada backend, HTTP, atau Firebase.
+Offline-first, all data stored locally. No backend, HTTP, or Firebase.
 
 ```
 lib/
@@ -33,7 +33,7 @@ lib/
 └── app.dart / main.dart
 ```
 
-## Jalankan
+## Run
 
 ```bash
 flutter pub get
@@ -41,6 +41,6 @@ flutter test
 flutter run
 ```
 
-## Desain
+## Design
 
-Lihat [`DESIGN.md`](DESIGN.md) dan [`docs/UI.md`](docs/UI.md).
+See [`DESIGN.md`](DESIGN.md) and [`docs/UI.md`](docs/UI.md).
