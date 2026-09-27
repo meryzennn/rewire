@@ -18,21 +18,25 @@ class _NavItem {
 }
 
 /// The five-tab bottom navigation bar, wired to the [StatefulNavigationShell]
-/// so each tab keeps its own navigation stack (spec §2.3).
+/// and an optional [PageController] for 1:1 real-time sliding pill animation.
 ///
 /// Design (DESIGN.md §4 Navigation): 64dp bar on the Clean Canvas surface, flat
 /// (no shadow), separated from content by a hairline divider. The active tab is
-/// marked by a Sage Whisper (primary-container) pill behind its filled icon plus
-/// a heavier label; inactive tabs use outline icons in Warm Stone.
+/// marked by a single sliding Sage Whisper (primary-container) pill behind the
+/// icon plus a heavier label; inactive tabs use outline icons in Warm Stone.
 ///
-/// The sage brand cue lives in the indicator pill rather than tinting the icon
-/// or label sage: Garden Sage on the surface is only ~2:1 contrast, so tinting
-/// text/icons sage would fail WCAG AA. The pill is decorative and the icon/label
-/// stay in high-contrast ink, keeping both the brand and R-25 satisfied.
+/// By using a single sliding pill layer in the background, we eliminate any
+/// color-lerping to transparent (which previously produced a temporary dark shadow)
+/// and allow the indicator to follow user swipe gestures continuously.
 class AppBottomNav extends StatelessWidget {
-  const AppBottomNav({super.key, required this.navigationShell});
+  const AppBottomNav({
+    super.key,
+    required this.navigationShell,
+    this.pageController,
+  });
 
   final StatefulNavigationShell navigationShell;
+  final PageController? pageController;
 
   static const _items = <_NavItem>[
     _NavItem(
@@ -63,19 +67,24 @@ class AppBottomNav extends StatelessWidget {
   ];
 
   void _onTap(int index) {
-    // initialLocation:true re-taps a tab back to its branch root, matching the
-    // familiar bottom-nav behaviour.
+    if (pageController != null && pageController!.hasClients) {
+      pageController!.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 280),
+        curve: Curves.easeInOutCubic,
+      );
+    }
     navigationShell.goBranch(
       index,
       initialLocation: index == navigationShell.currentIndex,
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final surface = isDark ? AppColors.darkSurface : AppColors.surface;
-    final divider = isDark ? AppColors.darkDivider : AppColors.divider;
+  Widget _buildContent(BuildContext context, double currentPage) {
+    final theme = Theme.of(context);
+    final surface = theme.colorScheme.surface;
+    final divider = theme.dividerColor;
+    final pill = theme.colorScheme.primaryContainer;
 
     return Container(
       decoration: BoxDecoration(
@@ -86,20 +95,70 @@ class AppBottomNav extends StatelessWidget {
         top: false,
         child: SizedBox(
           height: 64,
-          child: Row(
-            children: [
-              for (var i = 0; i < _items.length; i++)
-                Expanded(
-                  child: _NavButton(
-                    item: _items[i],
-                    selected: i == navigationShell.currentIndex,
-                    onTap: () => _onTap(i),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final tabCount = _items.length;
+              final tabWidth = constraints.maxWidth / tabCount;
+              const pillWidth = 56.0;
+              const pillHeight = 30.0;
+              const pillTop = 8.0;
+
+              final clampedPage =
+                  currentPage.clamp(0.0, (tabCount - 1).toDouble());
+              final pillLeft =
+                  clampedPage * tabWidth + (tabWidth - pillWidth) / 2;
+
+              return Stack(
+                children: [
+                  Positioned(
+                    left: pillLeft,
+                    top: pillTop,
+                    width: pillWidth,
+                    height: pillHeight,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: pill,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
                   ),
-                ),
-            ],
+                  Row(
+                    children: [
+                      for (var i = 0; i < tabCount; i++)
+                        Expanded(
+                          child: _NavButton(
+                            item: _items[i],
+                            progress:
+                                (1.0 - (clampedPage - i).abs()).clamp(0.0, 1.0),
+                            selected: i == navigationShell.currentIndex,
+                            onTap: () => _onTap(i),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = pageController;
+    if (controller == null) {
+      return _buildContent(context, navigationShell.currentIndex.toDouble());
+    }
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, _) {
+        final currentPage = (controller.hasClients && controller.page != null)
+            ? controller.page!
+            : navigationShell.currentIndex.toDouble();
+        return _buildContent(context, currentPage);
+      },
     );
   }
 }
@@ -107,24 +166,26 @@ class AppBottomNav extends StatelessWidget {
 class _NavButton extends StatelessWidget {
   const _NavButton({
     required this.item,
+    required this.progress,
     required this.selected,
     required this.onTap,
   });
 
   final _NavItem item;
+  final double progress;
   final bool selected;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final ink = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final muted = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-    final pill = isDark
-        ? AppColors.darkPrimaryContainer
-        : AppColors.primaryContainer;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final ink = theme.colorScheme.onSurface;
+    final muted = theme.textTheme.bodySmall?.color ??
+        (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary);
 
-    final iconColor = selected ? ink : muted;
+    final iconColor = Color.lerp(muted, ink, progress) ?? ink;
+    final textColor = Color.lerp(muted, ink, progress) ?? ink;
 
     return Semantics(
       button: true,
@@ -132,38 +193,29 @@ class _NavButton extends StatelessWidget {
       label: item.label,
       child: InkWell(
         onTap: onTap,
-        // A round highlight keeps the 48dp touch/focus target legible without
-        // stretching a rectangle across the whole cell.
         customBorder: const StadiumBorder(),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeOut,
+            SizedBox(
               width: 56,
               height: 30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: selected ? pill : Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
-              ),
               child: Icon(
-                selected ? item.activeIcon : item.icon,
+                progress > 0.5 ? item.activeIcon : item.icon,
                 size: 24,
                 color: iconColor,
               ),
             ),
             const SizedBox(height: 4),
-            // Labels stay in high-contrast ink in both states (Warm Stone at
-            // 12sp is ~4.3:1, under WCAG AA). The inactive tab is dimmed by its
-            // outline icon and lighter weight instead of a low-contrast label.
             Text(
               item.label,
               style: TextStyle(
                 fontSize: 12,
-                fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                color: ink,
+                fontWeight: progress > 0.5 ? FontWeight.w600 : FontWeight.w400,
+                color: textColor,
               ),
             ),
           ],

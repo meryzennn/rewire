@@ -43,6 +43,15 @@ class RewireApp extends StatelessWidget {
     darkTheme: buildDarkTheme(),
     themeMode: mode,
     routerConfig: router,
+    builder: (context, child) {
+      final theme = Theme.of(context);
+      return AnimatedTheme(
+        data: theme,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        child: child ?? const SizedBox.shrink(),
+      );
+    },
   );
 
   @override
@@ -86,9 +95,14 @@ GoRouter buildRouter(
         builder: (context, state) =>
             OnboardingScreen(preferences: prefService),
       ),
-      StatefulShellRoute.indexedStack(
+      StatefulShellRoute(
         builder: (context, state, navigationShell) =>
             _ShellScaffold(navigationShell: navigationShell),
+        navigatorContainerBuilder: (context, navigationShell, children) =>
+            _SwipeableBranchContainer(
+              navigationShell: navigationShell,
+              children: children,
+            ),
         branches: [
           StatefulShellBranch(
             routes: [
@@ -149,17 +163,113 @@ GoRouter buildRouter(
   );
 }
 
+/// Scope that provides the shared [PageController] across the shell and tabs.
+class _ShellPageScope extends InheritedWidget {
+  const _ShellPageScope({
+    required this.pageController,
+    required super.child,
+  });
+
+  final PageController pageController;
+
+  static PageController of(BuildContext context) {
+    final scope =
+        context.dependOnInheritedWidgetOfExactType<_ShellPageScope>();
+    assert(scope != null, 'No _ShellPageScope found in context');
+    return scope!.pageController;
+  }
+
+  @override
+  bool updateShouldNotify(_ShellPageScope oldWidget) =>
+      pageController != oldWidget.pageController;
+}
+
+/// A container that hosts all branch Navigators in a [PageView], enabling
+/// horizontal swipe navigation between tabs while synchronizing with the
+/// [navigationShell] and [AppBottomNav].
+class _SwipeableBranchContainer extends StatelessWidget {
+  const _SwipeableBranchContainer({
+    required this.navigationShell,
+    required this.children,
+  });
+
+  final StatefulNavigationShell navigationShell;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = _ShellPageScope.of(context);
+    return PageView(
+      controller: controller,
+      onPageChanged: (index) {
+        if (index != navigationShell.currentIndex) {
+          navigationShell.goBranch(index);
+        }
+      },
+      children: children,
+    );
+  }
+}
+
 /// Shell around the active tab: the branch content plus the shared bottom nav.
-class _ShellScaffold extends StatelessWidget {
+/// Owns the shared [PageController] so the bottom nav sliding indicator moves
+/// 1:1 with user swipe gestures in real time.
+class _ShellScaffold extends StatefulWidget {
   const _ShellScaffold({required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: navigationShell,
-    bottomNavigationBar: AppBottomNav(navigationShell: navigationShell),
-  );
+  State<_ShellScaffold> createState() => _ShellScaffoldState();
+}
+
+class _ShellScaffoldState extends State<_ShellScaffold> {
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(
+      initialPage: widget.navigationShell.currentIndex,
+    );
+  }
+
+  @override
+  void didUpdateWidget(_ShellScaffold oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final target = widget.navigationShell.currentIndex;
+    if (_pageController.hasClients) {
+      final current =
+          _pageController.page?.round() ?? _pageController.initialPage;
+      if (current != target) {
+        _pageController.animateToPage(
+          target,
+          duration: const Duration(milliseconds: 280),
+          curve: Curves.easeInOutCubic,
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _ShellPageScope(
+      pageController: _pageController,
+      child: Scaffold(
+        body: widget.navigationShell,
+        bottomNavigationBar: AppBottomNav(
+          navigationShell: widget.navigationShell,
+          pageController: _pageController,
+        ),
+      ),
+    );
+  }
 }
 
 /// Stand-in for a tab screen until its screen task lands (Tasks 7-12). Stateful

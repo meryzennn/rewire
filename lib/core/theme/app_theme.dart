@@ -13,6 +13,7 @@ ThemeData buildLightTheme() {
     secondary: AppColors.secondary,
     secondaryContainer: AppColors.secondaryContainer,
     surface: AppColors.surface,
+    onSurface: AppColors.textPrimary,
     error: AppColors.danger,
   );
   return ThemeData(
@@ -65,6 +66,7 @@ ThemeData buildDarkTheme() {
     secondary: AppColors.darkSecondary,
     secondaryContainer: AppColors.darkSecondaryContainer,
     surface: AppColors.darkSurface,
+    onSurface: AppColors.darkTextPrimary,
     error: const Color(0xFFE0937D),
   );
   return ThemeData(
