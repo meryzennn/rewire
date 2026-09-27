@@ -47,4 +47,22 @@ void main() {
     expect(brainStageForLevel(0), 'dormant');
     expect(brainStageForLevel(99), 'transcendent');
   });
+
+  test('level progress calculations accurately report progress within brackets', () {
+    // Level 1: 0 to 50 XP (span = 50)
+    expect(xpSpanForLevel(1), 50);
+    expect(xpProgressInLevel(0), 0);
+    expect(levelProgressFraction(0), 0.0);
+
+    expect(xpProgressInLevel(20), 20);
+    expect(levelProgressFraction(20), 0.4);
+
+    // Level 2: 50 to 174 XP (span = 124)
+    expect(xpSpanForLevel(2), 124);
+    expect(xpProgressInLevel(50), 0);
+    expect(levelProgressFraction(50), 0.0);
+
+    // Level 50 (max): progress is 1.0
+    expect(levelProgressFraction(55122), 1.0);
+  });
 }

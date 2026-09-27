@@ -102,9 +102,9 @@
 
 **Files:** `lib/screens/home/{home_screen.dart,widgets/brain_visual.dart,widgets/streak_card.dart,widgets/daily_quests_card.dart,widgets/quick_actions.dart}`, `lib/widgets/{xp_chip,celebration_overlay,level_up_dialog}.dart`.
 
-- [ ] Widget-test stage/level/streak/quest rendering and level-up event.
-- [ ] Implement spec UI; map brain stage to five local assets; subtle idle pulse and level-up transition. Missing asset must show styled fallback, not crash.
-- [ ] Run tests; commit `feat: build home and progression visuals`.
+- [x] Widget-test stage/level/streak/quest rendering and level-up event.
+- [x] Implement spec UI; map brain stage to five local assets; subtle idle pulse and level-up transition. Missing asset must show styled fallback, not crash.
+- [x] Run tests; commit `feat: build home and progression visuals`.
 
 ### Task 10: Meditation
 

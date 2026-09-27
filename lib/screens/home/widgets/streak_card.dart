@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import '../../../app.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/provider_utils.dart';
 import '../../../providers/checkin_provider.dart';
 
 /// Stitch home screen streak card widget: displays current and longest streaks,
@@ -20,11 +20,12 @@ class StreakCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final checkinProvider = provider ?? context.watch<CheckinProvider>();
+    final checkinProvider =
+        provider ?? context.watchOrNull<CheckinProvider>();
 
-    final currentStreak = checkinProvider.currentStreak;
-    final longestStreak = checkinProvider.longestStreak;
-    final todayCheckin = checkinProvider.todayCheckin;
+    final currentStreak = checkinProvider?.currentStreak ?? 0;
+    final longestStreak = checkinProvider?.longestStreak ?? 0;
+    final todayCheckin = checkinProvider?.todayCheckin;
     final hasCheckedIn = todayCheckin != null;
     final isClean = todayCheckin?.status == 'clean';
 

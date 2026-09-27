@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/theme/app_theme.dart';
 import 'screens/checkin/checkin_screen.dart';
+import 'screens/home/home_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/settings/settings_screen.dart';
 import 'services/preference_service.dart';
@@ -115,7 +116,7 @@ GoRouter buildRouter(
               GoRoute(
                 path: Routes.home,
                 builder: (context, state) =>
-                    const _TabPlaceholder(navKey: 'screen-home', title: 'Home'),
+                    const HomeScreen(key: Key('screen-home')),
               ),
             ],
           ),

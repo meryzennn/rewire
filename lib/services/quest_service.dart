@@ -36,6 +36,12 @@ class QuestService {
     }
   }
 
+  /// Returns all daily quests for [now] (refreshing if needed).
+  Future<List<Quest>> getDailyQuests(DateTime now) async {
+    await refreshIfNeeded(now);
+    return _quests.getQuestsForDate(formatLocalDate(now), type: 'daily');
+  }
+
   /// Advances every active quest that responds to [activity], marking newly
   /// completed quests done and awarding their XP once. Returns those newly
   /// completed quests.
