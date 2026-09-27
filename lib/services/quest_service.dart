@@ -28,8 +28,10 @@ class QuestService {
 
     if (now.weekday == DateTime.monday) {
       final weekStart = today; // Monday is the week key
-      final existingWeekly =
-          await _quests.getQuestsForDate(weekStart, type: 'weekly');
+      final existingWeekly = await _quests.getQuestsForDate(
+        weekStart,
+        type: 'weekly',
+      );
       if (existingWeekly.isEmpty) {
         await _quests.insertQuests(_selectWeekly(now, weekStart));
       }
@@ -137,7 +139,9 @@ class QuestService {
         return activity == QuestActivity.checkin ? inc(1) : null;
       case 'weekly_streak_7':
         // Streak length is absolute, not additive.
-        return activity == QuestActivity.streak ? amount.clamp(0, target) : null;
+        return activity == QuestActivity.streak
+            ? amount.clamp(0, target)
+            : null;
       default:
         return null;
     }
@@ -150,8 +154,9 @@ class QuestService {
   List<Quest> _selectDaily(DateTime now, String dateAssigned) {
     final seed = _dateSeed(now);
     final count = 3 + (seed % 2); // 3 or 4
-    final others =
-        kDailyQuestPool.where((t) => t.questId != kCheckinQuestId).toList();
+    final others = kDailyQuestPool
+        .where((t) => t.questId != kCheckinQuestId)
+        .toList();
     final picked = _rotatePick(others, seed % others.length, count - 1);
     return [
       kDailyQuestPool.firstWhere((t) => t.questId == kCheckinQuestId),
@@ -162,8 +167,11 @@ class QuestService {
   List<Quest> _selectWeekly(DateTime now, String dateAssigned) {
     final seed = _dateSeed(now);
     final count = 2 + (seed % 2); // 2 or 3
-    final picked =
-        _rotatePick(kWeeklyQuestPool, seed % kWeeklyQuestPool.length, count);
+    final picked = _rotatePick(
+      kWeeklyQuestPool,
+      seed % kWeeklyQuestPool.length,
+      count,
+    );
     return picked.map((t) => t.toQuest(dateAssigned)).toList();
   }
 
@@ -171,9 +179,7 @@ class QuestService {
     List<QuestTemplate> pool,
     int start,
     int count,
-  ) => [
-    for (var i = 0; i < count; i++) pool[(start + i) % pool.length],
-  ];
+  ) => [for (var i = 0; i < count; i++) pool[(start + i) % pool.length]];
 
   int _dateSeed(DateTime d) => d.year * 372 + d.month * 31 + d.day;
 

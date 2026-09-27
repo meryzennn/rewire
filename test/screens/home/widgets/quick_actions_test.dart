@@ -3,7 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rewire/screens/home/widgets/quick_actions.dart';
 
 void main() {
-  testWidgets('renders all three recovery quick actions and responds to taps', (tester) async {
+  testWidgets('renders all three recovery quick actions and responds to taps', (
+    tester,
+  ) async {
     var medTapped = false;
     var workTapped = false;
     var statsTapped = false;

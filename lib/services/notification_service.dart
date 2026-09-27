@@ -39,7 +39,7 @@ abstract class NotificationPluginAdapter {
 /// Default implementation delegating to real [FlutterLocalNotificationsPlugin].
 class DefaultNotificationPluginAdapter implements NotificationPluginAdapter {
   DefaultNotificationPluginAdapter([FlutterLocalNotificationsPlugin? plugin])
-      : _plugin = plugin ?? FlutterLocalNotificationsPlugin();
+    : _plugin = plugin ?? FlutterLocalNotificationsPlugin();
 
   final FlutterLocalNotificationsPlugin _plugin;
 
@@ -55,7 +55,8 @@ class DefaultNotificationPluginAdapter implements NotificationPluginAdapter {
   Future<bool?> requestPermission() async {
     return await _plugin
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.requestNotificationsPermission();
   }
 
@@ -104,7 +105,7 @@ class DefaultNotificationPluginAdapter implements NotificationPluginAdapter {
 /// safe daily schedules.
 class NotificationService {
   NotificationService({NotificationPluginAdapter? adapter})
-      : _adapter = adapter ?? DefaultNotificationPluginAdapter();
+    : _adapter = adapter ?? DefaultNotificationPluginAdapter();
 
   final NotificationPluginAdapter _adapter;
 
@@ -135,16 +136,17 @@ class NotificationService {
 
   static const AndroidNotificationDetails _androidDetails =
       AndroidNotificationDetails(
-    channelId,
-    channelName,
-    channelDescription: channelDescription,
-    importance: Importance.high,
-    priority: Priority.high,
-    showWhen: true,
-  );
+        channelId,
+        channelName,
+        channelDescription: channelDescription,
+        importance: Importance.high,
+        priority: Priority.high,
+        showWhen: true,
+      );
 
-  static const NotificationDetails _notificationDetails =
-      NotificationDetails(android: _androidDetails);
+  static const NotificationDetails _notificationDetails = NotificationDetails(
+    android: _androidDetails,
+  );
 
   bool _initialized = false;
   bool get isInitialized => _initialized;
@@ -155,7 +157,9 @@ class NotificationService {
     tz_data.initializeTimeZones();
     _configureLocalTimezone();
 
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
     final result = await _adapter.initialize(androidSettings: androidSettings);
     _initialized = true;
     return result ?? true;

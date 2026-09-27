@@ -5,10 +5,7 @@ import '../../../models/achievement.dart';
 
 /// Achievement grid widget displaying badge catalog and unlock states (spec §3.5, §9).
 class AchievementGrid extends StatelessWidget {
-  const AchievementGrid({
-    super.key,
-    required this.achievements,
-  });
+  const AchievementGrid({super.key, required this.achievements});
 
   final List<Achievement> achievements;
 
@@ -57,11 +54,11 @@ class AchievementGrid extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isUnlocked
                     ? (isDark
-                        ? AppColors.darkPrimary.withValues(alpha: 0.2)
-                        : AppColors.primaryContainer)
+                          ? AppColors.darkPrimary.withValues(alpha: 0.2)
+                          : AppColors.primaryContainer)
                     : (isDark
-                        ? AppColors.darkSurfaceVariant
-                        : AppColors.surfaceVariant),
+                          ? AppColors.darkSurfaceVariant
+                          : AppColors.surfaceVariant),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -71,9 +68,7 @@ class AchievementGrid extends StatelessWidget {
                     isUnlocked ? Icons.check_circle : Icons.lock,
                     size: 16,
                     color: isUnlocked
-                        ? (isDark
-                            ? AppColors.darkPrimary
-                            : AppColors.primary)
+                        ? (isDark ? AppColors.darkPrimary : AppColors.primary)
                         : AppColors.textSecondary,
                   ),
                   const SizedBox(width: 6),
@@ -85,9 +80,7 @@ class AchievementGrid extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: isUnlocked
-                          ? (isDark
-                              ? AppColors.darkPrimary
-                              : AppColors.primary)
+                          ? (isDark ? AppColors.darkPrimary : AppColors.primary)
                           : AppColors.textSecondary,
                     ),
                   ),
@@ -112,13 +105,16 @@ class AchievementGrid extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
-    final surfaceVariant =
-        isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant;
+    final surfaceVariant = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.surfaceVariant;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
 
     final unlockedCount = achievements.where((a) => a.unlocked == 1).length;
@@ -140,8 +136,10 @@ class AchievementGrid extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
                     color: surfaceVariant,
                     borderRadius: BorderRadius.circular(12),
@@ -182,8 +180,7 @@ class AchievementGrid extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: achievements.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 8,
@@ -206,8 +203,8 @@ class AchievementGrid extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: isUnlocked
                                   ? (isDark
-                                      ? AppColors.darkPrimaryContainer
-                                      : AppColors.primaryContainer)
+                                        ? AppColors.darkPrimaryContainer
+                                        : AppColors.primaryContainer)
                                   : surfaceVariant,
                               border: Border.all(
                                 color: isUnlocked

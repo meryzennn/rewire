@@ -53,12 +53,15 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
 
     final bg = theme.scaffoldBackgroundColor;
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
-    final surfaceVariant =
-        isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final surfaceVariant = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.surfaceVariant;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
     final accent = isDark ? AppColors.darkAccent : AppColors.accent;
 
@@ -83,17 +86,16 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
             // 1. Top App Bar
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.psychology,
-                          color: accent,
-                          size: 28,
-                        ),
+                        Icon(Icons.psychology, color: accent, size: 28),
                         const SizedBox(width: 8),
                         Text(
                           'Latihan',
@@ -112,11 +114,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                         color: surfaceColor,
                         border: Border.all(color: dividerColor),
                       ),
-                      child: Icon(
-                        Icons.tune,
-                        color: textSecondary,
-                        size: 20,
-                      ),
+                      child: Icon(Icons.tune, color: textSecondary, size: 20),
                     ),
                   ],
                 ),
@@ -126,7 +124,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
             // 2. Neuroplasticity Callout & Stats
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 4,
+                ),
                 child: Column(
                   children: [
                     // Neuro-Rewire Boost Micro-Callout
@@ -164,10 +165,11 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                 children: [
                                   Text(
                                     'Neuro-Rewire Boost',
-                                    style: theme.textTheme.labelMedium?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: textPrimary,
-                                    ),
+                                    style: theme.textTheme.labelMedium
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: textPrimary,
+                                        ),
                                   ),
                                   Text(
                                     '+35 XP tiap sesi selesai',
@@ -233,17 +235,16 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                   children: [
                                     Text(
                                       'Total Sesi',
-                                      style: theme.textTheme.bodySmall?.copyWith(
-                                        color: textSecondary,
-                                      ),
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(color: textSecondary),
                                     ),
                                     Text(
                                       '$totalSessions',
-                                      style:
-                                          theme.textTheme.titleMedium?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: textPrimary,
-                                      ),
+                                      style: theme.textTheme.titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: textPrimary,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -281,17 +282,16 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                   children: [
                                     Text(
                                       'Total Menit',
-                                      style: theme.textTheme.bodySmall?.copyWith(
-                                        color: textSecondary,
-                                      ),
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(color: textSecondary),
                                     ),
                                     Text(
                                       '$totalMinutes',
-                                      style:
-                                          theme.textTheme.titleMedium?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: textPrimary,
-                                      ),
+                                      style: theme.textTheme.titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: textPrimary,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -309,7 +309,12 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
             // 3. Section "Rutinitas"
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 8),
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 20,
+                  bottom: 8,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -337,10 +342,14 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
               child: SizedBox(
                 height: 190,
                 child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 4,
+                  ),
                   scrollDirection: Axis.horizontal,
                   itemCount: kAllRoutines.length,
-                  separatorBuilder: (context, index) => const SizedBox(width: 14),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 14),
                   itemBuilder: (context, index) {
                     final routine = kAllRoutines[index];
                     return _buildRoutineCard(
@@ -361,7 +370,12 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
             // 4. Section "Gerakan" & Filter Chips
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 8),
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 20,
+                  bottom: 8,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -376,47 +390,45 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: [
-                          'Semua',
-                          'Upper',
-                          'Lower',
-                          'Core',
-                          'Cardio',
-                        ].map((cat) {
-                          final isSelected = selectedCategory == cat;
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(20),
-                              onTap: () {
-                                workoutProv?.setCategory(cat);
-                              },
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 200),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: isSelected ? accent : surfaceVariant,
+                        children: ['Semua', 'Upper', 'Lower', 'Core', 'Cardio']
+                            .map((cat) {
+                              final isSelected = selectedCategory == cat;
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: InkWell(
                                   borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Text(
-                                  cat,
-                                  style: TextStyle(
-                                    color: isSelected
-                                        ? Colors.white
-                                        : textSecondary,
-                                    fontSize: 13,
-                                    fontWeight: isSelected
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
+                                  onTap: () {
+                                    workoutProv?.setCategory(cat);
+                                  },
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 200),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? accent
+                                          : surfaceVariant,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Text(
+                                      cat,
+                                      style: TextStyle(
+                                        color: isSelected
+                                            ? Colors.white
+                                            : textSecondary,
+                                        fontSize: 13,
+                                        fontWeight: isSelected
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                              );
+                            })
+                            .toList(),
                       ),
                     ),
                   ],
@@ -428,141 +440,141 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final exercise = filteredExercises[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(18),
-                        onTap: () {
-                          context.push(Routes.exerciseDetail, extra: exercise);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: surfaceColor,
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: dividerColor),
-                          ),
-                          child: Row(
-                            children: [
-                              // Exercise Icon / Image
-                              Container(
-                                width: 52,
-                                height: 52,
-                                decoration: BoxDecoration(
-                                  color: accent.withValues(alpha: 0.12),
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
-                                child: Icon(
-                                  _iconForCategory(exercise.category),
-                                  color: accent,
-                                  size: 26,
-                                ),
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final exercise = filteredExercises[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(18),
+                      onTap: () {
+                        context.push(Routes.exerciseDetail, extra: exercise);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: surfaceColor,
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(color: dividerColor),
+                        ),
+                        child: Row(
+                          children: [
+                            // Exercise Icon / Image
+                            Container(
+                              width: 52,
+                              height: 52,
+                              decoration: BoxDecoration(
+                                color: accent.withValues(alpha: 0.12),
+                                borderRadius: BorderRadius.circular(14),
                               ),
-                              const SizedBox(width: 14),
+                              child: Icon(
+                                _iconForCategory(exercise.category),
+                                color: accent,
+                                size: 26,
+                              ),
+                            ),
+                            const SizedBox(width: 14),
 
-                              // Info
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      exercise.name,
-                                      style: theme.textTheme.titleSmall?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: textPrimary,
-                                      ),
+                            // Info
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    exercise.name,
+                                    style: theme.textTheme.titleSmall?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: textPrimary,
                                     ),
-                                    const SizedBox(height: 2),
-                                    Text(
-                                      '${exercise.category} • ${exercise.targetMuscles}',
-                                      style: theme.textTheme.bodySmall?.copyWith(
-                                        color: textSecondary,
-                                      ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    '${exercise.category} • ${exercise.targetMuscles}',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: textSecondary,
                                     ),
-                                    const SizedBox(height: 6),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 2,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: (isDark
-                                                    ? AppColors.darkPrimaryContainer
-                                                    : AppColors.primaryContainer)
-                                                .withValues(alpha: 0.6),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Text(
-                                            exercise.difficulty,
-                                            style: TextStyle(
-                                              color: isDark
-                                                  ? AppColors.darkPrimary
-                                                  : AppColors.primary,
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 2,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color:
+                                              (isDark
+                                                      ? AppColors
+                                                            .darkPrimaryContainer
+                                                      : AppColors
+                                                            .primaryContainer)
+                                                  .withValues(alpha: 0.6),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
                                           ),
                                         ),
-                                        const SizedBox(width: 6),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 2,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: surfaceVariant,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Text(
-                                            '${exercise.defaultSets}×${exercise.defaultReps} ${exercise.unit}',
-                                            style: TextStyle(
-                                              color: textSecondary,
-                                              fontSize: 11,
-                                            ),
+                                        child: Text(
+                                          exercise.difficulty,
+                                          style: TextStyle(
+                                            color: isDark
+                                                ? AppColors.darkPrimary
+                                                : AppColors.primary,
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 2,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: surfaceVariant,
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          '${exercise.defaultSets}×${exercise.defaultReps} ${exercise.unit}',
+                                          style: TextStyle(
+                                            color: textSecondary,
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
+                            ),
 
-                              // Chevron button
-                              Container(
-                                width: 34,
-                                height: 34,
-                                decoration: BoxDecoration(
-                                  color: surfaceVariant,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Icon(
-                                  Icons.chevron_right,
-                                  color: textSecondary,
-                                  size: 20,
-                                ),
+                            // Chevron button
+                            Container(
+                              width: 34,
+                              height: 34,
+                              decoration: BoxDecoration(
+                                color: surfaceVariant,
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                            ],
-                          ),
+                              child: Icon(
+                                Icons.chevron_right,
+                                color: textSecondary,
+                                size: 20,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  },
-                  childCount: filteredExercises.length,
-                ),
+                    ),
+                  );
+                }, childCount: filteredExercises.length),
               ),
             ),
 
             // Bottom padding for bottom navigation
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 80),
-            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 80)),
           ],
         ),
       ),
@@ -611,10 +623,11 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: (isDark
-                                  ? AppColors.darkPrimaryContainer
-                                  : AppColors.primaryContainer)
-                              .withValues(alpha: 0.6),
+                          color:
+                              (isDark
+                                      ? AppColors.darkPrimaryContainer
+                                      : AppColors.primaryContainer)
+                                  .withValues(alpha: 0.6),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(

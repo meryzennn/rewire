@@ -72,5 +72,3 @@ int xpForWorkoutDurationMinutes(int minutes) {
   if (minutes <= 20) return 30;
   return 40;
 }
-
-

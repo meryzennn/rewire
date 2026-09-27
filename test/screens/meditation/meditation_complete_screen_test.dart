@@ -16,8 +16,9 @@ Widget buildCompleteScreen({
 }
 
 void main() {
-  testWidgets('renders completion headline, duration, and XP reward',
-      (tester) async {
+  testWidgets('renders completion headline, duration, and XP reward', (
+    tester,
+  ) async {
     const award = XpAward(
       amount: 20,
       totalXpBefore: 30,
@@ -26,10 +27,9 @@ void main() {
       levelAfter: 2,
     );
 
-    await tester.pumpWidget(buildCompleteScreen(
-      durationMinutes: 15,
-      award: award,
-    ));
+    await tester.pumpWidget(
+      buildCompleteScreen(durationMinutes: 15, award: award),
+    );
     await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('Sesi Selesai! 🧘'), findsOneWidget);
@@ -43,8 +43,9 @@ void main() {
     expect(find.text('Selesai'), findsOneWidget);
   });
 
-  testWidgets('does not show level up banner when no level up occurs',
-      (tester) async {
+  testWidgets('does not show level up banner when no level up occurs', (
+    tester,
+  ) async {
     const award = XpAward(
       amount: 15,
       totalXpBefore: 10,
@@ -53,10 +54,9 @@ void main() {
       levelAfter: 1,
     );
 
-    await tester.pumpWidget(buildCompleteScreen(
-      durationMinutes: 10,
-      award: award,
-    ));
+    await tester.pumpWidget(
+      buildCompleteScreen(durationMinutes: 10, award: award),
+    );
     await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('+15 XP'), findsOneWidget);

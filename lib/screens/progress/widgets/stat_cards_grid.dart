@@ -28,13 +28,16 @@ class StatCardsGrid extends StatelessWidget {
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
-    final secondaryColor =
-        isDark ? AppColors.darkSecondary : AppColors.secondary;
+    final secondaryColor = isDark
+        ? AppColors.darkSecondary
+        : AppColors.secondary;
     final accentColor = isDark ? AppColors.darkAccent : AppColors.accent;
 
     final cards = [
@@ -91,9 +94,7 @@ class StatCardsGrid extends StatelessWidget {
             ),
             Text(
               'Pembaruan otomatis',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: textSecondary,
-              ),
+              style: theme.textTheme.bodySmall?.copyWith(color: textSecondary),
             ),
           ],
         ),

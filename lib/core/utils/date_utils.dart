@@ -26,4 +26,3 @@ const List<String> kIndonesianMonths = [
 
 String formatIndonesianDate(DateTime date) =>
     '${date.day} ${kIndonesianMonths[date.month - 1]} ${date.year}';
-

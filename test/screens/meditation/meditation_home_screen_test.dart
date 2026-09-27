@@ -117,23 +117,25 @@ void main() {
     expect(find.textContaining('+15 XP'), findsOneWidget);
   });
 
-  testWidgets('tapping duration pill updates selected duration and potential XP',
-      (tester) async {
-    setViewport(tester);
-    final provider = FakeMeditationProvider(selectedDurationMinutes: 10);
+  testWidgets(
+    'tapping duration pill updates selected duration and potential XP',
+    (tester) async {
+      setViewport(tester);
+      final provider = FakeMeditationProvider(selectedDurationMinutes: 10);
 
-    await tester.pumpWidget(buildScreen(provider));
-    await tester.pump(const Duration(milliseconds: 100));
+      await tester.pumpWidget(buildScreen(provider));
+      await tester.pump(const Duration(milliseconds: 100));
 
-    expect(find.textContaining('+15 XP'), findsOneWidget);
+      expect(find.textContaining('+15 XP'), findsOneWidget);
 
-    // Tap 20 min pill
-    await tester.tap(find.text('20 min'));
-    await tester.pump(const Duration(milliseconds: 100));
+      // Tap 20 min pill
+      await tester.tap(find.text('20 min'));
+      await tester.pump(const Duration(milliseconds: 100));
 
-    expect(provider.selectedDurationMinutes, 20);
-    expect(find.textContaining('+25 XP'), findsOneWidget);
-  });
+      expect(provider.selectedDurationMinutes, 20);
+      expect(find.textContaining('+25 XP'), findsOneWidget);
+    },
+  );
 
   testWidgets('tapping sound card selects that track', (tester) async {
     setViewport(tester);
@@ -151,8 +153,9 @@ void main() {
     expect(provider.selectedTrackId, 'waves');
   });
 
-  testWidgets('tapping breathing card updates breathing pattern',
-      (tester) async {
+  testWidgets('tapping breathing card updates breathing pattern', (
+    tester,
+  ) async {
     setViewport(tester);
     final provider = FakeMeditationProvider();
 

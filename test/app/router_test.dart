@@ -13,7 +13,10 @@ Future<GoRouter> _buildRouter({required bool onboarded}) async {
   return buildRouter(prefs);
 }
 
-Future<GoRouter> _pumpApp(WidgetTester tester, {required bool onboarded}) async {
+Future<GoRouter> _pumpApp(
+  WidgetTester tester, {
+  required bool onboarded,
+}) async {
   final router = await _buildRouter(onboarded: onboarded);
   await tester.pumpWidget(RewireApp(router: router));
   await tester.pumpAndSettle();
@@ -74,7 +77,10 @@ void main() {
 
       // IndexedStack keeps inactive branches mounted (offstage), so the Home
       // branch's State survives the tab switch rather than being rebuilt.
-      final homeFinder = find.byKey(const Key('screen-home'), skipOffstage: false);
+      final homeFinder = find.byKey(
+        const Key('screen-home'),
+        skipOffstage: false,
+      );
       expect(homeFinder, findsOneWidget);
       final homeState2 = tester.state(homeFinder);
       expect(identical(homeState1, homeState2), isTrue);

@@ -47,7 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
     ]);
   }
 
-  void _checkLevelUp(BuildContext context, int currentLevel, String brainStage) {
+  void _checkLevelUp(
+    BuildContext context,
+    int currentLevel,
+    String brainStage,
+  ) {
     if (_lastLevel != null && currentLevel > _lastLevel!) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
@@ -67,10 +71,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final primaryColor =
-        isDark ? AppColors.darkPrimary : AppColors.primary;
-    final onSurfaceVariant =
-        isDark ? AppColors.darkTextSecondary : const Color(0xFF434841);
+    final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
+    final onSurfaceVariant = isDark
+        ? AppColors.darkTextSecondary
+        : const Color(0xFF434841);
 
     final userProvider = context.watchOrNull<UserProvider>();
     if (userProvider != null) {
@@ -84,11 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: theme.scaffoldBackgroundColor,
         title: Row(
           children: [
-            Icon(
-              Icons.psychology,
-              color: primaryColor,
-              size: 26,
-            ),
+            Icon(Icons.psychology, color: primaryColor, size: 26),
             const SizedBox(width: 8),
             Text(
               'Rewire',
@@ -102,11 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: onSurfaceVariant,
-              size: 22,
-            ),
+            icon: Icon(Icons.settings, color: onSurfaceVariant, size: 22),
             onPressed: () => context.go(Routes.settings),
           ),
           const SizedBox(width: 8),

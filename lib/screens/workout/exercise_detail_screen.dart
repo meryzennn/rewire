@@ -6,10 +6,7 @@ import '../../data/exercises.dart';
 
 /// Screen displaying detailed exercise instructions, form guide, and target muscles (spec §5b).
 class ExerciseDetailScreen extends StatelessWidget {
-  const ExerciseDetailScreen({
-    super.key,
-    required this.exercise,
-  });
+  const ExerciseDetailScreen({super.key, required this.exercise});
 
   final Exercise exercise;
 
@@ -35,12 +32,15 @@ class ExerciseDetailScreen extends StatelessWidget {
 
     final bg = theme.scaffoldBackgroundColor;
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
-    final surfaceVariant =
-        isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final surfaceVariant = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.surfaceVariant;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
     final accent = isDark ? AppColors.darkAccent : AppColors.accent;
 
@@ -241,11 +241,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                       color: accent.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(
-                      Icons.accessibility,
-                      color: accent,
-                      size: 24,
-                    ),
+                    child: Icon(Icons.accessibility, color: accent, size: 24),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -306,8 +302,11 @@ class ExerciseDetailScreen extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: (isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer)
-                    .withValues(alpha: 0.5),
+                color:
+                    (isDark
+                            ? AppColors.darkPrimaryContainer
+                            : AppColors.primaryContainer)
+                        .withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
                   color: (isDark ? AppColors.darkPrimary : AppColors.primary)

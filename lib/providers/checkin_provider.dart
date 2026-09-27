@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 
 import '../core/utils/date_utils.dart';
@@ -105,7 +106,10 @@ class CheckinProvider extends ChangeNotifier {
     );
 
     // Save checkin & triggers atomically
-    final saved = await _checkins.saveCheckin(checkinToSave, triggers: triggers);
+    final saved = await _checkins.saveCheckin(
+      checkinToSave,
+      triggers: triggers,
+    );
 
     final u = users;
     if (u != null) {
@@ -124,12 +128,15 @@ class CheckinProvider extends ChangeNotifier {
             streakStart = profile.streakStartDate ?? formatLocalDate(yesterday);
           } else {
             if (profile.currentStreak > 0) {
-              await _checkins.insertStreak(Streak(
-                startDate: profile.streakStartDate ?? formatLocalDate(yesterday),
-                endDate: formatLocalDate(yesterday),
-                length: profile.currentStreak,
-                endedBy: 'relapse',
-              ));
+              await _checkins.insertStreak(
+                Streak(
+                  startDate:
+                      profile.streakStartDate ?? formatLocalDate(yesterday),
+                  endDate: formatLocalDate(yesterday),
+                  length: profile.currentStreak,
+                  endedBy: 'relapse',
+                ),
+              );
             }
             newStreak = 1;
             streakStart = dateStr;
@@ -146,22 +153,22 @@ class CheckinProvider extends ChangeNotifier {
 
         final newLongest = math.max(newStreak, profile.longestStreak);
 
-        await u.updateProfile(UserProfile(
-          id: profile.id,
-          level: profile.level,
-          totalXp: profile.totalXp,
-          currentStreak: newStreak,
-          longestStreak: newLongest,
-          streakStartDate: streakStart,
-          brainStage: profile.brainStage,
-          createdAt: profile.createdAt,
-        ));
+        await u.updateProfile(
+          UserProfile(
+            id: profile.id,
+            level: profile.level,
+            totalXp: profile.totalXp,
+            currentStreak: newStreak,
+            longestStreak: newLongest,
+            streakStartDate: streakStart,
+            brainStage: profile.brainStage,
+            createdAt: profile.createdAt,
+          ),
+        );
 
-        await _checkins.insertStreak(Streak(
-          startDate: streakStart,
-          length: newStreak,
-          endedBy: 'active',
-        ));
+        await _checkins.insertStreak(
+          Streak(startDate: streakStart, length: newStreak, endedBy: 'active'),
+        );
 
         _currentStreak = newStreak;
         _longestStreak = newLongest;
@@ -195,25 +202,29 @@ class CheckinProvider extends ChangeNotifier {
       } else {
         // status == 'relapse'
         if (profile.currentStreak > 0) {
-          await _checkins.insertStreak(Streak(
-            startDate: profile.streakStartDate ?? dateStr,
-            endDate: dateStr,
-            length: profile.currentStreak,
-            endedBy: 'relapse',
-          ));
+          await _checkins.insertStreak(
+            Streak(
+              startDate: profile.streakStartDate ?? dateStr,
+              endDate: dateStr,
+              length: profile.currentStreak,
+              endedBy: 'relapse',
+            ),
+          );
         }
 
         // Reset streak to 0, preserve lifetime total_xp, level, and longestStreak
-        await u.updateProfile(UserProfile(
-          id: profile.id,
-          level: profile.level,
-          totalXp: profile.totalXp,
-          currentStreak: 0,
-          longestStreak: profile.longestStreak,
-          streakStartDate: null,
-          brainStage: profile.brainStage,
-          createdAt: profile.createdAt,
-        ));
+        await u.updateProfile(
+          UserProfile(
+            id: profile.id,
+            level: profile.level,
+            totalXp: profile.totalXp,
+            currentStreak: 0,
+            longestStreak: profile.longestStreak,
+            streakStartDate: null,
+            brainStage: profile.brainStage,
+            createdAt: profile.createdAt,
+          ),
+        );
 
         _currentStreak = 0;
         _longestStreak = profile.longestStreak;

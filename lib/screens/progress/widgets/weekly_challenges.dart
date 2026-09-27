@@ -5,10 +5,7 @@ import '../../../models/quest.dart';
 
 /// Weekly challenges card list widget (spec §3.4, §9).
 class WeeklyChallenges extends StatelessWidget {
-  const WeeklyChallenges({
-    super.key,
-    required this.challenges,
-  });
+  const WeeklyChallenges({super.key, required this.challenges});
 
   final List<Quest> challenges;
 
@@ -18,13 +15,16 @@ class WeeklyChallenges extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
-    final surfaceVariant =
-        isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant;
+    final surfaceVariant = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.surfaceVariant;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
 
     final completedCount = challenges.where((q) => q.completed == 1).length;
@@ -104,9 +104,7 @@ class WeeklyChallenges extends StatelessWidget {
                           width: 26,
                           height: 26,
                           decoration: BoxDecoration(
-                            color: isDone
-                                ? primaryColor
-                                : surfaceVariant,
+                            color: isDone ? primaryColor : surfaceVariant,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
                               color: isDone ? primaryColor : dividerColor,
@@ -134,14 +132,14 @@ class WeeklyChallenges extends StatelessWidget {
                                   Flexible(
                                     child: Text(
                                       quest.title,
-                                      style:
-                                          theme.textTheme.bodyMedium?.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        color: textPrimary,
-                                        decoration: isDone
-                                            ? TextDecoration.lineThrough
-                                            : null,
-                                      ),
+                                      style: theme.textTheme.bodyMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            color: textPrimary,
+                                            decoration: isDone
+                                                ? TextDecoration.lineThrough
+                                                : null,
+                                          ),
                                     ),
                                   ),
                                   const SizedBox(width: 8),
@@ -151,8 +149,9 @@ class WeeklyChallenges extends StatelessWidget {
                                       vertical: 2,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: AppColors.warning
-                                          .withValues(alpha: 0.15),
+                                      color: AppColors.warning.withValues(
+                                        alpha: 0.15,
+                                      ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(
@@ -179,8 +178,8 @@ class WeeklyChallenges extends StatelessWidget {
                                         backgroundColor: surfaceVariant,
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
-                                          primaryColor,
-                                        ),
+                                              primaryColor,
+                                            ),
                                         minHeight: 6,
                                       ),
                                     ),
@@ -204,10 +203,7 @@ class WeeklyChallenges extends StatelessWidget {
                     if (!isLast)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Divider(
-                          color: dividerColor,
-                          height: 1,
-                        ),
+                        child: Divider(color: dividerColor, height: 1),
                       ),
                   ],
                 );

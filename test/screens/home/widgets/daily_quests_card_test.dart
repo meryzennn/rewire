@@ -4,7 +4,9 @@ import 'package:rewire/models/quest.dart';
 import 'package:rewire/screens/home/widgets/daily_quests_card.dart';
 
 void main() {
-  testWidgets('renders daily quests with completed and active styling', (tester) async {
+  testWidgets('renders daily quests with completed and active styling', (
+    tester,
+  ) async {
     final quests = [
       const Quest(
         id: 1,
@@ -54,9 +56,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        home: Scaffold(
-          body: DailyQuestsCard(quests: quests),
-        ),
+        home: Scaffold(body: DailyQuestsCard(quests: quests)),
       ),
     );
     await tester.pumpAndSettle();

@@ -98,9 +98,17 @@ const BreathingPattern kBoxBreathing = BreathingPattern(
   title: 'Box Breathing',
   subtitle: '4-4-4-4',
   phases: [
-    BreathingPhase(label: 'Tarik napas...', durationSeconds: 4, action: 'inhale'),
+    BreathingPhase(
+      label: 'Tarik napas...',
+      durationSeconds: 4,
+      action: 'inhale',
+    ),
     BreathingPhase(label: 'Tahan...', durationSeconds: 4, action: 'hold'),
-    BreathingPhase(label: 'Buang napas...', durationSeconds: 4, action: 'exhale'),
+    BreathingPhase(
+      label: 'Buang napas...',
+      durationSeconds: 4,
+      action: 'exhale',
+    ),
     BreathingPhase(label: 'Tahan...', durationSeconds: 4, action: 'hold'),
   ],
 );
@@ -111,9 +119,17 @@ const BreathingPattern k478Breathing = BreathingPattern(
   title: '4-7-8 Breathing',
   subtitle: 'Relax',
   phases: [
-    BreathingPhase(label: 'Tarik napas...', durationSeconds: 4, action: 'inhale'),
+    BreathingPhase(
+      label: 'Tarik napas...',
+      durationSeconds: 4,
+      action: 'inhale',
+    ),
     BreathingPhase(label: 'Tahan...', durationSeconds: 7, action: 'hold'),
-    BreathingPhase(label: 'Buang napas...', durationSeconds: 8, action: 'exhale'),
+    BreathingPhase(
+      label: 'Buang napas...',
+      durationSeconds: 8,
+      action: 'exhale',
+    ),
   ],
 );
 

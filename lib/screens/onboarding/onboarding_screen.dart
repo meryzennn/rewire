@@ -41,22 +41,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
     _OnboardingPage(
       title: 'Tiga Pilar Rewire',
-      description:
-          'Catat progres pemulihanmu, tenangkan pikiran lewat meditasi, dan bergerak dengan olahraga rumahan.',
+      description: 'Catat progres pemulihanmu, tenangkan pikiran lewat meditasi, dan bergerak dengan olahraga rumahan.',
       icon: Icons.self_improvement_rounded,
       iconLabel: 'Meditasi dan kebugaran',
     ),
     _OnboardingPage(
       title: 'Level Up Otakmu',
-      description:
-          'Aktivitas positif memberimu XP. Seiring progres, otakmu berkembang melalui lima tahap.',
+      description: 'Aktivitas positif memberimu XP. Seiring progres, otakmu berkembang melalui lima tahap.',
       icon: Icons.psychology_alt_rounded,
       iconLabel: 'Perkembangan otak',
     ),
     _OnboardingPage(
       title: 'Atur Pengingat Harian',
-      description:
-          'Pilih waktu pengingat check-in. Pengingat meditasi dan olahraga juga bisa diatur nanti.',
+      description: 'Pilih waktu pengingat check-in. Pengingat meditasi dan olahraga juga bisa diatur nanti.',
       icon: Icons.notifications_active_rounded,
       iconLabel: 'Pengingat Rewire',
     ),
@@ -135,7 +132,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         onPressed: _complete,
                         // Arrow marks the one forward-completion action (R-08).
                         icon: const Text('Mulai Perjalanan'),
-                        label: const Icon(Icons.arrow_forward_rounded, size: 20),
+                        label: const Icon(
+                          Icons.arrow_forward_rounded,
+                          size: 20,
+                        ),
                       )
                     : ElevatedButton(
                         onPressed: () => _goTo(_page + 1),
@@ -169,7 +169,9 @@ class _BrandHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final muted = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final muted = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final primary = isDark ? AppColors.darkPrimary : AppColors.primary;
     final pillBg = isDark
         ? AppColors.darkSurfaceVariant
@@ -187,10 +189,8 @@ class _BrandHeader extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 'REWIRE JOURNEY',
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: muted,
-                  letterSpacing: 1.2,
-                ),
+                style: Theme.of(context).textTheme.labelSmall
+                    ?.copyWith(color: muted, letterSpacing: 1.2),
               ),
             ],
           ),
@@ -203,9 +203,8 @@ class _BrandHeader extends StatelessWidget {
             ),
             child: Text(
               '$step / $total',
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: muted,
-              ),
+              style: Theme.of(context).textTheme.labelMedium
+                  ?.copyWith(color: muted),
             ),
           ),
         ],
@@ -295,9 +294,8 @@ class _PageContent extends StatelessWidget {
           child: Text(
             page.description,
             textAlign: TextAlign.center,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(color: textSecondary),
+            style: Theme.of(context).textTheme.bodyLarge
+                ?.copyWith(color: textSecondary),
           ),
         ),
       ],
@@ -315,8 +313,9 @@ class _HeroAura extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final glow = (isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer)
-        .withValues(alpha: isDark ? 0.35 : 0.55);
+    final glow =
+        (isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer)
+            .withValues(alpha: isDark ? 0.35 : 0.55);
 
     return SizedBox(
       width: size,

@@ -56,121 +56,124 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-            _Section(
-              title: 'Tampilan',
-              children: [
-                _SwitchRow(
-                  switchKey: const Key('toggle-dark-mode'),
-                  icon: Icons.dark_mode_rounded,
-                  tint: _Tint.secondary,
-                  title: 'Mode Gelap',
-                  subtitle: 'Ubah ke tema gelap',
-                  value: Theme.of(context).brightness == Brightness.dark,
-                  onChanged: _prefs.setDarkMode,
-                ),
-                _InfoRow(
-                  icon: Icons.language_rounded,
-                  tint: _Tint.primary,
-                  title: 'Bahasa',
-                  // Indonesian-only in v1; display-only, no locale switcher yet.
-                  trailing: 'Indonesia',
-                ),
-              ],
-            ),
-            // SECTIONS_ANCHOR
-            _Section(
-              title: 'Notifikasi',
-              children: [
-                _SwitchRow(
-                  switchKey: const Key('toggle-daily-reminder'),
-                  icon: Icons.notifications_rounded,
-                  tint: _Tint.primary,
-                  title: 'Pengingat Harian',
-                  value: _prefs.dailyReminderEnabled,
-                  onChanged: (val) async {
-                    await _prefs.setDailyReminderEnabled(val);
-                    if (val) {
-                      await widget.notificationService?.requestPermission();
-                      await widget.notificationService?.scheduleDailyReminder(
-                        NotificationService.parseHhmm(_prefs.dailyReminderTime),
-                      );
-                    } else {
-                      await widget.notificationService?.cancelDailyReminder();
-                    }
-                  },
-                ),
-                _NavRow(
-                  rowKey: const Key('reminder-time'),
-                  icon: Icons.schedule_rounded,
-                  tint: _Tint.secondary,
-                  title: 'Waktu Pengingat',
-                  trailing: _prefs.dailyReminderTime,
-                  onTap: _pickTime,
-                ),
-                _SwitchRow(
-                  switchKey: const Key('toggle-meditation-reminder'),
-                  icon: Icons.self_improvement_rounded,
-                  tint: _Tint.primary,
-                  title: 'Pengingat Meditasi',
-                  value: _prefs.meditationReminderEnabled,
-                  onChanged: (val) async {
-                    await _prefs.setMeditationReminderEnabled(val);
-                    if (val) {
-                      await widget.notificationService?.requestPermission();
-                      await widget.notificationService
-                          ?.scheduleMeditationReminder();
-                    } else {
-                      await widget.notificationService
-                          ?.cancelMeditationReminder();
-                    }
-                  },
-                ),
-                _SwitchRow(
-                  switchKey: const Key('toggle-workout-reminder'),
-                  icon: Icons.fitness_center_rounded,
-                  tint: _Tint.secondary,
-                  title: 'Pengingat Olahraga',
-                  value: _prefs.workoutReminderEnabled,
-                  onChanged: (val) async {
-                    await _prefs.setWorkoutReminderEnabled(val);
-                    if (val) {
-                      await widget.notificationService?.requestPermission();
-                      await widget.notificationService
-                          ?.scheduleWorkoutReminder();
-                    } else {
-                      await widget.notificationService?.cancelWorkoutReminder();
-                    }
-                  },
-                ),
-              ],
-            ),
-            _Section(
-              title: 'Data',
-              children: [
-                _NavRow(
-                  rowKey: const Key('reset-data'),
-                  icon: Icons.delete_forever_rounded,
-                  tint: _Tint.danger,
-                  title: 'Reset Semua Data',
-                  danger: true,
-                  onTap: _confirmReset,
-                ),
-              ],
-            ),
-            _Section(
-              title: 'Tentang',
-              children: const [
-                _InfoRow(
-                  icon: Icons.info_rounded,
-                  tint: _Tint.neutral,
-                  title: 'Versi Aplikasi',
-                  trailing: '1.0.0',
-                ),
-              ],
-            ),
-          ],
+              _Section(
+                title: 'Tampilan',
+                children: [
+                  _SwitchRow(
+                    switchKey: const Key('toggle-dark-mode'),
+                    icon: Icons.dark_mode_rounded,
+                    tint: _Tint.secondary,
+                    title: 'Mode Gelap',
+                    subtitle: 'Ubah ke tema gelap',
+                    value: Theme.of(context).brightness == Brightness.dark,
+                    onChanged: _prefs.setDarkMode,
+                  ),
+                  _InfoRow(
+                    icon: Icons.language_rounded,
+                    tint: _Tint.primary,
+                    title: 'Bahasa',
+                    // Indonesian-only in v1; display-only, no locale switcher yet.
+                    trailing: 'Indonesia',
+                  ),
+                ],
+              ),
+              // SECTIONS_ANCHOR
+              _Section(
+                title: 'Notifikasi',
+                children: [
+                  _SwitchRow(
+                    switchKey: const Key('toggle-daily-reminder'),
+                    icon: Icons.notifications_rounded,
+                    tint: _Tint.primary,
+                    title: 'Pengingat Harian',
+                    value: _prefs.dailyReminderEnabled,
+                    onChanged: (val) async {
+                      await _prefs.setDailyReminderEnabled(val);
+                      if (val) {
+                        await widget.notificationService?.requestPermission();
+                        await widget.notificationService?.scheduleDailyReminder(
+                          NotificationService.parseHhmm(
+                            _prefs.dailyReminderTime,
+                          ),
+                        );
+                      } else {
+                        await widget.notificationService?.cancelDailyReminder();
+                      }
+                    },
+                  ),
+                  _NavRow(
+                    rowKey: const Key('reminder-time'),
+                    icon: Icons.schedule_rounded,
+                    tint: _Tint.secondary,
+                    title: 'Waktu Pengingat',
+                    trailing: _prefs.dailyReminderTime,
+                    onTap: _pickTime,
+                  ),
+                  _SwitchRow(
+                    switchKey: const Key('toggle-meditation-reminder'),
+                    icon: Icons.self_improvement_rounded,
+                    tint: _Tint.primary,
+                    title: 'Pengingat Meditasi',
+                    value: _prefs.meditationReminderEnabled,
+                    onChanged: (val) async {
+                      await _prefs.setMeditationReminderEnabled(val);
+                      if (val) {
+                        await widget.notificationService?.requestPermission();
+                        await widget.notificationService
+                            ?.scheduleMeditationReminder();
+                      } else {
+                        await widget.notificationService
+                            ?.cancelMeditationReminder();
+                      }
+                    },
+                  ),
+                  _SwitchRow(
+                    switchKey: const Key('toggle-workout-reminder'),
+                    icon: Icons.fitness_center_rounded,
+                    tint: _Tint.secondary,
+                    title: 'Pengingat Olahraga',
+                    value: _prefs.workoutReminderEnabled,
+                    onChanged: (val) async {
+                      await _prefs.setWorkoutReminderEnabled(val);
+                      if (val) {
+                        await widget.notificationService?.requestPermission();
+                        await widget.notificationService
+                            ?.scheduleWorkoutReminder();
+                      } else {
+                        await widget.notificationService
+                            ?.cancelWorkoutReminder();
+                      }
+                    },
+                  ),
+                ],
+              ),
+              _Section(
+                title: 'Data',
+                children: [
+                  _NavRow(
+                    rowKey: const Key('reset-data'),
+                    icon: Icons.delete_forever_rounded,
+                    tint: _Tint.danger,
+                    title: 'Reset Semua Data',
+                    danger: true,
+                    onTap: _confirmReset,
+                  ),
+                ],
+              ),
+              _Section(
+                title: 'Tentang',
+                children: const [
+                  _InfoRow(
+                    icon: Icons.info_rounded,
+                    tint: _Tint.neutral,
+                    title: 'Versi Aplikasi',
+                    trailing: '1.0.0',
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -263,7 +266,9 @@ class _Palette {
       case _Tint.neutral:
         return (
           _theme.inputDecorationTheme.fillColor ??
-              (isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant),
+              (isDark
+                  ? AppColors.darkSurfaceVariant
+                  : AppColors.surfaceVariant),
           ink,
         );
     }
@@ -283,7 +288,9 @@ class _Section extends StatelessWidget {
     final palette = _Palette(context);
     final rows = <Widget>[];
     for (var i = 0; i < children.length; i++) {
-      if (i > 0) rows.add(Divider(height: 1, thickness: 1, color: palette.divider));
+      if (i > 0) {
+        rows.add(Divider(height: 1, thickness: 1, color: palette.divider));
+      }
       rows.add(children[i]);
     }
     return Padding(
@@ -295,10 +302,8 @@ class _Section extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: palette.muted,
-                letterSpacing: 1.1,
-              ),
+              style: Theme.of(context).textTheme.labelMedium
+                  ?.copyWith(color: palette.muted, letterSpacing: 1.1),
             ),
           ),
           Container(
@@ -435,7 +440,10 @@ class _NavRow extends StatelessWidget {
             ),
             if (trailing != null) ...[
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: palette.isDark
                       ? AppColors.darkSurfaceVariant

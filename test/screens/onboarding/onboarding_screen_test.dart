@@ -57,17 +57,18 @@ void main() {
     expect(find.byKey(const Key('screen-home')), findsOneWidget);
   });
 
-  testWidgets('early pages show Selanjutnya, final page shows the completion CTA', (
-    tester,
-  ) async {
-    await _pumpFreshApp(tester);
+  testWidgets(
+    'early pages show Selanjutnya, final page shows the completion CTA',
+    (tester) async {
+      await _pumpFreshApp(tester);
 
-    expect(find.text('Selanjutnya'), findsOneWidget);
-    expect(find.text('Mulai Perjalanan'), findsNothing);
+      expect(find.text('Selanjutnya'), findsOneWidget);
+      expect(find.text('Mulai Perjalanan'), findsNothing);
 
-    await _advanceToLastPage(tester);
+      await _advanceToLastPage(tester);
 
-    expect(find.text('Mulai Perjalanan'), findsOneWidget);
-    expect(find.text('Selanjutnya'), findsNothing);
-  });
+      expect(find.text('Mulai Perjalanan'), findsOneWidget);
+      expect(find.text('Selanjutnya'), findsNothing);
+    },
+  );
 }

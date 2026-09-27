@@ -8,11 +8,7 @@ import '../../../widgets/xp_chip.dart';
 
 /// Daily quests card matching Stitch Home Screen section 4.
 class DailyQuestsCard extends StatelessWidget {
-  const DailyQuestsCard({
-    super.key,
-    this.provider,
-    this.quests,
-  });
+  const DailyQuestsCard({super.key, this.provider, this.quests});
 
   final QuestProvider? provider;
   final List<Quest>? quests;
@@ -22,7 +18,8 @@ class DailyQuestsCard extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final questList = quests ??
+    final questList =
+        quests ??
         provider?.dailyQuests ??
         context.watchOrNull<QuestProvider>()?.dailyQuests ??
         const [];
@@ -30,20 +27,21 @@ class DailyQuestsCard extends StatelessWidget {
     final completedCount = questList.where((q) => q.completed == 1).length;
     final totalCount = questList.length;
 
-    final surfaceColor =
-        isDark ? AppColors.darkSurface : AppColors.surface;
-    final dividerColor =
-        isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-    final primaryColor =
-        isDark ? AppColors.darkPrimary : AppColors.primary;
-    final primaryContainer =
-        isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer;
-    final itemBg =
-        isDark ? AppColors.darkSurfaceVariant : const Color(0xFFF7F6F3);
+    final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
+    final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
+    final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
+    final primaryContainer = isDark
+        ? AppColors.darkPrimaryContainer
+        : AppColors.primaryContainer;
+    final itemBg = isDark
+        ? AppColors.darkSurfaceVariant
+        : const Color(0xFFF7F6F3);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -155,10 +153,12 @@ class DailyQuestsCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           color: isDone ? textSecondary : textPrimary,
-                          decoration:
-                              isDone ? TextDecoration.lineThrough : null,
-                          fontWeight:
-                              isDone ? FontWeight.normal : FontWeight.w500,
+                          decoration: isDone
+                              ? TextDecoration.lineThrough
+                              : null,
+                          fontWeight: isDone
+                              ? FontWeight.normal
+                              : FontWeight.w500,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

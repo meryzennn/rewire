@@ -113,9 +113,7 @@ void main() {
         ChangeNotifierProvider<CheckinProvider>.value(value: checkinProvider),
         ChangeNotifierProvider<QuestProvider>.value(value: questProvider),
       ],
-      child: const MaterialApp(
-        home: HomeScreen(),
-      ),
+      child: const MaterialApp(home: HomeScreen()),
     );
   }
 
@@ -154,11 +152,13 @@ void main() {
       ],
     );
 
-    await tester.pumpWidget(buildHomeScreen(
-      userProvider: userProvider,
-      checkinProvider: checkinProvider,
-      questProvider: questProvider,
-    ));
+    await tester.pumpWidget(
+      buildHomeScreen(
+        userProvider: userProvider,
+        checkinProvider: checkinProvider,
+        questProvider: questProvider,
+      ),
+    );
     await tester.pump(const Duration(milliseconds: 100));
 
     // Brand and top bar
@@ -191,18 +191,17 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    final userProvider = FakeUserProvider(
-      level: 1,
-      brainStage: 'dormant',
-    );
+    final userProvider = FakeUserProvider(level: 1, brainStage: 'dormant');
     final checkinProvider = FakeCheckinProvider();
     final questProvider = FakeQuestProvider();
 
-    await tester.pumpWidget(buildHomeScreen(
-      userProvider: userProvider,
-      checkinProvider: checkinProvider,
-      questProvider: questProvider,
-    ));
+    await tester.pumpWidget(
+      buildHomeScreen(
+        userProvider: userProvider,
+        checkinProvider: checkinProvider,
+        questProvider: questProvider,
+      ),
+    );
     await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.byType(LevelUpDialog), findsNothing);
@@ -214,7 +213,10 @@ void main() {
 
     expect(find.byType(LevelUpDialog), findsOneWidget);
     expect(
-      find.descendant(of: find.byType(LevelUpDialog), matching: find.text('Level 2')),
+      find.descendant(
+        of: find.byType(LevelUpDialog),
+        matching: find.text('Level 2'),
+      ),
       findsOneWidget,
     );
   });

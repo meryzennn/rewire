@@ -38,24 +38,23 @@ class LevelUpDialog extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final surfaceColor =
-        isDark ? AppColors.darkSurface : AppColors.surface;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-    final primaryColor =
-        isDark ? AppColors.darkPrimary : AppColors.primary;
-    final primaryContainer =
-        isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer;
+    final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
+    final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
+    final primaryContainer = isDark
+        ? AppColors.darkPrimaryContainer
+        : AppColors.primaryContainer;
 
     return Stack(
       children: [
         // Particle celebration overlay
         const Positioned.fill(
-          child: IgnorePointer(
-            child: CelebrationOverlay(),
-          ),
+          child: IgnorePointer(child: CelebrationOverlay()),
         ),
         Center(
           child: Material(

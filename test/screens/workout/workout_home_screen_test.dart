@@ -97,8 +97,9 @@ void main() {
     expect(find.text('Squat'), findsOneWidget);
   });
 
-  testWidgets('tapping category filter updates selectedCategory in provider',
-      (tester) async {
+  testWidgets('tapping category filter updates selectedCategory in provider', (
+    tester,
+  ) async {
     setViewport(tester);
     final provider = FakeWorkoutProvider();
 

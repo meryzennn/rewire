@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 
@@ -25,8 +26,7 @@ class DefaultAudioService implements AudioService {
   final AudioPlayer? _explicitPlayer;
   AudioPlayer? _lazyPlayer;
 
-  AudioPlayer get _player =>
-      _explicitPlayer ?? (_lazyPlayer ??= AudioPlayer());
+  AudioPlayer get _player => _explicitPlayer ?? (_lazyPlayer ??= AudioPlayer());
 
   bool _isPlaying = false;
   String? _currentTrack;

@@ -111,7 +111,6 @@ class CheckinRepository {
     return rows.map((r) => r['description'] as String).toList();
   }
 
-
   Future<int> triggerCount() async =>
       Sqflite.firstIntValue(
         await _db.rawQuery('SELECT COUNT(*) FROM triggers'),

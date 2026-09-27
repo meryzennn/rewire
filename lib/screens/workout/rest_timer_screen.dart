@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -75,10 +76,12 @@ class _RestTimerScreenState extends State<RestTimerScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     final bg = theme.scaffoldBackgroundColor;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final accent = isDark ? AppColors.darkAccent : AppColors.accent;
 
     final progress = widget.durationSeconds > 0
@@ -120,8 +123,7 @@ class _RestTimerScreenState extends State<RestTimerScreen> {
                         child: CircularProgressIndicator(
                           value: progress,
                           strokeWidth: 8,
-                          backgroundColor:
-                              accent.withValues(alpha: 0.15),
+                          backgroundColor: accent.withValues(alpha: 0.15),
                           valueColor: AlwaysStoppedAnimation<Color>(accent),
                           strokeCap: StrokeCap.round,
                         ),
@@ -154,7 +156,10 @@ class _RestTimerScreenState extends State<RestTimerScreen> {
               // Next Exercise Preview
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 20,
+                ),
                 decoration: BoxDecoration(
                   color: isDark ? AppColors.darkSurface : AppColors.surface,
                   borderRadius: BorderRadius.circular(16),
@@ -200,10 +205,7 @@ class _RestTimerScreenState extends State<RestTimerScreen> {
                 onPressed: _skip,
                 child: const Text(
                   'Skip Istirahat',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

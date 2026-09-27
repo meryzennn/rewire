@@ -11,12 +11,7 @@ import '../services/xp_service.dart';
 
 /// Provider for bodyweight workout routines, exercises, stats, and session completion (spec §4.1–4.2).
 class WorkoutProvider extends ChangeNotifier {
-  WorkoutProvider(
-    this._workouts,
-    this._xp, {
-    this.quests,
-    this.achievements,
-  });
+  WorkoutProvider(this._workouts, this._xp, {this.quests, this.achievements});
 
   final WorkoutRepository _workouts;
   final XpService _xp;
@@ -71,7 +66,9 @@ class WorkoutProvider extends ChangeNotifier {
     final timestamp = now ?? DateTime.now();
     final minutes = (durationSeconds / 60).round();
     final routine = findRoutineById(routineId);
-    final effectiveMinutes = minutes > 0 ? minutes : (routine?.durationMinutes ?? 10);
+    final effectiveMinutes = minutes > 0
+        ? minutes
+        : (routine?.durationMinutes ?? 10);
     final xpEarned = xpForWorkoutDurationMinutes(effectiveMinutes);
 
     final session = WorkoutSession(
@@ -89,11 +86,7 @@ class WorkoutProvider extends ChangeNotifier {
     final award = await _xp.award(xpEarned);
 
     if (quests != null) {
-      await quests!.recordActivity(
-        QuestActivity.workout,
-        timestamp,
-        amount: 1,
-      );
+      await quests!.recordActivity(QuestActivity.workout, timestamp, amount: 1);
     }
 
     if (achievements != null) {

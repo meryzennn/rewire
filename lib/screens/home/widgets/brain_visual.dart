@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,21 +15,19 @@ bool get _isTestEnvironment {
 /// Brain evolution stages info.
 const Map<String, String> kBrainStageDescriptions = {
   'dormant': 'Pola lama mulai diistirahatkan. Jalur saraf baru bersiap tumbuh.',
-  'awakening': 'Titik-titik kesadaran baru mulai terhubung dan menyala perlahan.',
-  'growing': 'Koneksi sinapsis baru semakin kuat, stabil, dan terbentuk teratur.',
+  'awakening':
+      'Titik-titik kesadaran baru mulai terhubung dan menyala perlahan.',
+  'growing':
+      'Koneksi sinapsis baru semakin kuat, stabil, dan terbentuk teratur.',
   'thriving': 'Jaringan saraf positif berkembang pesat, fokus dan ketenangan meningkat.',
-  'transcendent': 'Jalur pemulihan terintegrasi penuh. Otakmu telah berevolusi!',
+  'transcendent':
+      'Jalur pemulihan terintegrasi penuh. Otakmu telah berevolusi!',
 };
 
 /// Stitch home screen brain visualization card: displays the evolving neural
 /// brain, current level, brain stage, and XP progress bar with a gentle idle pulse.
 class BrainVisual extends StatefulWidget {
-  const BrainVisual({
-    super.key,
-    this.provider,
-    this.onTap,
-    this.enablePulse,
-  });
+  const BrainVisual({super.key, this.provider, this.onTap, this.enablePulse});
 
   final UserProvider? provider;
   final VoidCallback? onTap;
@@ -59,10 +58,7 @@ class _BrainVisualState extends State<BrainVisual>
     }
 
     _scaleAnimation = Tween<double>(begin: 0.98, end: 1.03).animate(
-      CurvedAnimation(
-        parent: _pulseController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
   }
 
@@ -100,7 +96,9 @@ class _BrainVisualState extends State<BrainVisual>
                       width: 40,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: isDark ? AppColors.darkDivider : AppColors.divider,
+                        color: isDark
+                            ? AppColors.darkDivider
+                            : AppColors.divider,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -124,8 +122,10 @@ class _BrainVisualState extends State<BrainVisual>
                       decoration: BoxDecoration(
                         color: isCurrent
                             ? (isDark
-                                ? AppColors.darkPrimaryContainer
-                                : AppColors.primaryContainer.withValues(alpha: 0.5))
+                                  ? AppColors.darkPrimaryContainer
+                                  : AppColors.primaryContainer.withValues(
+                                      alpha: 0.5,
+                                    ))
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(12),
                         border: isCurrent
@@ -140,11 +140,17 @@ class _BrainVisualState extends State<BrainVisual>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
-                            isCurrent ? Icons.check_circle : Icons.radio_button_unchecked,
+                            isCurrent
+                                ? Icons.check_circle
+                                : Icons.radio_button_unchecked,
                             size: 18,
                             color: isCurrent
-                                ? (isDark ? AppColors.darkPrimary : AppColors.primary)
-                                : (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
+                                ? (isDark
+                                      ? AppColors.darkPrimary
+                                      : AppColors.primary)
+                                : (isDark
+                                      ? AppColors.darkTextSecondary
+                                      : AppColors.textSecondary),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
@@ -156,7 +162,9 @@ class _BrainVisualState extends State<BrainVisual>
                                   style: theme.textTheme.labelMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: isCurrent
-                                        ? (isDark ? AppColors.darkPrimary : AppColors.primary)
+                                        ? (isDark
+                                              ? AppColors.darkPrimary
+                                              : AppColors.primary)
                                         : null,
                                   ),
                                 ),
@@ -189,8 +197,7 @@ class _BrainVisualState extends State<BrainVisual>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final userProvider =
-        widget.provider ?? context.watchOrNull<UserProvider>();
+    final userProvider = widget.provider ?? context.watchOrNull<UserProvider>();
 
     final level = userProvider?.level ?? 1;
     final brainStage = userProvider?.brainStage ?? 'dormant';
@@ -199,20 +206,21 @@ class _BrainVisualState extends State<BrainVisual>
     final inLevelXp = userProvider?.xpInLevel ?? 0;
     final spanXp = userProvider?.xpSpan ?? 100;
 
-    final surfaceColor =
-        isDark ? AppColors.darkSurface : AppColors.surface;
-    final dividerColor =
-        isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-    final primaryColor =
-        isDark ? AppColors.darkPrimary : AppColors.primary;
-    final primaryContainer =
-        isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer;
-    final secondaryColor =
-        isDark ? AppColors.darkSecondary : AppColors.secondary;
+    final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
+    final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
+    final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
+    final primaryContainer = isDark
+        ? AppColors.darkPrimaryContainer
+        : AppColors.primaryContainer;
+    final secondaryColor = isDark
+        ? AppColors.darkSecondary
+        : AppColors.secondary;
 
     return Container(
       decoration: BoxDecoration(
@@ -388,11 +396,7 @@ class _StyledBrainFallback extends StatelessWidget {
           ),
         ),
         alignment: Alignment.center,
-        child: Icon(
-          Icons.psychology,
-          size: 76,
-          color: color,
-        ),
+        child: Icon(Icons.psychology, size: 76, color: color),
       ),
     );
   }

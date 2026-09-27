@@ -20,8 +20,7 @@ class StreakCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final checkinProvider =
-        provider ?? context.watchOrNull<CheckinProvider>();
+    final checkinProvider = provider ?? context.watchOrNull<CheckinProvider>();
 
     final currentStreak = checkinProvider?.currentStreak ?? 0;
     final longestStreak = checkinProvider?.longestStreak ?? 0;
@@ -29,16 +28,15 @@ class StreakCard extends StatelessWidget {
     final hasCheckedIn = todayCheckin != null;
     final isClean = todayCheckin?.status == 'clean';
 
-    final surfaceColor =
-        isDark ? AppColors.darkSurface : AppColors.surface;
-    final dividerColor =
-        isDark ? AppColors.darkDivider : AppColors.divider;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-    final primaryColor =
-        isDark ? AppColors.darkPrimary : AppColors.primary;
-    final primaryContainer =
-        isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer;
+    final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
+    final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
+    final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
+    final primaryContainer = isDark
+        ? AppColors.darkPrimaryContainer
+        : AppColors.primaryContainer;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -65,10 +63,7 @@ class StreakCard extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
-            child: const Text(
-              '🔥',
-              style: TextStyle(fontSize: 22),
-            ),
+            child: const Text('🔥', style: TextStyle(fontSize: 22)),
           ),
           const SizedBox(width: 12),
           // Streak count & longest streak
@@ -112,7 +107,10 @@ class StreakCard extends StatelessWidget {
               style: FilledButton.styleFrom(
                 backgroundColor: primaryColor,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -126,13 +124,20 @@ class StreakCard extends StatelessWidget {
             )
           else
             Material(
-              color: isClean ? primaryContainer : (isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant),
+              color: isClean
+                  ? primaryContainer
+                  : (isDark
+                        ? AppColors.darkSurfaceVariant
+                        : AppColors.surfaceVariant),
               borderRadius: BorderRadius.circular(12),
               child: InkWell(
                 onTap: onCheckinTap ?? () => context.push(Routes.checkin),
                 borderRadius: BorderRadius.circular(12),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

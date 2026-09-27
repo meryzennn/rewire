@@ -41,20 +41,14 @@ void main() {
       home: Scaffold(
         body: ChangeNotifierProvider<CheckinProvider>.value(
           value: provider,
-          child: StreakCard(
-            provider: provider,
-            onCheckinTap: onCheckinTap,
-          ),
+          child: StreakCard(provider: provider, onCheckinTap: onCheckinTap),
         ),
       ),
     );
   }
 
   testWidgets('renders streak count and longest streak', (tester) async {
-    final provider = FakeCheckinProvider(
-      currentStreak: 14,
-      longestStreak: 21,
-    );
+    final provider = FakeCheckinProvider(currentStreak: 14, longestStreak: 21);
 
     await tester.pumpWidget(buildCard(provider));
     await tester.pumpAndSettle();
@@ -64,7 +58,9 @@ void main() {
     expect(find.text('Terpanjang: 21 hari'), findsOneWidget);
   });
 
-  testWidgets('shows Check-in button when not checked in today', (tester) async {
+  testWidgets('shows Check-in button when not checked in today', (
+    tester,
+  ) async {
     var tapped = false;
     final provider = FakeCheckinProvider(
       currentStreak: 5,
@@ -72,7 +68,9 @@ void main() {
       todayCheckin: null,
     );
 
-    await tester.pumpWidget(buildCard(provider, onCheckinTap: () => tapped = true));
+    await tester.pumpWidget(
+      buildCard(provider, onCheckinTap: () => tapped = true),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Check-in'), findsOneWidget);
@@ -82,7 +80,9 @@ void main() {
     expect(tapped, isTrue);
   });
 
-  testWidgets('shows Selesai badge when checked in clean today', (tester) async {
+  testWidgets('shows Selesai badge when checked in clean today', (
+    tester,
+  ) async {
     final provider = FakeCheckinProvider(
       currentStreak: 6,
       longestStreak: 10,
@@ -100,7 +100,9 @@ void main() {
     expect(find.text('Check-in'), findsNothing);
   });
 
-  testWidgets('shows Tercatat badge when checked in relapse today', (tester) async {
+  testWidgets('shows Tercatat badge when checked in relapse today', (
+    tester,
+  ) async {
     final provider = FakeCheckinProvider(
       currentStreak: 0,
       longestStreak: 10,

@@ -22,24 +22,25 @@ class QuickActions extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final surfaceColor =
-        isDark ? AppColors.darkSurface : AppColors.surface;
-    final dividerColor =
-        isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-    final primaryColor =
-        isDark ? AppColors.darkPrimary : AppColors.primary;
-    final primaryContainer =
-        isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer;
-    final secondaryColor =
-        isDark ? AppColors.darkSecondary : AppColors.secondary;
-    final secondaryContainer =
-        isDark ? AppColors.darkSecondaryContainer : AppColors.secondaryContainer;
-    final accentColor =
-        isDark ? AppColors.darkAccent : AppColors.accent;
+    final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
+    final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
+    final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
+    final primaryContainer = isDark
+        ? AppColors.darkPrimaryContainer
+        : AppColors.primaryContainer;
+    final secondaryColor = isDark
+        ? AppColors.darkSecondary
+        : AppColors.secondary;
+    final secondaryContainer = isDark
+        ? AppColors.darkSecondaryContainer
+        : AppColors.secondaryContainer;
+    final accentColor = isDark ? AppColors.darkAccent : AppColors.accent;
 
     return Container(
       padding: const EdgeInsets.all(16),

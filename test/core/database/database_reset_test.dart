@@ -35,7 +35,10 @@ void main() {
   test('clearAllData empties every table but keeps the schema', () async {
     // Seed one row into each of the eight tables.
     await db.rawInsert('INSERT INTO user_profile (id) VALUES (1)');
-    await db.insert('daily_checkins', {'date': '2026-09-27', 'status': 'clean'});
+    await db.insert('daily_checkins', {
+      'date': '2026-09-27',
+      'status': 'clean',
+    });
     await db.insert('triggers', {'date': '2026-09-27', 'description': 'x'});
     await db.insert('meditation_sessions', {
       'date': '2026-09-27',

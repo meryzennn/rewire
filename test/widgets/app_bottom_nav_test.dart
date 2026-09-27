@@ -6,10 +6,7 @@ import 'package:rewire/widgets/app_bottom_nav.dart';
 
 class _FakeNavigationShell extends StatefulWidget
     implements StatefulNavigationShell {
-  const _FakeNavigationShell({
-    this.currentIndex = 0,
-    required this.onGoBranch,
-  });
+  const _FakeNavigationShell({this.currentIndex = 0, required this.onGoBranch});
 
   @override
   final int currentIndex;
@@ -36,10 +33,7 @@ void main() {
   testWidgets('renders all 5 tabs and a single sliding pill indicator', (
     tester,
   ) async {
-    final shell = _FakeNavigationShell(
-      currentIndex: 0,
-      onGoBranch: (_, _) {},
-    );
+    final shell = _FakeNavigationShell(currentIndex: 0, onGoBranch: (_, _) {});
 
     await tester.pumpWidget(
       MaterialApp(
@@ -84,10 +78,7 @@ void main() {
             height: 200,
             child: PageView(
               controller: controller,
-              children: List.generate(
-                5,
-                (i) => Center(child: Text('Page $i')),
-              ),
+              children: List.generate(5, (i) => Center(child: Text('Page $i'))),
             ),
           ),
           bottomNavigationBar: AppBottomNav(
@@ -132,10 +123,7 @@ void main() {
             height: 200,
             child: PageView(
               controller: controller,
-              children: List.generate(
-                5,
-                (i) => Center(child: Text('Page $i')),
-              ),
+              children: List.generate(5, (i) => Center(child: Text('Page $i'))),
             ),
           ),
           bottomNavigationBar: AppBottomNav(

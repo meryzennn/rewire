@@ -7,16 +7,20 @@ import '../../../models/daily_checkin.dart';
 
 /// Line chart visualizing mood trends (1-5) over the past 7 days (spec §9, Screen 6).
 class MoodTrendChart extends StatelessWidget {
-  const MoodTrendChart({
-    super.key,
-    required this.checkins,
-    this.now,
-  });
+  const MoodTrendChart({super.key, required this.checkins, this.now});
 
   final List<DailyCheckin> checkins;
   final DateTime? now;
 
-  static const List<String> _dayLabels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+  static const List<String> _dayLabels = [
+    'Sen',
+    'Sel',
+    'Rab',
+    'Kam',
+    'Jum',
+    'Sab',
+    'Min',
+  ];
   static const List<String> _moodEmojis = ['', '😢', '😕', '😐', '🙂', '😄'];
 
   @override
@@ -26,10 +30,12 @@ class MoodTrendChart extends StatelessWidget {
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final accentColor = isDark ? AppColors.darkAccent : AppColors.accent;
 
     final referenceDate = now ?? DateTime.now();
@@ -39,9 +45,7 @@ class MoodTrendChart extends StatelessWidget {
       return referenceDate.subtract(Duration(days: 6 - i));
     });
 
-    final checkinMap = {
-      for (final c in checkins) c.date: c,
-    };
+    final checkinMap = {for (final c in checkins) c.date: c};
 
     final spots = <FlSpot>[];
     var hasAnyMood = false;
@@ -49,7 +53,10 @@ class MoodTrendChart extends StatelessWidget {
     for (var i = 0; i < 7; i++) {
       final dateStr = formatLocalDate(days[i]);
       final checkin = checkinMap[dateStr];
-      if (checkin != null && checkin.mood != null && checkin.mood! >= 1 && checkin.mood! <= 5) {
+      if (checkin != null &&
+          checkin.mood != null &&
+          checkin.mood! >= 1 &&
+          checkin.mood! <= 5) {
         spots.add(FlSpot(i.toDouble(), checkin.mood!.toDouble()));
         hasAnyMood = true;
       }
@@ -70,9 +77,7 @@ class MoodTrendChart extends StatelessWidget {
             ),
             Text(
               'Skala 1 - 5',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: textSecondary,
-              ),
+              style: theme.textTheme.bodySmall?.copyWith(color: textSecondary),
             ),
           ],
         ),
@@ -120,7 +125,9 @@ class MoodTrendChart extends StatelessWidget {
                               return LineTooltipItem(
                                 '$emoji Mood: $moodVal/5',
                                 TextStyle(
-                                  color: isDark ? Colors.white : AppColors.textPrimary,
+                                  color: isDark
+                                      ? Colors.white
+                                      : AppColors.textPrimary,
                                   fontWeight: FontWeight.bold,
                                 ),
                               );
@@ -143,7 +150,9 @@ class MoodTrendChart extends StatelessWidget {
                             reservedSize: 32,
                             getTitlesWidget: (val, meta) {
                               final m = val.toInt();
-                              if (m < 1 || m > 5) return const SizedBox.shrink();
+                              if (m < 1 || m > 5) {
+                                return const SizedBox.shrink();
+                              }
                               return Padding(
                                 padding: const EdgeInsets.only(right: 6),
                                 child: Text(
@@ -161,7 +170,9 @@ class MoodTrendChart extends StatelessWidget {
                             interval: 1,
                             getTitlesWidget: (val, meta) {
                               final idx = val.toInt();
-                              if (idx < 0 || idx >= 7) return const SizedBox.shrink();
+                              if (idx < 0 || idx >= 7) {
+                                return const SizedBox.shrink();
+                              }
                               final day = days[idx];
                               final label = _dayLabels[day.weekday - 1];
                               final isToday = idx == 6;
@@ -171,8 +182,12 @@ class MoodTrendChart extends StatelessWidget {
                                 child: Text(
                                   label,
                                   style: TextStyle(
-                                    color: isToday ? accentColor : textSecondary,
-                                    fontWeight: isToday ? FontWeight.bold : FontWeight.w500,
+                                    color: isToday
+                                        ? accentColor
+                                        : textSecondary,
+                                    fontWeight: isToday
+                                        ? FontWeight.bold
+                                        : FontWeight.w500,
                                     fontSize: 12,
                                   ),
                                 ),

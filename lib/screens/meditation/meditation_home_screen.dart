@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -45,15 +46,13 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
     }
 
     _scaleAnimation = Tween<double>(begin: 0.96, end: 1.04).animate(
-      CurvedAnimation(
-        parent: _pulseController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        final prov = widget.provider ?? context.readOrNull<MeditationProvider>();
+        final prov =
+            widget.provider ?? context.readOrNull<MeditationProvider>();
         prov?.loadStats();
       }
     });
@@ -79,8 +78,9 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
         return StatefulBuilder(
           builder: (dialogCtx, setDialogState) {
             return AlertDialog(
-              backgroundColor:
-                  isDark ? AppColors.darkSurface : AppColors.surface,
+              backgroundColor: isDark
+                  ? AppColors.darkSurface
+                  : AppColors.surface,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -166,18 +166,20 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
     final potentialXp = xpForMeditationMinutes(selectedDuration);
 
     final bg = theme.scaffoldBackgroundColor;
-    final surfaceColor =
-        isDark ? AppColors.darkSurface : AppColors.surface;
-    final surfaceVariant =
-        isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant;
-    final dividerColor =
-        isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-    final lavenderAccent =
-        isDark ? AppColors.darkSecondary : AppColors.secondary;
+    final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
+    final surfaceVariant = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.surfaceVariant;
+    final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
+    final lavenderAccent = isDark
+        ? AppColors.darkSecondary
+        : AppColors.secondary;
     final lavenderContainer = isDark
         ? AppColors.darkSecondaryContainer
         : AppColors.secondaryContainer;
@@ -196,11 +198,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
         ),
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: textSecondary,
-              size: 22,
-            ),
+            icon: Icon(Icons.settings, color: textSecondary, size: 22),
             onPressed: () => context.go(Routes.settings),
           ),
           const SizedBox(width: 8),
@@ -249,8 +247,9 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                               border: Border.all(color: dividerColor),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black
-                                      .withValues(alpha: isDark ? 0.2 : 0.04),
+                                  color: Colors.black.withValues(
+                                    alpha: isDark ? 0.2 : 0.04,
+                                  ),
                                   blurRadius: 10,
                                 ),
                               ],
@@ -345,13 +344,16 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color: isSelected ? lavenderAccent : surfaceVariant,
+                              color: isSelected
+                                  ? lavenderAccent
+                                  : surfaceVariant,
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: isSelected
                                   ? [
                                       BoxShadow(
-                                        color: lavenderAccent
-                                            .withValues(alpha: 0.35),
+                                        color: lavenderAccent.withValues(
+                                          alpha: 0.35,
+                                        ),
                                         blurRadius: 8,
                                         offset: const Offset(0, 2),
                                       ),
@@ -389,8 +391,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                     }),
                     // Custom Duration button
                     InkWell(
-                      onTap: () =>
-                          _showCustomDurationDialog(context, provider),
+                      onTap: () => _showCustomDurationDialog(context, provider),
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -398,7 +399,8 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: !kMeditationDurations.contains(selectedDuration)
+                          color:
+                              !kMeditationDurations.contains(selectedDuration)
                               ? lavenderAccent
                               : surfaceVariant,
                           borderRadius: BorderRadius.circular(20),
@@ -409,8 +411,10 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                             Icon(
                               Icons.tune,
                               size: 14,
-                              color: !kMeditationDurations
-                                      .contains(selectedDuration)
+                              color:
+                                  !kMeditationDurations.contains(
+                                    selectedDuration,
+                                  )
                                   ? Colors.white
                                   : textSecondary,
                             ),
@@ -420,12 +424,16 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                                   ? '$selectedDuration min'
                                   : 'Kustom ⏱️',
                               style: TextStyle(
-                                color: !kMeditationDurations
-                                        .contains(selectedDuration)
+                                color:
+                                    !kMeditationDurations.contains(
+                                      selectedDuration,
+                                    )
                                     ? Colors.white
                                     : textPrimary,
-                                fontWeight: !kMeditationDurations
-                                        .contains(selectedDuration)
+                                fontWeight:
+                                    !kMeditationDurations.contains(
+                                      selectedDuration,
+                                    )
                                     ? FontWeight.bold
                                     : FontWeight.normal,
                                 fontSize: 13,
@@ -492,7 +500,9 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? lavenderContainer.withValues(alpha: isDark ? 0.3 : 0.4)
+                            ? lavenderContainer.withValues(
+                                alpha: isDark ? 0.3 : 0.4,
+                              )
                             : surfaceColor,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
@@ -501,8 +511,9 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black
-                                .withValues(alpha: isDark ? 0.2 : 0.02),
+                            color: Colors.black.withValues(
+                              alpha: isDark ? 0.2 : 0.02,
+                            ),
                             blurRadius: 8,
                             offset: const Offset(0, 2),
                           ),
@@ -601,7 +612,9 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                         ),
                         decoration: BoxDecoration(
                           color: selectedBreathingId == null
-                              ? lavenderContainer.withValues(alpha: isDark ? 0.3 : 0.4)
+                              ? lavenderContainer.withValues(
+                                  alpha: isDark ? 0.3 : 0.4,
+                                )
                               : surfaceColor,
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
@@ -653,15 +666,18 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                         ),
                         decoration: BoxDecoration(
                           color: selectedBreathingId == kBoxBreathing.id
-                              ? lavenderContainer.withValues(alpha: isDark ? 0.3 : 0.4)
+                              ? lavenderContainer.withValues(
+                                  alpha: isDark ? 0.3 : 0.4,
+                                )
                               : surfaceColor,
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
                             color: selectedBreathingId == kBoxBreathing.id
                                 ? lavenderAccent
                                 : dividerColor,
-                            width:
-                                selectedBreathingId == kBoxBreathing.id ? 2 : 1,
+                            width: selectedBreathingId == kBoxBreathing.id
+                                ? 2
+                                : 1,
                           ),
                         ),
                         child: Column(
@@ -706,15 +722,18 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                         ),
                         decoration: BoxDecoration(
                           color: selectedBreathingId == k478Breathing.id
-                              ? lavenderContainer.withValues(alpha: isDark ? 0.3 : 0.4)
+                              ? lavenderContainer.withValues(
+                                  alpha: isDark ? 0.3 : 0.4,
+                                )
                               : surfaceColor,
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
                             color: selectedBreathingId == k478Breathing.id
                                 ? lavenderAccent
                                 : dividerColor,
-                            width:
-                                selectedBreathingId == k478Breathing.id ? 2 : 1,
+                            width: selectedBreathingId == k478Breathing.id
+                                ? 2
+                                : 1,
                           ),
                         ),
                         child: Column(
@@ -782,11 +801,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.bolt,
-                    size: 16,
-                    color: AppColors.warning,
-                  ),
+                  Icon(Icons.bolt, size: 16, color: AppColors.warning),
                   const SizedBox(width: 4),
                   Text.rich(
                     TextSpan(
@@ -802,9 +817,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                             color: textPrimary,
                           ),
                         ),
-                        const TextSpan(
-                          text: ' Brain Rewiring setelah selesai',
-                        ),
+                        const TextSpan(text: ' Brain Rewiring setelah selesai'),
                       ],
                     ),
                   ),

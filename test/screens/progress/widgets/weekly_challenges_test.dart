@@ -4,13 +4,12 @@ import 'package:rewire/models/quest.dart';
 import 'package:rewire/screens/progress/widgets/weekly_challenges.dart';
 
 void main() {
-  testWidgets('renders empty placeholder when no weekly challenges exist',
-      (tester) async {
+  testWidgets('renders empty placeholder when no weekly challenges exist', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: WeeklyChallenges(challenges: []),
-        ),
+        home: Scaffold(body: WeeklyChallenges(challenges: [])),
       ),
     );
 
@@ -18,8 +17,9 @@ void main() {
     expect(find.text('Tidak ada tantangan mingguan aktif'), findsOneWidget);
   });
 
-  testWidgets('renders list of active weekly challenges with progress bars',
-      (tester) async {
+  testWidgets('renders list of active weekly challenges with progress bars', (
+    tester,
+  ) async {
     final challenges = [
       Quest(
         id: 1,
@@ -49,9 +49,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        home: Scaffold(
-          body: WeeklyChallenges(challenges: challenges),
-        ),
+        home: Scaffold(body: WeeklyChallenges(challenges: challenges)),
       ),
     );
 

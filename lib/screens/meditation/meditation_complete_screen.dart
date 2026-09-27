@@ -24,21 +24,22 @@ class MeditationCompleteScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     final bg = theme.scaffoldBackgroundColor;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-    final lavenderAccent =
-        isDark ? AppColors.darkSecondary : AppColors.secondary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
+    final lavenderAccent = isDark
+        ? AppColors.darkSecondary
+        : AppColors.secondary;
 
     return Scaffold(
       backgroundColor: bg,
       body: Stack(
         children: [
           // Gentle confetti celebration particles
-          const Positioned.fill(
-            child: CelebrationOverlay(),
-          ),
+          const Positioned.fill(child: CelebrationOverlay()),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -91,12 +92,7 @@ class MeditationCompleteScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // XP Awarded chip
-                  Center(
-                    child: XpChip(
-                      amount: xpAward.amount,
-                      fontSize: 16,
-                    ),
-                  ),
+                  Center(child: XpChip(amount: xpAward.amount, fontSize: 16)),
 
                   if (xpAward.leveledUp) ...[
                     const SizedBox(height: 16),
@@ -122,7 +118,9 @@ class MeditationCompleteScreen extends StatelessWidget {
                             'Level Up! Kamu mencapai Level ${xpAward.levelAfter}',
                             style: theme.textTheme.labelLarge?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: isDark ? Colors.white : AppColors.textPrimary,
+                              color: isDark
+                                  ? Colors.white
+                                  : AppColors.textPrimary,
                             ),
                           ),
                         ],

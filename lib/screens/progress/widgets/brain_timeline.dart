@@ -18,10 +18,20 @@ class BrainTimeline extends StatelessWidget {
 
   static const List<Map<String, dynamic>> _stages = [
     {'id': 'dormant', 'name': 'Dormant', 'emoji': '🌑', 'range': 'Lvl 1-5'},
-    {'id': 'awakening', 'name': 'Awakening', 'emoji': '🌱', 'range': 'Lvl 6-15'},
+    {
+      'id': 'awakening',
+      'name': 'Awakening',
+      'emoji': '🌱',
+      'range': 'Lvl 6-15',
+    },
     {'id': 'growing', 'name': 'Growing', 'emoji': '🌿', 'range': 'Lvl 16-25'},
     {'id': 'thriving', 'name': 'Thriving', 'emoji': '🌳', 'range': 'Lvl 26-40'},
-    {'id': 'transcendent', 'name': 'Transcendent', 'emoji': '🧠', 'range': 'Lvl 41-50'},
+    {
+      'id': 'transcendent',
+      'name': 'Transcendent',
+      'emoji': '🧠',
+      'range': 'Lvl 41-50',
+    },
   ];
 
   int _stageIndex(String stage) {
@@ -52,13 +62,16 @@ class BrainTimeline extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
-    final surfaceVariant =
-        isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant;
+    final surfaceVariant = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.surfaceVariant;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
     final accent = isDark ? AppColors.darkAccent : AppColors.accent;
 
@@ -213,8 +226,8 @@ class BrainTimeline extends StatelessWidget {
                         color: isCurrent
                             ? primaryColor
                             : (isPassed
-                                ? primaryColor.withValues(alpha: 0.25)
-                                : surfaceVariant),
+                                  ? primaryColor.withValues(alpha: 0.25)
+                                  : surfaceVariant),
                         border: Border.all(
                           color: isCurrent
                               ? primaryColor
@@ -226,10 +239,16 @@ class BrainTimeline extends StatelessWidget {
                         child: isPassed
                             ? Icon(Icons.check, size: 16, color: primaryColor)
                             : (isCurrent
-                                ? const Icon(Icons.circle,
-                                    size: 10, color: Colors.white)
-                                : Icon(Icons.lock,
-                                    size: 14, color: textSecondary)),
+                                  ? const Icon(
+                                      Icons.circle,
+                                      size: 10,
+                                      color: Colors.white,
+                                    )
+                                  : Icon(
+                                      Icons.lock,
+                                      size: 14,
+                                      color: textSecondary,
+                                    )),
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -237,8 +256,9 @@ class BrainTimeline extends StatelessWidget {
                       stageData['name'] as String,
                       style: TextStyle(
                         fontSize: 10,
-                        fontWeight:
-                            isCurrent ? FontWeight.bold : FontWeight.normal,
+                        fontWeight: isCurrent
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                         color: isCurrent ? accent : textSecondary,
                       ),
                       maxLines: 1,

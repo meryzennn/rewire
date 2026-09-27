@@ -17,9 +17,11 @@ void main() {
   late QuestService service;
 
   // A guaranteed Monday and a mid-week day derived from it.
-  final monday = DateTime(2026, 9, 27).subtract(
-    Duration(days: DateTime(2026, 9, 27).weekday - 1),
-  );
+  final monday = DateTime(
+    2026,
+    9,
+    27,
+  ).subtract(Duration(days: DateTime(2026, 9, 27).weekday - 1));
   final wednesday = monday.add(const Duration(days: 2));
 
   setUp(() async {
@@ -72,9 +74,9 @@ void main() {
         XpService(UserRepository(db2), CheckinRepository(db2)),
       );
       await service2.refreshIfNeeded(wednesday);
-      final second = (await QuestRepository(db2).getQuestsForDate(_date(wednesday)))
-          .map((q) => q.questId)
-          .toList();
+      final second = (await QuestRepository(
+        db2,
+      ).getQuestsForDate(_date(wednesday))).map((q) => q.questId).toList();
 
       expect(first, second);
     });
@@ -93,59 +95,76 @@ void main() {
     test('assigns 2-3 weekly quests on Monday, idempotently', () async {
       await service.refreshIfNeeded(monday);
       await service.refreshIfNeeded(monday);
-      final weekly = await quests.getQuestsForDate(_date(monday), type: 'weekly');
+      final weekly = await quests.getQuestsForDate(
+        _date(monday),
+        type: 'weekly',
+      );
       expect(weekly.length, inInclusiveRange(2, 3));
     });
   });
 
   group('recordActivity', () {
-    test('check-in completes the daily check-in quest and awards its XP once',
-        () async {
-      await service.refreshIfNeeded(wednesday);
+    test(
+      'check-in completes the daily check-in quest and awards its XP once',
+      () async {
+        await service.refreshIfNeeded(wednesday);
 
-      final completed = await service.recordActivity(
-        QuestActivity.checkin,
-        wednesday,
-      );
-      expect(completed.map((q) => q.questId), contains(kCheckinQuestId));
-      expect((await users.getProfile())!.totalXp, kDailyQuestXp);
+        final completed = await service.recordActivity(
+          QuestActivity.checkin,
+          wednesday,
+        );
+        expect(completed.map((q) => q.questId), contains(kCheckinQuestId));
+        expect((await users.getProfile())!.totalXp, kDailyQuestXp);
 
-      // Recording again must not re-award an already completed quest.
-      final again = await service.recordActivity(QuestActivity.checkin, wednesday);
-      expect(again.map((q) => q.questId), isNot(contains(kCheckinQuestId)));
-      expect((await users.getProfile())!.totalXp, kDailyQuestXp);
-    });
+        // Recording again must not re-award an already completed quest.
+        final again = await service.recordActivity(
+          QuestActivity.checkin,
+          wednesday,
+        );
+        expect(again.map((q) => q.questId), isNot(contains(kCheckinQuestId)));
+        expect((await users.getProfile())!.totalXp, kDailyQuestXp);
+      },
+    );
 
-    test('a 10-minute meditation completes both 5- and 10-minute quests',
-        () async {
-      // Force a full daily pool so both meditation quests are present.
-      await quests.insertQuests([
-        for (final t in kDailyQuestPool) t.toQuest(_date(wednesday)),
-      ]);
+    test(
+      'a 10-minute meditation completes both 5- and 10-minute quests',
+      () async {
+        // Force a full daily pool so both meditation quests are present.
+        await quests.insertQuests([
+          for (final t in kDailyQuestPool) t.toQuest(_date(wednesday)),
+        ]);
 
-      final completed = await service.recordActivity(
-        QuestActivity.meditation,
-        wednesday,
-        amount: 10,
-      );
-      final ids = completed.map((q) => q.questId).toSet();
-      expect(ids, containsAll({'meditate_5min', 'meditate_10min'}));
-    });
+        final completed = await service.recordActivity(
+          QuestActivity.meditation,
+          wednesday,
+          amount: 10,
+        );
+        final ids = completed.map((q) => q.questId).toSet();
+        expect(ids, containsAll({'meditate_5min', 'meditate_10min'}));
+      },
+    );
 
-    test('weekly meditation-minutes quest accumulates toward its target',
-        () async {
+    test('weekly meditation-minutes quest accumulates toward its target', () async {
       await service.refreshIfNeeded(monday); // assigns weekly for the week
       // Two 20-minute sessions => 40 >= 30 target for weekly_meditate_30min.
-      await service.recordActivity(QuestActivity.meditation, monday, amount: 20);
+      await service.recordActivity(
+        QuestActivity.meditation,
+        monday,
+        amount: 20,
+      );
       final done = await service.recordActivity(
         QuestActivity.meditation,
         monday,
         amount: 20,
       );
       // If the weekly minutes quest was assigned this week, it should complete.
-      final weekly = await quests.getQuestsForDate(_date(monday), type: 'weekly');
-      final minutesQuest =
-          weekly.where((q) => q.questId == 'weekly_meditate_30min');
+      final weekly = await quests.getQuestsForDate(
+        _date(monday),
+        type: 'weekly',
+      );
+      final minutesQuest = weekly.where(
+        (q) => q.questId == 'weekly_meditate_30min',
+      );
       if (minutesQuest.isNotEmpty) {
         expect(minutesQuest.single.completed, 1);
         expect(done.map((q) => q.questId), contains('weekly_meditate_30min'));

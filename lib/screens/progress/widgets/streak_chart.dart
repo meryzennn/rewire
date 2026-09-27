@@ -7,16 +7,20 @@ import '../../../models/daily_checkin.dart';
 
 /// Bar chart visualizing check-in streak history over the past 7 days (spec §9, Screen 6).
 class StreakChart extends StatelessWidget {
-  const StreakChart({
-    super.key,
-    required this.checkins,
-    this.now,
-  });
+  const StreakChart({super.key, required this.checkins, this.now});
 
   final List<DailyCheckin> checkins;
   final DateTime? now;
 
-  static const List<String> _dayLabels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+  static const List<String> _dayLabels = [
+    'Sen',
+    'Sel',
+    'Rab',
+    'Kam',
+    'Jum',
+    'Sab',
+    'Min',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +29,12 @@ class StreakChart extends StatelessWidget {
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
     final dangerColor = AppColors.danger;
 
@@ -40,9 +46,7 @@ class StreakChart extends StatelessWidget {
       return d;
     });
 
-    final checkinMap = {
-      for (final c in checkins) c.date: c,
-    };
+    final checkinMap = {for (final c in checkins) c.date: c};
 
     final barGroups = <BarChartGroupData>[];
     for (var i = 0; i < 7; i++) {
@@ -70,7 +74,9 @@ class StreakChart extends StatelessWidget {
               toY: height,
               color: barColor,
               width: 18,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(6),
+              ),
             ),
           ],
         ),
@@ -124,11 +130,15 @@ class StreakChart extends StatelessWidget {
                           final checkin = checkinMap[dateStr];
                           final statusText = checkin == null
                               ? 'Tidak ada data'
-                              : (checkin.status == 'clean' ? 'Bersih (Clean)' : 'Relapse');
+                              : (checkin.status == 'clean'
+                                    ? 'Bersih (Clean)'
+                                    : 'Relapse');
                           return BarTooltipItem(
                             '$dateStr\n$statusText',
                             TextStyle(
-                              color: isDark ? Colors.white : AppColors.textPrimary,
+                              color: isDark
+                                  ? Colors.white
+                                  : AppColors.textPrimary,
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                             ),
@@ -152,7 +162,9 @@ class StreakChart extends StatelessWidget {
                           showTitles: true,
                           getTitlesWidget: (val, meta) {
                             final idx = val.toInt();
-                            if (idx < 0 || idx >= 7) return const SizedBox.shrink();
+                            if (idx < 0 || idx >= 7) {
+                              return const SizedBox.shrink();
+                            }
                             final day = days[idx];
                             final label = _dayLabels[day.weekday - 1];
                             final isToday = idx == 6;
@@ -163,7 +175,9 @@ class StreakChart extends StatelessWidget {
                                 label,
                                 style: TextStyle(
                                   color: isToday ? primaryColor : textSecondary,
-                                  fontWeight: isToday ? FontWeight.bold : FontWeight.w500,
+                                  fontWeight: isToday
+                                      ? FontWeight.bold
+                                      : FontWeight.w500,
                                   fontSize: 12,
                                 ),
                               ),

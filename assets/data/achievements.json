@@ -1,0 +1,122 @@
+[
+  {
+    "badge_id": "first_spark",
+    "title": "First Spark",
+    "icon": "🔥",
+    "description": "1 day clean"
+  },
+  {
+    "badge_id": "week_warrior",
+    "title": "One Week Warrior",
+    "icon": "⚡",
+    "description": "7-day streak"
+  },
+  {
+    "badge_id": "two_weeks",
+    "title": "Fortnight Fighter",
+    "icon": "🌟",
+    "description": "14-day streak"
+  },
+  {
+    "badge_id": "lunar_cycle",
+    "title": "Lunar Cycle",
+    "icon": "🌙",
+    "description": "30-day streak"
+  },
+  {
+    "badge_id": "solar_power",
+    "title": "Solar Power",
+    "icon": "☀️",
+    "description": "90-day streak"
+  },
+  {
+    "badge_id": "zen_mind",
+    "title": "Zen Mind",
+    "icon": "🧘",
+    "description": "100 total meditation minutes"
+  },
+  {
+    "badge_id": "deep_focus",
+    "title": "Deep Focus",
+    "icon": "🔮",
+    "description": "500 total meditation minutes"
+  },
+  {
+    "badge_id": "iron_will",
+    "title": "Iron Will",
+    "icon": "💪",
+    "description": "50 workouts completed"
+  },
+  {
+    "badge_id": "marathon",
+    "title": "Marathon",
+    "icon": "🏃",
+    "description": "100 workouts completed"
+  },
+  {
+    "badge_id": "early_bird",
+    "title": "Early Bird",
+    "icon": "🐦",
+    "description": "Check-in before 8 AM, 7 days in a row"
+  },
+  {
+    "badge_id": "night_owl",
+    "title": "Night Owl",
+    "icon": "🦉",
+    "description": "Meditate after 10 PM, 5 times"
+  },
+  {
+    "badge_id": "consistency",
+    "title": "Consistency King",
+    "icon": "📅",
+    "description": "30 consecutive daily check-ins"
+  },
+  {
+    "badge_id": "explorer",
+    "title": "Explorer",
+    "icon": "🗺️",
+    "description": "Try all 6 ambient sounds"
+  },
+  {
+    "badge_id": "full_body",
+    "title": "Full Body",
+    "icon": "🏋️",
+    "description": "Complete all workout routines at least once"
+  },
+  {
+    "badge_id": "trigger_aware",
+    "title": "Trigger Aware",
+    "icon": "🎯",
+    "description": "Log 20 triggers"
+  },
+  {
+    "badge_id": "bouncer",
+    "title": "Bouncer",
+    "icon": "🔄",
+    "description": "Resume streak within 24h of relapse"
+  },
+  {
+    "badge_id": "level_10",
+    "title": "Sapling",
+    "icon": "🌱",
+    "description": "Reach level 10"
+  },
+  {
+    "badge_id": "level_25",
+    "title": "Mighty Oak",
+    "icon": "🌳",
+    "description": "Reach level 25"
+  },
+  {
+    "badge_id": "level_50",
+    "title": "Fully Rewired",
+    "icon": "🧠",
+    "description": "Reach level 50 (max)"
+  },
+  {
+    "badge_id": "quest_master",
+    "title": "Quest Master",
+    "icon": "⭐",
+    "description": "Complete 50 daily quests total"
+  }
+]

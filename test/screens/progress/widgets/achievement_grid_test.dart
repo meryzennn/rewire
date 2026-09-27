@@ -4,13 +4,12 @@ import 'package:rewire/models/achievement.dart';
 import 'package:rewire/screens/progress/widgets/achievement_grid.dart';
 
 void main() {
-  testWidgets('renders empty placeholder when achievements list is empty',
-      (tester) async {
+  testWidgets('renders empty placeholder when achievements list is empty', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: AchievementGrid(achievements: []),
-        ),
+        home: Scaffold(body: AchievementGrid(achievements: [])),
       ),
     );
 
@@ -18,8 +17,9 @@ void main() {
     expect(find.text('Belum ada data pencapaian'), findsOneWidget);
   });
 
-  testWidgets('renders unlocked and locked achievements correctly',
-      (tester) async {
+  testWidgets('renders unlocked and locked achievements correctly', (
+    tester,
+  ) async {
     final achievements = [
       const Achievement(
         badgeId: 'first_spark',
@@ -40,9 +40,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        home: Scaffold(
-          body: AchievementGrid(achievements: achievements),
-        ),
+        home: Scaffold(body: AchievementGrid(achievements: achievements)),
       ),
     );
 

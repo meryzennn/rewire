@@ -22,10 +22,10 @@ class XpChip extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final defaultBg =
-        isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer;
-    final defaultText =
-        isDark ? AppColors.darkPrimary : AppColors.primary;
+    final defaultBg = isDark
+        ? AppColors.darkPrimaryContainer
+        : AppColors.primaryContainer;
+    final defaultText = isDark ? AppColors.darkPrimary : AppColors.primary;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),

@@ -12,14 +12,15 @@ import 'package:rewire/screens/progress/progress_screen.dart';
 
 class FakeUserProvider extends ChangeNotifier implements UserProvider {
   FakeUserProvider({UserProfile? profile})
-      : _profile = profile ??
-            const UserProfile(
-              level: 12,
-              totalXp: 3500,
-              currentStreak: 10,
-              longestStreak: 15,
-              brainStage: 'awakening',
-            );
+    : _profile =
+          profile ??
+          const UserProfile(
+            level: 12,
+            totalXp: 3500,
+            currentStreak: 10,
+            longestStreak: 15,
+            brainStage: 'awakening',
+          );
 
   final UserProfile? _profile;
 
@@ -38,7 +39,7 @@ class FakeUserProvider extends ChangeNotifier implements UserProvider {
 
 class FakeQuestProvider extends ChangeNotifier implements QuestProvider {
   FakeQuestProvider({List<Quest>? weeklyQuests})
-      : _weeklyQuests = weeklyQuests ?? const [];
+    : _weeklyQuests = weeklyQuests ?? const [];
 
   final List<Quest> _weeklyQuests;
 
@@ -61,7 +62,7 @@ class FakeQuestProvider extends ChangeNotifier implements QuestProvider {
 class FakeAchievementProvider extends ChangeNotifier
     implements AchievementProvider {
   FakeAchievementProvider({List<Achievement>? items})
-      : _items = items ?? const [];
+    : _items = items ?? const [];
 
   final List<Achievement> _items;
 
@@ -119,8 +120,9 @@ void main() {
     });
   }
 
-  testWidgets('renders progress screen with empty history without errors',
-      (tester) async {
+  testWidgets('renders progress screen with empty history without errors', (
+    tester,
+  ) async {
     setViewport(tester);
 
     final userProvider = FakeUserProvider(
@@ -170,8 +172,9 @@ void main() {
     expect(find.text('Pencapaian'), findsOneWidget);
   });
 
-  testWidgets('renders progress screen with populated data and achievements',
-      (tester) async {
+  testWidgets('renders progress screen with populated data and achievements', (
+    tester,
+  ) async {
     setViewport(tester);
 
     final userProvider = FakeUserProvider(
@@ -219,18 +222,8 @@ void main() {
     ];
 
     final checkins = [
-      DailyCheckin(
-        date: '2026-09-27',
-        status: 'clean',
-        mood: 5,
-        xpEarned: 20,
-      ),
-      DailyCheckin(
-        date: '2026-09-26',
-        status: 'clean',
-        mood: 4,
-        xpEarned: 20,
-      ),
+      DailyCheckin(date: '2026-09-27', status: 'clean', mood: 5, xpEarned: 20),
+      DailyCheckin(date: '2026-09-26', status: 'clean', mood: 4, xpEarned: 20),
     ];
 
     final questProvider = FakeQuestProvider(weeklyQuests: weeklyQuests);
@@ -253,7 +246,10 @@ void main() {
     expect(find.text('Level 15'), findsOneWidget);
     expect(find.text('Awakening 🌱'), findsOneWidget);
 
-    expect(find.text('12 Hari'), findsNWidgets(2)); // current streak and clean days
+    expect(
+      find.text('12 Hari'),
+      findsNWidgets(2),
+    ); // current streak and clean days
     expect(find.text('20 Hari'), findsOneWidget); // longest streak
     expect(find.text('150 Menit'), findsOneWidget);
     expect(find.text('10 Sesi'), findsOneWidget);

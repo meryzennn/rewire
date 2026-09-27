@@ -113,8 +113,7 @@ GoRouter buildRouter(
     routes: [
       GoRoute(
         path: Routes.onboarding,
-        builder: (context, state) =>
-            OnboardingScreen(preferences: prefService),
+        builder: (context, state) => OnboardingScreen(preferences: prefService),
       ),
       GoRoute(
         path: Routes.checkin,
@@ -137,7 +136,8 @@ GoRouter buildRouter(
           final extra = state.extra as Map<String, dynamic>?;
           return MeditationCompleteScreen(
             durationMinutes: extra?['durationMinutes'] as int? ?? 10,
-            xpAward: extra?['xpAward'] as XpAward? ??
+            xpAward:
+                extra?['xpAward'] as XpAward? ??
                 const XpAward(
                   amount: 15,
                   totalXpBefore: 0,
@@ -162,10 +162,10 @@ GoRouter buildRouter(
           final routine =
               extra?['routine'] as WorkoutRoutine? ?? kAllRoutines.first;
           final durationSeconds = extra?['durationSeconds'] as int? ?? 900;
-          final exercisesCompleted =
-              extra?['exercisesCompleted'] as int? ?? 6;
+          final exercisesCompleted = extra?['exercisesCompleted'] as int? ?? 6;
           final exercisesTotal = extra?['exercisesTotal'] as int? ?? 6;
-          final xpAward = extra?['xpAward'] as XpAward? ??
+          final xpAward =
+              extra?['xpAward'] as XpAward? ??
               const XpAward(
                 amount: 25,
                 totalXpBefore: 0,
@@ -254,16 +254,12 @@ GoRouter buildRouter(
 
 /// Scope that provides the shared [PageController] across the shell and tabs.
 class _ShellPageScope extends InheritedWidget {
-  const _ShellPageScope({
-    required this.pageController,
-    required super.child,
-  });
+  const _ShellPageScope({required this.pageController, required super.child});
 
   final PageController pageController;
 
   static PageController of(BuildContext context) {
-    final scope =
-        context.dependOnInheritedWidgetOfExactType<_ShellPageScope>();
+    final scope = context.dependOnInheritedWidgetOfExactType<_ShellPageScope>();
     assert(scope != null, 'No _ShellPageScope found in context');
     return scope!.pageController;
   }

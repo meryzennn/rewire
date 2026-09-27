@@ -31,23 +31,25 @@ class WorkoutCompleteScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     final bg = theme.scaffoldBackgroundColor;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final accent = isDark ? AppColors.darkAccent : AppColors.accent;
 
     final durationMinutes = (durationSeconds / 60).round();
-    final displayMinutes = durationMinutes > 0 ? durationMinutes : routine.durationMinutes;
+    final displayMinutes = durationMinutes > 0
+        ? durationMinutes
+        : routine.durationMinutes;
 
     return Scaffold(
       backgroundColor: bg,
       body: Stack(
         children: [
           // Celebration Confetti
-          const Positioned.fill(
-            child: CelebrationOverlay(),
-          ),
+          const Positioned.fill(child: CelebrationOverlay()),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -111,12 +113,7 @@ class WorkoutCompleteScreen extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // XP Awarded chip
-                  Center(
-                    child: XpChip(
-                      amount: xpAward.amount,
-                      fontSize: 16,
-                    ),
-                  ),
+                  Center(child: XpChip(amount: xpAward.amount, fontSize: 16)),
 
                   if (xpAward.leveledUp) ...[
                     const SizedBox(height: 16),
@@ -142,7 +139,9 @@ class WorkoutCompleteScreen extends StatelessWidget {
                             'Level Up! Kamu mencapai Level ${xpAward.levelAfter}',
                             style: theme.textTheme.labelLarge?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: isDark ? Colors.white : AppColors.textPrimary,
+                              color: isDark
+                                  ? Colors.white
+                                  : AppColors.textPrimary,
                             ),
                           ),
                         ],

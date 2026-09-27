@@ -37,13 +37,7 @@ void main() {
   });
 
   test('formats date into Indonesian date string', () {
-    expect(
-      formatIndonesianDate(DateTime(2026, 9, 26)),
-      '26 September 2026',
-    );
-    expect(
-      formatIndonesianDate(DateTime(2026, 1, 1)),
-      '1 Januari 2026',
-    );
+    expect(formatIndonesianDate(DateTime(2026, 9, 26)), '26 September 2026');
+    expect(formatIndonesianDate(DateTime(2026, 1, 1)), '1 Januari 2026');
   });
 }

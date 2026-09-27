@@ -1,0 +1,94 @@
+{
+  "daily_pool": [
+    {
+      "quest_id": "checkin_today",
+      "type": "daily",
+      "title": "Check-in hari ini",
+      "xp_reward": 25,
+      "target_value": 1,
+      "description": null
+    },
+    {
+      "quest_id": "meditate_5min",
+      "type": "daily",
+      "title": "Meditasi minimal 5 menit",
+      "xp_reward": 25,
+      "target_value": 1,
+      "description": null
+    },
+    {
+      "quest_id": "workout_1",
+      "type": "daily",
+      "title": "Selesaikan 1 workout",
+      "xp_reward": 25,
+      "target_value": 1,
+      "description": null
+    },
+    {
+      "quest_id": "log_trigger_1",
+      "type": "daily",
+      "title": "Catat 1 trigger",
+      "xp_reward": 25,
+      "target_value": 1,
+      "description": null
+    },
+    {
+      "quest_id": "meditate_10min",
+      "type": "daily",
+      "title": "Meditasi 10 menit",
+      "xp_reward": 25,
+      "target_value": 1,
+      "description": null
+    },
+    {
+      "quest_id": "workout_2",
+      "type": "daily",
+      "title": "Selesaikan 2 workout",
+      "xp_reward": 25,
+      "target_value": 2,
+      "description": null
+    }
+  ],
+  "weekly_pool": [
+    {
+      "quest_id": "weekly_meditate_5days",
+      "type": "weekly",
+      "title": "Meditasi 5 hari minggu ini",
+      "xp_reward": 100,
+      "target_value": 5,
+      "description": null
+    },
+    {
+      "quest_id": "weekly_workout_3",
+      "type": "weekly",
+      "title": "3 workout minggu ini",
+      "xp_reward": 100,
+      "target_value": 3,
+      "description": null
+    },
+    {
+      "quest_id": "weekly_streak_7",
+      "type": "weekly",
+      "title": "Streak 7 hari",
+      "xp_reward": 100,
+      "target_value": 7,
+      "description": null
+    },
+    {
+      "quest_id": "weekly_meditate_30min",
+      "type": "weekly",
+      "title": "Total 30 menit meditasi",
+      "xp_reward": 100,
+      "target_value": 30,
+      "description": null
+    },
+    {
+      "quest_id": "weekly_checkin_daily",
+      "type": "weekly",
+      "title": "Check-in setiap hari",
+      "xp_reward": 100,
+      "target_value": 7,
+      "description": null
+    }
+  ]
+}

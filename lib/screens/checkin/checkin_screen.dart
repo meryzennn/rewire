@@ -76,7 +76,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
           children: [
             Icon(Icons.info_outline, color: AppColors.primary),
             SizedBox(width: 8),
-            Text('Check-in Harian', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            Text(
+              'Check-in Harian',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
           ],
         ),
         content: const Text(
@@ -88,7 +91,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Mengerti', style: TextStyle(fontWeight: FontWeight.bold)),
+            child: const Text(
+              'Mengerti',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
@@ -127,7 +133,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
               'Tidak apa-apa.',
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                color: isDark
+                    ? AppColors.darkTextPrimary
+                    : AppColors.textPrimary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -135,7 +143,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
             Text(
               'Setiap proses butuh waktu. Yang terpenting adalah keberanianmu untuk jujur dan bangkit kembali.',
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                color: isDark
+                    ? AppColors.darkTextSecondary
+                    : AppColors.textSecondary,
                 height: 1.5,
               ),
               textAlign: TextAlign.center,
@@ -144,14 +154,18 @@ class _CheckinScreenState extends State<CheckinScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant,
+                color: isDark
+                    ? AppColors.darkSurfaceVariant
+                    : AppColors.surfaceVariant,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 'Streak kamu akan direset, tapi total XP dan level tetap tersimpan utuh.',
                 style: theme.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                  color: isDark
+                      ? AppColors.darkTextPrimary
+                      : AppColors.textPrimary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -247,27 +261,29 @@ class _CheckinScreenState extends State<CheckinScreen> {
     final isDark = theme.brightness == Brightness.dark;
     final checkinProvider = widget.provider ?? context.watch<CheckinProvider>();
 
-    final surfaceColor =
-        isDark ? AppColors.darkSurface : AppColors.surface;
-    final surfaceVariantColor =
-        isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant;
-    final dividerColor =
-        isDark ? AppColors.darkDivider : AppColors.divider;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-    final primaryColor =
-        isDark ? AppColors.darkPrimary : AppColors.primary;
-    final primaryContainer =
-        isDark ? AppColors.darkPrimaryContainer : AppColors.primaryContainer;
+    final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
+    final surfaceVariantColor = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.surfaceVariant;
+    final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
+    final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
+    final primaryContainer = isDark
+        ? AppColors.darkPrimaryContainer
+        : AppColors.primaryContainer;
 
     final now = DateTime.now();
     final todayFormatted = formatIndonesianDate(now);
 
     final currentStreak = checkinProvider.currentStreak;
     final hasCheckedIn = checkinProvider.todayCheckin != null;
-    final displayStreak = hasCheckedIn && checkinProvider.todayCheckin?.status == 'clean'
+    final displayStreak =
+        hasCheckedIn && checkinProvider.todayCheckin?.status == 'clean'
         ? currentStreak
         : (currentStreak > 0 ? currentStreak + 1 : 1);
 
@@ -299,7 +315,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -314,7 +333,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: primaryContainer,
                             borderRadius: BorderRadius.circular(20),
@@ -329,7 +351,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                currentStreak > 0 ? 'Streak Berjalan' : 'Mulai Baru',
+                                currentStreak > 0
+                                    ? 'Streak Berjalan'
+                                    : 'Mulai Baru',
                                 style: theme.textTheme.labelMedium?.copyWith(
                                   color: primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -354,7 +378,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          currentStreak > 0 ? 'bersih tanpa distraksi' : 'langkah pemulihan',
+                          currentStreak > 0
+                              ? 'bersih tanpa distraksi'
+                              : 'langkah pemulihan',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: textSecondary,
                           ),
@@ -426,7 +452,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
                     ),
                     const SizedBox(height: 12),
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: surfaceColor,
                         borderRadius: BorderRadius.circular(16),
@@ -447,9 +476,14 @@ class _CheckinScreenState extends State<CheckinScreen> {
                             borderRadius: BorderRadius.circular(12),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
                               decoration: BoxDecoration(
-                                color: isSelected ? primaryContainer : Colors.transparent,
+                                color: isSelected
+                                    ? primaryContainer
+                                    : Colors.transparent,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Column(
@@ -466,8 +500,12 @@ class _CheckinScreenState extends State<CheckinScreen> {
                                   Text(
                                     label,
                                     style: theme.textTheme.labelSmall?.copyWith(
-                                      color: isSelected ? primaryColor : textSecondary,
-                                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                      color: isSelected
+                                          ? primaryColor
+                                          : textSecondary,
+                                      fontWeight: isSelected
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
                                     ),
                                   ),
                                 ],
@@ -491,7 +529,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
                         ),
                         const SizedBox(width: 8),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: surfaceVariantColor,
                             borderRadius: BorderRadius.circular(12),
@@ -517,7 +558,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                           label: Text(trigger),
                           labelStyle: TextStyle(
                             fontSize: 13,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                             color: isSelected ? primaryColor : textSecondary,
                           ),
                           backgroundColor: surfaceColor,
@@ -526,7 +569,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                             side: BorderSide(
-                              color: isSelected ? primaryColor.withValues(alpha: 0.5) : dividerColor,
+                              color: isSelected
+                                  ? primaryColor.withValues(alpha: 0.5)
+                                  : dividerColor,
                             ),
                           ),
                           onSelected: (selected) {
@@ -548,8 +593,12 @@ class _CheckinScreenState extends State<CheckinScreen> {
                       maxLength: 250,
                       style: TextStyle(color: textPrimary, fontSize: 14),
                       decoration: InputDecoration(
-                        hintText: 'Tulis trigger atau catatan singkat jika ada...',
-                        hintStyle: TextStyle(color: textSecondary, fontSize: 14),
+                        hintText:
+                            'Tulis trigger atau catatan singkat jika ada...',
+                        hintStyle: TextStyle(
+                          color: textSecondary,
+                          fontSize: 14,
+                        ),
                         filled: true,
                         fillColor: surfaceColor,
                         contentPadding: const EdgeInsets.all(14),
@@ -559,7 +608,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(14),
-                          borderSide: BorderSide(color: primaryColor, width: 1.5),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                            width: 1.5,
+                          ),
                         ),
                       ),
                     ),
@@ -611,11 +663,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
-                        Icons.spa,
-                        size: 15,
-                        color: AppColors.accent,
-                      ),
+                      const Icon(Icons.spa, size: 15, color: AppColors.accent),
                       const SizedBox(width: 6),
                       Flexible(
                         child: Text(

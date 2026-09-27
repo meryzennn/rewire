@@ -4,7 +4,9 @@ import 'package:rewire/widgets/celebration_overlay.dart';
 import 'package:rewire/widgets/level_up_dialog.dart';
 
 void main() {
-  testWidgets('renders LevelUpDialog components and dismisses on tap', (tester) async {
+  testWidgets('renders LevelUpDialog components and dismisses on tap', (
+    tester,
+  ) async {
     var dismissed = false;
 
     await tester.pumpWidget(
@@ -24,7 +26,9 @@ void main() {
     expect(find.text('Level 6'), findsOneWidget);
     expect(find.text('STAGE: AWAKENING'), findsOneWidget);
     expect(
-      find.text('Jalur saraf baru berhasil terbentuk!\nOtakmu semakin bertumbuh dan berevolusi.'),
+      find.text(
+        'Jalur saraf baru berhasil terbentuk!\nOtakmu semakin bertumbuh dan berevolusi.',
+      ),
       findsOneWidget,
     );
     expect(find.byType(CelebrationOverlay), findsOneWidget);

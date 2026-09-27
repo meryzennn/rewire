@@ -3,16 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rewire/screens/progress/widgets/brain_timeline.dart';
 
 void main() {
-  testWidgets('renders brain timeline with level, stage, and XP progress',
-      (tester) async {
+  testWidgets('renders brain timeline with level, stage, and XP progress', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
-          body: BrainTimeline(
-            level: 18,
-            totalXp: 8500,
-            brainStage: 'growing',
-          ),
+          body: BrainTimeline(level: 18, totalXp: 8500, brainStage: 'growing'),
         ),
       ),
     );

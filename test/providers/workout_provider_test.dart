@@ -78,31 +78,34 @@ void main() {
     expect(notified, 1);
   });
 
-  test('completeWorkout inserts session, awards XP, and updates stats', () async {
-    await questService.refreshIfNeeded(now);
+  test(
+    'completeWorkout inserts session, awards XP, and updates stats',
+    () async {
+      await questService.refreshIfNeeded(now);
 
-    final award = await provider.completeWorkout(
-      routineId: 'morning_energy',
-      routineName: 'Morning Energy',
-      durationSeconds: 900, // 15 minutes -> 25 XP (spec §3.1)
-      exercisesCompleted: 6,
-      exercisesTotal: 6,
-      now: now,
-    );
+      final award = await provider.completeWorkout(
+        routineId: 'morning_energy',
+        routineName: 'Morning Energy',
+        durationSeconds: 900, // 15 minutes -> 25 XP (spec §3.1)
+        exercisesCompleted: 6,
+        exercisesTotal: 6,
+        now: now,
+      );
 
-    expect(award.amount, 25);
-    expect(award.totalXpAfter, 25);
+      expect(award.amount, 25);
+      expect(award.totalXpAfter, 25);
 
-    expect(provider.totalMinutes, 15);
-    expect(provider.sessionCount, 1);
+      expect(provider.totalMinutes, 15);
+      expect(provider.sessionCount, 1);
 
-    final history = await workouts.getHistory();
-    expect(history.length, 1);
-    expect(history.first.routineId, 'morning_energy');
-    expect(history.first.routineName, 'Morning Energy');
-    expect(history.first.durationSeconds, 900);
-    expect(history.first.exercisesCompleted, 6);
-    expect(history.first.exercisesTotal, 6);
-    expect(history.first.xpEarned, 25);
-  });
+      final history = await workouts.getHistory();
+      expect(history.length, 1);
+      expect(history.first.routineId, 'morning_energy');
+      expect(history.first.routineName, 'Morning Energy');
+      expect(history.first.durationSeconds, 900);
+      expect(history.first.exercisesCompleted, 6);
+      expect(history.first.exercisesTotal, 6);
+      expect(history.first.xpEarned, 25);
+    },
+  );
 }

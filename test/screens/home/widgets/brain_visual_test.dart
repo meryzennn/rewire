@@ -52,7 +52,9 @@ void main() {
     );
   }
 
-  testWidgets('renders level, stage, and XP progress bar matching Stitch', (tester) async {
+  testWidgets('renders level, stage, and XP progress bar matching Stitch', (
+    tester,
+  ) async {
     final provider = FakeUserProvider(
       level: 12,
       brainStage: 'awakening',
@@ -68,15 +70,25 @@ void main() {
     expect(find.text('Brain Rewiring Progress'), findsOneWidget);
     expect(find.text('720 / 1000 XP'), findsOneWidget);
 
-    // Styled fallback should render gracefully when asset is missing
+    // Image asset for stage is rendered
+    expect(find.byType(Image), findsOneWidget);
+  });
+
+  testWidgets('renders styled fallback when brain stage asset is missing', (
+    tester,
+  ) async {
+    final provider = FakeUserProvider(brainStage: 'missing_stage');
+
+    await tester.pumpWidget(buildWidget(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
     expect(find.byIcon(Icons.psychology), findsOneWidget);
   });
 
-  testWidgets('tapping opens the brain evolution stage timeline sheet', (tester) async {
-    final provider = FakeUserProvider(
-      level: 6,
-      brainStage: 'awakening',
-    );
+  testWidgets('tapping opens the brain evolution stage timeline sheet', (
+    tester,
+  ) async {
+    final provider = FakeUserProvider(level: 6, brainStage: 'awakening');
 
     await tester.pumpWidget(buildWidget(provider));
     await tester.pump(const Duration(milliseconds: 100));
@@ -85,7 +97,10 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 350));
 
-    expect(find.text('Tahapan Evolusi Otak (Neuroplastisitas)'), findsOneWidget);
+    expect(
+      find.text('Tahapan Evolusi Otak (Neuroplastisitas)'),
+      findsOneWidget,
+    );
     expect(find.text('DORMANT'), findsOneWidget);
     expect(find.text('AWAKENING'), findsWidgets);
     expect(find.text('GROWING'), findsOneWidget);

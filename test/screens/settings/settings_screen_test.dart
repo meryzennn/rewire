@@ -166,7 +166,10 @@ void main() {
 
     await _tapKey(tester, const Key('toggle-workout-reminder'));
     expect(h.preferences.workoutReminderEnabled, isTrue);
-    expect(adapter.scheduledIds, contains(NotificationService.workoutReminderId));
+    expect(
+      adapter.scheduledIds,
+      contains(NotificationService.workoutReminderId),
+    );
 
     await _tapKey(tester, const Key('toggle-meditation-reminder'));
     expect(
@@ -175,7 +178,10 @@ void main() {
     );
 
     await _tapKey(tester, const Key('toggle-workout-reminder'));
-    expect(adapter.canceledIds, contains(NotificationService.workoutReminderId));
+    expect(
+      adapter.canceledIds,
+      contains(NotificationService.workoutReminderId),
+    );
   });
 
   testWidgets('reminder time shows the persisted value', (tester) async {
@@ -200,23 +206,27 @@ void main() {
     expect(find.text('Tampilan'), findsOneWidget); // still on settings
   });
 
-  testWidgets('reset confirm clears data + prefs and cancels all notifications', (
-    tester,
-  ) async {
-    final adapter = _FakeNotificationAdapter();
-    final h = await _pumpSettings(
-      tester,
-      seed: {'dark_mode': true},
-      notificationAdapter: adapter,
-    );
+  testWidgets(
+    'reset confirm clears data + prefs and cancels all notifications',
+    (tester) async {
+      final adapter = _FakeNotificationAdapter();
+      final h = await _pumpSettings(
+        tester,
+        seed: {'dark_mode': true},
+        notificationAdapter: adapter,
+      );
 
-    await _tapKey(tester, const Key('reset-data'));
-    await tester.tap(find.text('Reset'));
-    await tester.pumpAndSettle();
+      await _tapKey(tester, const Key('reset-data'));
+      await tester.tap(find.text('Reset'));
+      await tester.pumpAndSettle();
 
-    expect(h.resetCalls, hasLength(1)); // DB wipe invoked
-    expect(h.preferences.onboardingCompleted, isFalse); // prefs cleared
-    expect(adapter.cancelAllCount, 1); // scheduled notifications cleared
-    expect(find.text('Welcome to Rewire'), findsOneWidget); // back to onboarding
-  });
+      expect(h.resetCalls, hasLength(1)); // DB wipe invoked
+      expect(h.preferences.onboardingCompleted, isFalse); // prefs cleared
+      expect(adapter.cancelAllCount, 1); // scheduled notifications cleared
+      expect(
+        find.text('Welcome to Rewire'),
+        findsOneWidget,
+      ); // back to onboarding
+    },
+  );
 }

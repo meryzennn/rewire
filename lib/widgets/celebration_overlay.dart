@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../core/theme/app_colors.dart';
@@ -53,10 +54,8 @@ class _CelebrationOverlayState extends State<CelebrationOverlay>
       );
     });
 
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    )..forward().then((_) {
+    _controller = AnimationController(vsync: this, duration: widget.duration)
+      ..forward().then((_) {
         if (mounted) {
           widget.onFinished?.call();
         }
@@ -105,10 +104,7 @@ class _Particle {
 }
 
 class _CelebrationPainter extends CustomPainter {
-  _CelebrationPainter({
-    required this.progress,
-    required this.particles,
-  });
+  _CelebrationPainter({required this.progress, required this.particles});
 
   final double progress;
   final List<_Particle> particles;

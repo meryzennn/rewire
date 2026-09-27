@@ -86,10 +86,7 @@ void main() {
     expect(await repo.getTriggersByDate(dateStr), ['stress', 'boredom']);
 
     // Re-saving with new triggers replaces previous triggers for this date
-    await repo.saveCheckin(
-      checkin(mood: 4),
-      triggers: ['loneliness'],
-    );
+    await repo.saveCheckin(checkin(mood: 4), triggers: ['loneliness']);
     expect(await repo.triggerCount(), 1);
     expect(await repo.getTriggersByDate(dateStr), ['loneliness']);
   });

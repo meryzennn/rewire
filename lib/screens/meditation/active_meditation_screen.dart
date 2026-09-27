@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -81,10 +82,7 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
     );
 
     _scaleAnimation = Tween<double>(begin: 0.82, end: 1.25).animate(
-      CurvedAnimation(
-        parent: _circleAnimController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _circleAnimController, curve: Curves.easeInOut),
     );
 
     _initWakelock();
@@ -149,8 +147,7 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
         if (_phaseSecondsRemaining > 1) {
           _phaseSecondsRemaining--;
         } else {
-          _currentPhaseIndex =
-              (_currentPhaseIndex + 1) % pattern.phases.length;
+          _currentPhaseIndex = (_currentPhaseIndex + 1) % pattern.phases.length;
           _applyBreathingPhase(pattern.phases[_currentPhaseIndex]);
         }
       });
@@ -159,8 +156,7 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
 
   void _applyBreathingPhase(BreathingPhase phase) {
     _phaseSecondsRemaining = phase.durationSeconds;
-    _circleAnimController.duration =
-        Duration(seconds: phase.durationSeconds);
+    _circleAnimController.duration = Duration(seconds: phase.durationSeconds);
 
     if (phase.action == 'inhale') {
       _circleAnimController.forward();
@@ -240,11 +236,8 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
     final shouldStop = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor:
-            isDark ? AppColors.darkSurface : AppColors.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        backgroundColor: isDark ? AppColors.darkSurface : AppColors.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text(
           'Akhiri Sesi Meditasi?',
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -359,10 +352,7 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.white54,
-                    ),
+                    icon: const Icon(Icons.close, color: Colors.white54),
                     onPressed: _handleStopTap,
                   ),
                 ],
@@ -413,9 +403,7 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
                       ),
                       child: Center(
                         child: Icon(
-                          pattern != null
-                              ? Icons.air
-                              : Icons.self_improvement,
+                          pattern != null ? Icons.air : Icons.self_improvement,
                           size: 48,
                           color: Colors.white.withValues(alpha: 0.9),
                         ),
@@ -506,7 +494,9 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
                       elevation: 4,
                     ),
                     icon: Icon(
-                      _isPaused ? Icons.play_arrow_rounded : Icons.pause_rounded,
+                      _isPaused
+                          ? Icons.play_arrow_rounded
+                          : Icons.pause_rounded,
                       size: 34,
                     ),
                     onPressed: _togglePause,

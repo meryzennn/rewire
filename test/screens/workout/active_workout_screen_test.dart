@@ -56,45 +56,50 @@ void main() {
     });
   }
 
-  testWidgets('renders active workout and transitions to rest on set complete',
-      (tester) async {
-    setViewport(tester);
-    final provider = FakeActiveWorkoutProvider();
-    final routine = kAllRoutines.first; // Morning Energy (6 exercises, each 3 sets)
+  testWidgets(
+    'renders active workout and transitions to rest on set complete',
+    (tester) async {
+      setViewport(tester);
+      final provider = FakeActiveWorkoutProvider();
+      final routine =
+          kAllRoutines.first; // Morning Energy (6 exercises, each 3 sets)
 
-    await tester.pumpWidget(
-      MaterialApp(
-        home: ChangeNotifierProvider<WorkoutProvider>.value(
-          value: provider,
-          child: ActiveWorkoutScreen(
-            routine: routine,
-            provider: provider,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: ChangeNotifierProvider<WorkoutProvider>.value(
+            value: provider,
+            child: ActiveWorkoutScreen(routine: routine, provider: provider),
           ),
         ),
-      ),
-    );
+      );
 
-    // Initial state: Exercise 1 (Jumping Jack), Set 1 / 3
-    expect(find.text('Morning Energy'), findsOneWidget);
-    expect(find.text('Gerakan 1 / 6'), findsOneWidget);
-    expect(find.text('Jumping Jack'), findsOneWidget);
-    expect(find.text('Set 1 / 3'), findsOneWidget);
-    expect(find.byKey(const Key('active-workout-complete-set-button')), findsOneWidget);
+      // Initial state: Exercise 1 (Jumping Jack), Set 1 / 3
+      expect(find.text('Morning Energy'), findsOneWidget);
+      expect(find.text('Gerakan 1 / 6'), findsOneWidget);
+      expect(find.text('Jumping Jack'), findsOneWidget);
+      expect(find.text('Set 1 / 3'), findsOneWidget);
+      expect(
+        find.byKey(const Key('active-workout-complete-set-button')),
+        findsOneWidget,
+      );
 
-    // Complete Set 1 -> transitions to rest
-    await tester.tap(find.byKey(const Key('active-workout-complete-set-button')));
-    await tester.pump();
+      // Complete Set 1 -> transitions to rest
+      await tester.tap(
+        find.byKey(const Key('active-workout-complete-set-button')),
+      );
+      await tester.pump();
 
-    // Now in Rest State
-    expect(find.text('Istirahat'), findsOneWidget);
-    expect(find.byKey(const Key('skip-rest-button')), findsOneWidget);
+      // Now in Rest State
+      expect(find.text('Istirahat'), findsOneWidget);
+      expect(find.byKey(const Key('skip-rest-button')), findsOneWidget);
 
-    // Skip Rest -> transitions back to Set 2
-    await tester.tap(find.byKey(const Key('skip-rest-button')));
-    await tester.pump();
+      // Skip Rest -> transitions back to Set 2
+      await tester.tap(find.byKey(const Key('skip-rest-button')));
+      await tester.pump();
 
-    expect(find.text('Set 2 / 3'), findsOneWidget);
-  });
+      expect(find.text('Set 2 / 3'), findsOneWidget);
+    },
+  );
 
   testWidgets('tapping Batal shows confirmation dialog', (tester) async {
     setViewport(tester);
@@ -105,10 +110,7 @@ void main() {
       MaterialApp(
         home: ChangeNotifierProvider<WorkoutProvider>.value(
           value: provider,
-          child: ActiveWorkoutScreen(
-            routine: routine,
-            provider: provider,
-          ),
+          child: ActiveWorkoutScreen(routine: routine, provider: provider),
         ),
       ),
     );
@@ -127,8 +129,9 @@ void main() {
     expect(find.text('Batalkan Latihan?'), findsNothing);
   });
 
-  testWidgets('completing final set finishes workout and calls provider',
-      (tester) async {
+  testWidgets('completing final set finishes workout and calls provider', (
+    tester,
+  ) async {
     setViewport(tester);
     final provider = FakeActiveWorkoutProvider();
 
@@ -138,22 +141,23 @@ void main() {
       MaterialApp(
         home: ChangeNotifierProvider<WorkoutProvider>.value(
           value: provider,
-          child: ActiveWorkoutScreen(
-            routine: kMiniRoutine,
-            provider: provider,
-          ),
+          child: ActiveWorkoutScreen(routine: kMiniRoutine, provider: provider),
         ),
       ),
     );
 
     // Set 1 complete -> rest
-    await tester.tap(find.byKey(const Key('active-workout-complete-set-button')));
+    await tester.tap(
+      find.byKey(const Key('active-workout-complete-set-button')),
+    );
     await tester.pump();
     await tester.tap(find.byKey(const Key('skip-rest-button')));
     await tester.pump();
 
     // Set 2 complete -> rest
-    await tester.tap(find.byKey(const Key('active-workout-complete-set-button')));
+    await tester.tap(
+      find.byKey(const Key('active-workout-complete-set-button')),
+    );
     await tester.pump();
     await tester.tap(find.byKey(const Key('skip-rest-button')));
     await tester.pump();
@@ -161,7 +165,9 @@ void main() {
     // Set 3: Last set of last exercise!
     expect(find.text('Selesai Latihan ✓'), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('active-workout-complete-set-button')));
+    await tester.tap(
+      find.byKey(const Key('active-workout-complete-set-button')),
+    );
     await tester.pumpAndSettle();
 
     expect(provider.completeWorkoutCalled, isTrue);

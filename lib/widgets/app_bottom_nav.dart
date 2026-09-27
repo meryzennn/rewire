@@ -103,8 +103,10 @@ class AppBottomNav extends StatelessWidget {
               const pillHeight = 30.0;
               const pillTop = 8.0;
 
-              final clampedPage =
-                  currentPage.clamp(0.0, (tabCount - 1).toDouble());
+              final clampedPage = currentPage.clamp(
+                0.0,
+                (tabCount - 1).toDouble(),
+              );
               final pillLeft =
                   clampedPage * tabWidth + (tabWidth - pillWidth) / 2;
 
@@ -128,8 +130,10 @@ class AppBottomNav extends StatelessWidget {
                         Expanded(
                           child: _NavButton(
                             item: _items[i],
-                            progress:
-                                (1.0 - (clampedPage - i).abs()).clamp(0.0, 1.0),
+                            progress: (1.0 - (clampedPage - i).abs()).clamp(
+                              0.0,
+                              1.0,
+                            ),
                             selected: i == navigationShell.currentIndex,
                             onTap: () => _onTap(i),
                           ),
@@ -181,7 +185,8 @@ class _NavButton extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final ink = theme.colorScheme.onSurface;
-    final muted = theme.textTheme.bodySmall?.color ??
+    final muted =
+        theme.textTheme.bodySmall?.color ??
         (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary);
 
     final iconColor = Color.lerp(muted, ink, progress) ?? ink;

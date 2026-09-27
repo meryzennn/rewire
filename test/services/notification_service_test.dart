@@ -73,15 +73,17 @@ class FakeNotificationPluginAdapter implements NotificationPluginAdapter {
     required AndroidScheduleMode androidScheduleMode,
     DateTimeComponents? matchDateTimeComponents,
   }) async {
-    scheduled.add(ScheduledCall(
-      id: id,
-      title: title,
-      body: body,
-      scheduledDate: scheduledDate,
-      notificationDetails: notificationDetails,
-      androidScheduleMode: androidScheduleMode,
-      matchDateTimeComponents: matchDateTimeComponents,
-    ));
+    scheduled.add(
+      ScheduledCall(
+        id: id,
+        title: title,
+        body: body,
+        scheduledDate: scheduledDate,
+        notificationDetails: notificationDetails,
+        androidScheduleMode: androidScheduleMode,
+        matchDateTimeComponents: matchDateTimeComponents,
+      ),
+    );
   }
 
   @override
@@ -91,12 +93,14 @@ class FakeNotificationPluginAdapter implements NotificationPluginAdapter {
     required String body,
     required NotificationDetails notificationDetails,
   }) async {
-    shown.add(ShownCall(
-      id: id,
-      title: title,
-      body: body,
-      notificationDetails: notificationDetails,
-    ));
+    shown.add(
+      ShownCall(
+        id: id,
+        title: title,
+        body: body,
+        notificationDetails: notificationDetails,
+      ),
+    );
   }
 
   @override
@@ -141,37 +145,52 @@ void main() {
   });
 
   group('Schedule reminders', () {
-    test('scheduleDailyReminder uses id 1001 and daily reminder copy', () async {
-      await service.initialize();
-      await service.scheduleDailyReminder(const TimeOfDay(hour: 7, minute: 30));
+    test(
+      'scheduleDailyReminder uses id 1001 and daily reminder copy',
+      () async {
+        await service.initialize();
+        await service.scheduleDailyReminder(
+          const TimeOfDay(hour: 7, minute: 30),
+        );
 
-      expect(adapter.scheduled.length, 1);
-      final call = adapter.scheduled.first;
-      expect(call.id, NotificationService.dailyReminderId);
-      expect(call.title, NotificationService.dailyReminderTitle);
-      expect(call.body, NotificationService.dailyReminderBody);
-      expect(call.matchDateTimeComponents, DateTimeComponents.time);
-      expect(call.androidScheduleMode, AndroidScheduleMode.exactAllowWhileIdle);
-      expect(call.scheduledDate.hour, 7);
-      expect(call.scheduledDate.minute, 30);
-    });
+        expect(adapter.scheduled.length, 1);
+        final call = adapter.scheduled.first;
+        expect(call.id, NotificationService.dailyReminderId);
+        expect(call.title, NotificationService.dailyReminderTitle);
+        expect(call.body, NotificationService.dailyReminderBody);
+        expect(call.matchDateTimeComponents, DateTimeComponents.time);
+        expect(
+          call.androidScheduleMode,
+          AndroidScheduleMode.exactAllowWhileIdle,
+        );
+        expect(call.scheduledDate.hour, 7);
+        expect(call.scheduledDate.minute, 30);
+      },
+    );
 
-    test('scheduleMeditationReminder uses id 1002 and meditation copy', () async {
-      await service.initialize();
-      await service.scheduleMeditationReminder(const TimeOfDay(hour: 13, minute: 0));
+    test(
+      'scheduleMeditationReminder uses id 1002 and meditation copy',
+      () async {
+        await service.initialize();
+        await service.scheduleMeditationReminder(
+          const TimeOfDay(hour: 13, minute: 0),
+        );
 
-      expect(adapter.scheduled.length, 1);
-      final call = adapter.scheduled.first;
-      expect(call.id, NotificationService.meditationReminderId);
-      expect(call.title, NotificationService.meditationReminderTitle);
-      expect(call.body, NotificationService.meditationReminderBody);
-      expect(call.scheduledDate.hour, 13);
-      expect(call.scheduledDate.minute, 0);
-    });
+        expect(adapter.scheduled.length, 1);
+        final call = adapter.scheduled.first;
+        expect(call.id, NotificationService.meditationReminderId);
+        expect(call.title, NotificationService.meditationReminderTitle);
+        expect(call.body, NotificationService.meditationReminderBody);
+        expect(call.scheduledDate.hour, 13);
+        expect(call.scheduledDate.minute, 0);
+      },
+    );
 
     test('scheduleWorkoutReminder uses id 1003 and workout copy', () async {
       await service.initialize();
-      await service.scheduleWorkoutReminder(const TimeOfDay(hour: 18, minute: 15));
+      await service.scheduleWorkoutReminder(
+        const TimeOfDay(hour: 18, minute: 15),
+      );
 
       expect(adapter.scheduled.length, 1);
       final call = adapter.scheduled.first;
@@ -254,11 +273,17 @@ void main() {
       // daily enabled -> scheduled 06:45
       // meditation disabled -> canceled
       // workout enabled -> scheduled 17:00
-      expect(adapter.scheduled.map((e) => e.id), containsAll([
-        NotificationService.dailyReminderId,
-        NotificationService.workoutReminderId,
-      ]));
-      expect(adapter.canceledIds, contains(NotificationService.meditationReminderId));
+      expect(
+        adapter.scheduled.map((e) => e.id),
+        containsAll([
+          NotificationService.dailyReminderId,
+          NotificationService.workoutReminderId,
+        ]),
+      );
+      expect(
+        adapter.canceledIds,
+        contains(NotificationService.meditationReminderId),
+      );
 
       final dailyCall = adapter.scheduled.firstWhere(
         (e) => e.id == NotificationService.dailyReminderId,

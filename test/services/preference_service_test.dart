@@ -4,7 +4,9 @@ import 'package:rewire/services/preference_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Builds a service over a freshly mocked SharedPreferences.
-Future<PreferenceService> _service([Map<String, Object> seed = const {}]) async {
+Future<PreferenceService> _service([
+  Map<String, Object> seed = const {},
+]) async {
   SharedPreferences.setMockInitialValues(seed);
   final prefs = await SharedPreferences.getInstance();
   return PreferenceService(prefs);

@@ -146,10 +146,10 @@
 
 **Files:** `assets/**`, `integration_test/app_flow_test.dart`, `README.md` if present.
 
-- [ ] Bundle six audio files, five brain stage assets, 15 exercise illustrations, onboarding art, and four JSON/content definitions; verify declared paths resolve. Use original/licensed assets only.
-- [ ] Add integration tests for check-in→XP/quest, meditation→XP, workout→XP, and level-up→stage. Use deterministic fixtures; do not depend on real audio playback.
-- [ ] Run `dart format .`, `flutter analyze`, `flutter test`, `flutter test integration_test`; resolve all failures. Build with `flutter build apk --debug` on Android toolchain.
-- [ ] Commit `test: verify core recovery journeys`.
+- [x] Bundle six audio files, five brain stage assets, 15 exercise illustrations, onboarding art, and four JSON/content definitions; verify declared paths resolve. Use original/licensed assets only.
+- [x] Add integration tests for check-in→XP/quest, meditation→XP, workout→XP, and level-up→stage. Use deterministic fixtures; do not depend on real audio playback.
+- [x] Run `dart format .`, `flutter analyze`, `flutter test`, `flutter test integration_test`; resolve all failures. Build with `flutter build apk --debug` on Android toolchain.
+- [x] Commit `test: verify core recovery journeys`.
 
 ## Final coverage check
 

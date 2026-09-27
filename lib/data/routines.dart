@@ -22,8 +22,10 @@ class WorkoutRoutine {
   final String description;
 
   /// Resolves the list of [Exercise] definitions belonging to this routine.
-  List<Exercise> get exercises =>
-      exerciseIds.map((id) => findExerciseById(id)).whereType<Exercise>().toList();
+  List<Exercise> get exercises => exerciseIds
+      .map((id) => findExerciseById(id))
+      .whereType<Exercise>()
+      .toList();
 
   /// Total XP awarded upon routine completion (spec §3.1).
   int get xp => xpForWorkoutDurationMinutes(durationMinutes);
@@ -45,8 +47,7 @@ const List<WorkoutRoutine> kAllRoutines = [
       'plank',
       'high_knees',
     ],
-    description:
-        'Rutinitas pagi hari untuk membangunkan tubuh dan melancarkan sirkulasi energi.',
+    description: 'Rutinitas pagi hari untuk membangunkan tubuh dan melancarkan sirkulasi energi.',
   ),
   WorkoutRoutine(
     id: 'full_body_burn',
@@ -64,8 +65,7 @@ const List<WorkoutRoutine> kAllRoutines = [
       'burpee',
       'plank',
     ],
-    description:
-        'Latihan seluruh tubuh intensitas menengah untuk membentuk kekuatan dan daya tahan.',
+    description: 'Latihan seluruh tubuh intensitas menengah untuk membentuk kekuatan dan daya tahan.',
   ),
   WorkoutRoutine(
     id: 'core_crusher',
@@ -80,8 +80,7 @@ const List<WorkoutRoutine> kAllRoutines = [
       'bicycle_crunch',
       'wall_sit',
     ],
-    description:
-        'Latihan terfokus untuk memperkuat otot perut, pinggul, dan stabilitas postur.',
+    description: 'Latihan terfokus untuk memperkuat otot perut, pinggul, dan stabilitas postur.',
   ),
 ];
 

@@ -76,11 +76,10 @@ void main() {
     );
   }
 
-  testWidgets('renders all Stitch Daily Check-in screen components', (tester) async {
-    final provider = FakeCheckinProvider(
-      currentStreak: 14,
-      longestStreak: 20,
-    );
+  testWidgets('renders all Stitch Daily Check-in screen components', (
+    tester,
+  ) async {
+    final provider = FakeCheckinProvider(currentStreak: 14, longestStreak: 20);
 
     await tester.pumpWidget(buildScreen(provider));
     await tester.pumpAndSettle();
@@ -117,12 +116,16 @@ void main() {
     // Action button & micro-copy
     expect(find.text('Simpan Check-in'), findsOneWidget);
     expect(
-      find.text('Satu langkah kecil sadar untuk membentuk jalur otak yang baru.'),
+      find.text(
+        'Satu langkah kecil sadar untuk membentuk jalur otak yang baru.',
+      ),
       findsOneWidget,
     );
   });
 
-  testWidgets('allows selecting status, mood, triggers, and notes', (tester) async {
+  testWidgets('allows selecting status, mood, triggers, and notes', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(800, 1400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(() {
@@ -130,10 +133,7 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    final provider = FakeCheckinProvider(
-      currentStreak: 3,
-      longestStreak: 5,
-    );
+    final provider = FakeCheckinProvider(currentStreak: 3, longestStreak: 5);
 
     await tester.pumpWidget(buildScreen(provider));
     await tester.pumpAndSettle();
@@ -167,66 +167,74 @@ void main() {
     expect(provider.lastNotes, 'Sedikit cemas tapi berhasil jalan santai.');
   });
 
-  testWidgets('submitting relapse displays compassionate encouragement dialog', (tester) async {
-    tester.view.physicalSize = const Size(800, 1400);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(() {
-      tester.view.resetPhysicalSize();
-      tester.view.resetDevicePixelRatio();
-    });
+  testWidgets(
+    'submitting relapse displays compassionate encouragement dialog',
+    (tester) async {
+      tester.view.physicalSize = const Size(800, 1400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
 
-    final provider = FakeCheckinProvider(
-      currentStreak: 10,
-      longestStreak: 10,
-    );
+      final provider = FakeCheckinProvider(
+        currentStreak: 10,
+        longestStreak: 10,
+      );
 
-    await tester.pumpWidget(buildScreen(provider));
-    await tester.pumpAndSettle();
+      await tester.pumpWidget(buildScreen(provider));
+      await tester.pumpAndSettle();
 
-    // Select Relapse card
-    await tester.tap(find.text('Relapse Hari ini'));
-    await tester.pumpAndSettle();
+      // Select Relapse card
+      await tester.tap(find.text('Relapse Hari ini'));
+      await tester.pumpAndSettle();
 
-    // Submit
-    await tester.tap(find.text('Simpan Check-in'));
-    await tester.pumpAndSettle();
+      // Submit
+      await tester.tap(find.text('Simpan Check-in'));
+      await tester.pumpAndSettle();
 
-    expect(provider.submitCalled, isTrue);
-    expect(provider.lastStatus, 'relapse');
+      expect(provider.submitCalled, isTrue);
+      expect(provider.lastStatus, 'relapse');
 
-    // Encouragement dialog
-    expect(find.text('Tidak apa-apa.'), findsOneWidget);
-    expect(
-      find.text('Streak kamu akan direset, tapi total XP dan level tetap tersimpan utuh.'),
-      findsOneWidget,
-    );
-    expect(find.text('Mulai Lagi 💪'), findsOneWidget);
+      // Encouragement dialog
+      expect(find.text('Tidak apa-apa.'), findsOneWidget);
+      expect(
+        find.text(
+          'Streak kamu akan direset, tapi total XP dan level tetap tersimpan utuh.',
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('Mulai Lagi 💪'), findsOneWidget);
 
-    // Dismiss dialog
-    await tester.tap(find.text('Mulai Lagi 💪'));
-    await tester.pumpAndSettle();
+      // Dismiss dialog
+      await tester.tap(find.text('Mulai Lagi 💪'));
+      await tester.pumpAndSettle();
 
-    expect(find.text('Tidak apa-apa.'), findsNothing);
-  });
+      expect(find.text('Tidak apa-apa.'), findsNothing);
+    },
+  );
 
-  testWidgets('pre-populates existing check-in data when already checked in today', (tester) async {
-    final provider = FakeCheckinProvider(
-      currentStreak: 7,
-      longestStreak: 7,
-      todayCheckin: const DailyCheckin(
-        date: '2026-09-27',
-        status: 'clean',
-        mood: 5,
-        notes: 'Hari yang sangat produktif!',
-        xpEarned: 20,
-      ),
-      todayTriggers: ['Sosial Media'],
-    );
+  testWidgets(
+    'pre-populates existing check-in data when already checked in today',
+    (tester) async {
+      final provider = FakeCheckinProvider(
+        currentStreak: 7,
+        longestStreak: 7,
+        todayCheckin: const DailyCheckin(
+          date: '2026-09-27',
+          status: 'clean',
+          mood: 5,
+          notes: 'Hari yang sangat produktif!',
+          xpEarned: 20,
+        ),
+        todayTriggers: ['Sosial Media'],
+      );
 
-    await tester.pumpWidget(buildScreen(provider));
-    await tester.pumpAndSettle();
+      await tester.pumpWidget(buildScreen(provider));
+      await tester.pumpAndSettle();
 
-    expect(find.text('Hari yang sangat produktif!'), findsOneWidget);
-    expect(find.text('Hari ke-7'), findsOneWidget);
-  });
+      expect(find.text('Hari yang sangat produktif!'), findsOneWidget);
+      expect(find.text('Hari ke-7'), findsOneWidget);
+    },
+  );
 }

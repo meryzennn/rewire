@@ -78,7 +78,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
       final questProv =
           widget.questProvider ?? context.readOrNull<QuestProvider>();
       final achProv =
-          widget.achievementProvider ?? context.readOrNull<AchievementProvider>();
+          widget.achievementProvider ??
+          context.readOrNull<AchievementProvider>();
 
       await userProv?.loadProfile();
       await questProv?.loadAllQuests();
@@ -126,16 +127,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     final bg = theme.scaffoldBackgroundColor;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
     final accent = isDark ? AppColors.darkAccent : AppColors.accent;
 
-    final userProv =
-        widget.userProvider ?? context.watchOrNull<UserProvider>();
+    final userProv = widget.userProvider ?? context.watchOrNull<UserProvider>();
     final questProv =
         widget.questProvider ?? context.watchOrNull<QuestProvider>();
     final achProv =
-        widget.achievementProvider ?? context.watchOrNull<AchievementProvider>();
+        widget.achievementProvider ??
+        context.watchOrNull<AchievementProvider>();
 
     final profile = userProv?.profile;
     final level = profile?.level ?? 1;
@@ -159,18 +161,16 @@ class _ProgressScreenState extends State<ProgressScreen> {
               // 1. Top Bar
               SliverToBoxAdapter(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          Icon(
-                            Icons.insights,
-                            color: accent,
-                            size: 28,
-                          ),
+                          Icon(Icons.insights, color: accent, size: 28),
                           const SizedBox(width: 10),
                           Text(
                             'Progress',
@@ -189,8 +189,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
               // 2. Brain Evolution Hero Card
               SliverToBoxAdapter(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 6,
+                  ),
                   child: BrainTimeline(
                     level: level,
                     totalXp: totalXp,
@@ -202,8 +204,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
               // 3. Stats Bento Grid
               SliverToBoxAdapter(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                   child: StatCardsGrid(
                     currentStreak: currentStreak,
                     longestStreak: longestStreak,
@@ -218,51 +222,49 @@ class _ProgressScreenState extends State<ProgressScreen> {
               // 4. Streak History Chart (7 Days Bar Chart)
               SliverToBoxAdapter(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  child: StreakChart(
-                    checkins: _checkins,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
                   ),
+                  child: StreakChart(checkins: _checkins),
                 ),
               ),
 
               // 5. Mood Trend Chart
               SliverToBoxAdapter(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  child: MoodTrendChart(
-                    checkins: _checkins,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
                   ),
+                  child: MoodTrendChart(checkins: _checkins),
                 ),
               ),
 
               // 6. Weekly Challenges
               SliverToBoxAdapter(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  child: WeeklyChallenges(
-                    challenges: weeklyQuests,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
                   ),
+                  child: WeeklyChallenges(challenges: weeklyQuests),
                 ),
               ),
 
               // 7. Achievements Grid
               SliverToBoxAdapter(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  child: AchievementGrid(
-                    achievements: achievements,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
                   ),
+                  child: AchievementGrid(achievements: achievements),
                 ),
               ),
 
               // Bottom spacing for navigation bar
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 90),
-              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 90)),
             ],
           ),
         ),

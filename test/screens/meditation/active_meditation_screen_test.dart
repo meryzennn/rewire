@@ -20,16 +20,19 @@ Widget buildActiveScreen({
 }
 
 void main() {
-  testWidgets('renders active meditation screen with timer and track info',
-      (tester) async {
+  testWidgets('renders active meditation screen with timer and track info', (
+    tester,
+  ) async {
     final fakeAudio = FakeAudioService();
 
-    await tester.pumpWidget(buildActiveScreen(
-      durationMinutes: 10,
-      trackId: 'rain',
-      breathingId: 'box',
-      audioService: fakeAudio,
-    ));
+    await tester.pumpWidget(
+      buildActiveScreen(
+        durationMinutes: 10,
+        trackId: 'rain',
+        breathingId: 'box',
+        audioService: fakeAudio,
+      ),
+    );
     await tester.pump(const Duration(milliseconds: 100));
 
     // Audio should start playing
@@ -54,11 +57,13 @@ void main() {
   testWidgets('timer counts down with each elapsed second', (tester) async {
     final fakeAudio = FakeAudioService();
 
-    await tester.pumpWidget(buildActiveScreen(
-      durationMinutes: 5,
-      trackId: 'forest',
-      audioService: fakeAudio,
-    ));
+    await tester.pumpWidget(
+      buildActiveScreen(
+        durationMinutes: 5,
+        trackId: 'forest',
+        audioService: fakeAudio,
+      ),
+    );
     await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('05:00'), findsOneWidget);
@@ -72,10 +77,9 @@ void main() {
   testWidgets('pause button stops timer countdown and audio', (tester) async {
     final fakeAudio = FakeAudioService();
 
-    await tester.pumpWidget(buildActiveScreen(
-      durationMinutes: 5,
-      audioService: fakeAudio,
-    ));
+    await tester.pumpWidget(
+      buildActiveScreen(durationMinutes: 5, audioService: fakeAudio),
+    );
     await tester.pump(const Duration(milliseconds: 100));
 
     expect(fakeAudio.isPlaying, isTrue);
@@ -101,10 +105,9 @@ void main() {
   testWidgets('stop button shows confirmation dialog', (tester) async {
     final fakeAudio = FakeAudioService();
 
-    await tester.pumpWidget(buildActiveScreen(
-      durationMinutes: 10,
-      audioService: fakeAudio,
-    ));
+    await tester.pumpWidget(
+      buildActiveScreen(durationMinutes: 10, audioService: fakeAudio),
+    );
     await tester.pump(const Duration(milliseconds: 100));
 
     // Tap stop

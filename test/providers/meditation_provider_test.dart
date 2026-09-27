@@ -84,32 +84,35 @@ void main() {
     expect(notified, 3);
   });
 
-  test('completeSession inserts session, awards XP, and updates stats', () async {
-    // Refresh quests so daily meditation quests are assigned
-    await questService.refreshIfNeeded(now);
+  test(
+    'completeSession inserts session, awards XP, and updates stats',
+    () async {
+      // Refresh quests so daily meditation quests are assigned
+      await questService.refreshIfNeeded(now);
 
-    final award = await provider.completeSession(
-      durationSeconds: 600, // 10 minutes
-      audioType: 'rain',
-      breathingType: 'box',
-      now: now,
-    );
+      final award = await provider.completeSession(
+        durationSeconds: 600, // 10 minutes
+        audioType: 'rain',
+        breathingType: 'box',
+        now: now,
+      );
 
-    // 10 minutes gives 15 XP according to spec §3.1
-    expect(award.amount, 15);
-    expect(award.totalXpAfter, 15);
+      // 10 minutes gives 15 XP according to spec §3.1
+      expect(award.amount, 15);
+      expect(award.totalXpAfter, 15);
 
-    // Stats updated in provider
-    expect(provider.totalMinutes, 10);
-    expect(provider.sessionCount, 1);
+      // Stats updated in provider
+      expect(provider.totalMinutes, 10);
+      expect(provider.sessionCount, 1);
 
-    // Verify persisted session in repository
-    final history = await meditation.getHistory();
-    expect(history.length, 1);
-    expect(history.first.durationSeconds, 600);
-    expect(history.first.audioType, 'rain');
-    expect(history.first.breathingType, 'box');
-    expect(history.first.xpEarned, 15);
-    expect(history.first.completed, 1);
-  });
+      // Verify persisted session in repository
+      final history = await meditation.getHistory();
+      expect(history.length, 1);
+      expect(history.first.durationSeconds, 600);
+      expect(history.first.audioType, 'rain');
+      expect(history.first.breathingType, 'box');
+      expect(history.first.xpEarned, 15);
+      expect(history.first.completed, 1);
+    },
+  );
 }

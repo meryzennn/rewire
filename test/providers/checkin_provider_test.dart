@@ -61,25 +61,28 @@ void main() {
 
   tearDown(() async => db.close());
 
-  test('clean check-in awards +20 XP once, starts streak, and sets longest streak', () async {
-    final checkin = await provider.submitCheckin(
-      status: 'clean',
-      mood: 4,
-      notes: 'Feeling great',
-      now: day1,
-    );
+  test(
+    'clean check-in awards +20 XP once, starts streak, and sets longest streak',
+    () async {
+      final checkin = await provider.submitCheckin(
+        status: 'clean',
+        mood: 4,
+        notes: 'Feeling great',
+        now: day1,
+      );
 
-    expect(checkin.status, 'clean');
-    expect(checkin.mood, 4);
-    expect(checkin.notes, 'Feeling great');
-    expect(provider.currentStreak, 1);
-    expect(provider.longestStreak, 1);
+      expect(checkin.status, 'clean');
+      expect(checkin.mood, 4);
+      expect(checkin.notes, 'Feeling great');
+      expect(provider.currentStreak, 1);
+      expect(provider.longestStreak, 1);
 
-    final profile = await users.getProfile();
-    expect(profile!.totalXp, 20);
-    expect(profile.currentStreak, 1);
-    expect(profile.longestStreak, 1);
-  });
+      final profile = await users.getProfile();
+      expect(profile!.totalXp, 20);
+      expect(profile.currentStreak, 1);
+      expect(profile.longestStreak, 1);
+    },
+  );
 
   test('consecutive clean check-in increments streak and awards XP', () async {
     await provider.submitCheckin(status: 'clean', now: day1);
@@ -130,15 +133,16 @@ void main() {
     final profile = await users.getProfile();
     expect(profile!.currentStreak, 0);
     expect(profile.longestStreak, 2);
-    expect(profile.totalXp, 40, reason: 'Relapse must never reduce lifetime XP');
+    expect(
+      profile.totalXp,
+      40,
+      reason: 'Relapse must never reduce lifetime XP',
+    );
     expect(profile.level, 1, reason: 'Relapse must never reduce level');
 
     // Recorded in streaks table with ended_by: 'relapse'
     final streaks = await checkins.getStreaks();
-    expect(
-      streaks.any((s) => s.endedBy == 'relapse' && s.length == 2),
-      isTrue,
-    );
+    expect(streaks.any((s) => s.endedBy == 'relapse' && s.length == 2), isTrue);
   });
 
   test('triggers are saved atomically and advance trigger quests', () async {
@@ -170,14 +174,13 @@ void main() {
     );
     // Seed day 6 checkin so day 7 continues it
     await checkins.saveCheckin(
-      const DailyCheckin(
-        date: '2026-09-26',
-        status: 'clean',
-        xpEarned: 20,
-      ),
+      const DailyCheckin(date: '2026-09-26', status: 'clean', xpEarned: 20),
     );
 
-    await provider.submitCheckin(status: 'clean', now: day3); // day3 = 2026-09-27
+    await provider.submitCheckin(
+      status: 'clean',
+      now: day3,
+    ); // day3 = 2026-09-27
     expect(provider.currentStreak, 7);
 
     final profile = await users.getProfile();

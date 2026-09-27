@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,11 +22,7 @@ bool get _isTestEnvironment {
 
 /// Screen tracking an active workout session step-by-step with sets and rest periods (spec §5c).
 class ActiveWorkoutScreen extends StatefulWidget {
-  const ActiveWorkoutScreen({
-    super.key,
-    required this.routine,
-    this.provider,
-  });
+  const ActiveWorkoutScreen({super.key, required this.routine, this.provider});
 
   final WorkoutRoutine routine;
   final WorkoutProvider? provider;
@@ -49,8 +46,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
   List<Exercise> get _exercises => widget.routine.exercises;
   Exercise get _currentExercise => _exercises[_currentExerciseIndex];
 
-  bool get _isLastExercise =>
-      _currentExerciseIndex == _exercises.length - 1;
+  bool get _isLastExercise => _currentExerciseIndex == _exercises.length - 1;
   bool get _isLastSetOfCurrentExercise =>
       _currentSet >= _currentExercise.defaultSets;
   bool get _isEntireWorkoutComplete =>
@@ -82,7 +78,9 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
   void _resetExerciseTimer() {
     _exerciseCountdownTimer?.cancel();
     _isExerciseTimerRunning = false;
-    _exerciseTimerSeconds = _currentExercise.isTimed ? _currentExercise.defaultReps : 0;
+    _exerciseTimerSeconds = _currentExercise.isTimed
+        ? _currentExercise.defaultReps
+        : 0;
   }
 
   void _toggleExerciseTimer() {
@@ -96,8 +94,9 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
         _isExerciseTimerRunning = true;
       });
       if (!_isTestEnvironment) {
-        _exerciseCountdownTimer =
-            Timer.periodic(const Duration(seconds: 1), (timer) {
+        _exerciseCountdownTimer = Timer.periodic(const Duration(seconds: 1), (
+          timer,
+        ) {
           if (!mounted) return;
           if (_exerciseTimerSeconds > 1) {
             setState(() {
@@ -145,11 +144,14 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
     _sessionTimer?.cancel();
     _exerciseCountdownTimer?.cancel();
 
-    final workoutProv = widget.provider ?? context.readOrNull<WorkoutProvider>();
-    final effectiveDuration =
-        _elapsedSeconds > 0 ? _elapsedSeconds : widget.routine.durationMinutes * 60;
+    final workoutProv =
+        widget.provider ?? context.readOrNull<WorkoutProvider>();
+    final effectiveDuration = _elapsedSeconds > 0
+        ? _elapsedSeconds
+        : widget.routine.durationMinutes * 60;
 
-    final award = await workoutProv?.completeWorkout(
+    final award =
+        await workoutProv?.completeWorkout(
           routineId: widget.routine.id,
           routineName: widget.routine.name,
           durationSeconds: effectiveDuration,
@@ -169,7 +171,8 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
             durationSeconds: effectiveDuration,
             exercisesCompleted: _exercises.length,
             exercisesTotal: _exercises.length,
-            xpAward: award ??
+            xpAward:
+                award ??
                 const XpAward(
                   amount: 25,
                   totalXpBefore: 0,
@@ -201,9 +204,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
             child: const Text('Lanjut Latihan'),
           ),
           TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.danger,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.danger),
             onPressed: () => Navigator.of(ctx).pop(true),
             child: const Text('Ya, Batalkan'),
           ),
@@ -252,8 +253,8 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
       final nextTitle = !_isLastSetOfCurrentExercise
           ? _currentExercise.name
           : (!_isLastExercise
-              ? _exercises[_currentExerciseIndex + 1].name
-              : 'Selesai');
+                ? _exercises[_currentExerciseIndex + 1].name
+                : 'Selesai');
       return RestTimerScreen(
         durationSeconds: 30,
         nextExerciseName: nextTitle,
@@ -267,16 +268,21 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
 
     final bg = theme.scaffoldBackgroundColor;
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
-    final surfaceVariant =
-        isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant;
-    final textPrimary =
-        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final surfaceVariant = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.surfaceVariant;
+    final textPrimary = isDark
+        ? AppColors.darkTextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.textSecondary;
     final accent = isDark ? AppColors.darkAccent : AppColors.accent;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
 
-    final progress = (_currentExerciseIndex + (_currentSet - 1) / _currentExercise.defaultSets) /
+    final progress =
+        (_currentExerciseIndex +
+            (_currentSet - 1) / _currentExercise.defaultSets) /
         _exercises.length;
 
     return Scaffold(
@@ -481,7 +487,9 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                 ),
                 onPressed: _completeSet,
                 child: Text(
-                  _isEntireWorkoutComplete ? 'Selesai Latihan ✓' : 'Set Selesai ✓',
+                  _isEntireWorkoutComplete
+                      ? 'Selesai Latihan ✓'
+                      : 'Set Selesai ✓',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

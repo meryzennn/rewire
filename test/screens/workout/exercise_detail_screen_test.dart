@@ -8,9 +8,7 @@ void main() {
     final exercise = kAllExercises.first; // Push-up
 
     await tester.pumpWidget(
-      MaterialApp(
-        home: ExerciseDetailScreen(exercise: exercise),
-      ),
+      MaterialApp(home: ExerciseDetailScreen(exercise: exercise)),
     );
 
     // Headline and App bar

@@ -40,8 +40,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Beginner',
-    description:
-        'Latihan dasar tubuh bagian atas untuk menguatkan dada, bahu, dan trisep.',
+    description: 'Latihan dasar tubuh bagian atas untuk menguatkan dada, bahu, dan trisep.',
     targetMuscles: 'Dada & Trisep',
     imageAssetPath: 'assets/images/exercises/pushup.png',
   ),
@@ -68,8 +67,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Intermediate',
-    description:
-        'Push-up dengan tangan membentuk wajik di bawah dada untuk aktivasi trisep maksimal.',
+    description: 'Push-up dengan tangan membentuk wajik di bawah dada untuk aktivasi trisep maksimal.',
     targetMuscles: 'Trisep & Dada Bagian Dalam',
     imageAssetPath: 'assets/images/exercises/diamond_pushup.png',
   ),
@@ -82,8 +80,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Intermediate',
-    description:
-        'Gerakan tubuh bagian atas membentuk segitiga untuk melatih kekuatan bahu.',
+    description: 'Gerakan tubuh bagian atas membentuk segitiga untuk melatih kekuatan bahu.',
     targetMuscles: 'Bahu & Punggung Atas',
     imageAssetPath: 'assets/images/exercises/pike_pushup.png',
   ),
@@ -98,8 +95,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Beginner',
-    description:
-        'Gerakan dasar tubuh bagian bawah untuk memperkuat paha depan dan bokong.',
+    description: 'Gerakan dasar tubuh bagian bawah untuk memperkuat paha depan dan bokong.',
     targetMuscles: 'Paha & Bokong',
     imageAssetPath: 'assets/images/exercises/squat.png',
   ),
@@ -126,8 +122,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Intermediate',
-    description:
-        'Squat eksplosif dengan lompatan untuk kekuatan otot kaki dan pembakaran kalori.',
+    description: 'Squat eksplosif dengan lompatan untuk kekuatan otot kaki dan pembakaran kalori.',
     targetMuscles: 'Daya Ledak Kaki & Betis',
     imageAssetPath: 'assets/images/exercises/jump_squat.png',
   ),
@@ -140,8 +135,7 @@ const List<Exercise> kAllExercises = [
     isTimed: true,
     unit: 'Detik',
     difficulty: 'Beginner',
-    description:
-        'Menahan posisi duduk bersandar pada dinding untuk melatih daya tahan isometrik.',
+    description: 'Menahan posisi duduk bersandar pada dinding untuk melatih daya tahan isometrik.',
     targetMuscles: 'Ketahanan Paha Depan',
     imageAssetPath: 'assets/images/exercises/wall_sit.png',
   ),
@@ -156,8 +150,7 @@ const List<Exercise> kAllExercises = [
     isTimed: true,
     unit: 'Detik',
     difficulty: 'Beginner',
-    description:
-        'Tahan posisi lurus dengan siku untuk memperkuat seluruh otot inti tubuh.',
+    description: 'Tahan posisi lurus dengan siku untuk memperkuat seluruh otot inti tubuh.',
     targetMuscles: 'Otot Inti & Postur',
     imageAssetPath: 'assets/images/exercises/plank.png',
   ),
@@ -170,8 +163,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Beginner',
-    description:
-        'Gerakan mengangkat punggung atas dari lantai untuk aktivasi perut bagian atas.',
+    description: 'Gerakan mengangkat punggung atas dari lantai untuk aktivasi perut bagian atas.',
     targetMuscles: 'Perut Bagian Atas',
     imageAssetPath: 'assets/images/exercises/crunch.png',
   ),
@@ -184,8 +176,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Intermediate',
-    description:
-        'Dari posisi push-up menarik lutut bergantian secara cepat, melatih inti dan cardio.',
+    description: 'Dari posisi push-up menarik lutut bergantian secara cepat, melatih inti dan cardio.',
     targetMuscles: 'Perut Bawah & Cardio Inti',
     imageAssetPath: 'assets/images/exercises/mountain_climber.png',
   ),
@@ -198,8 +189,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi / sisi',
     difficulty: 'Intermediate',
-    description:
-        'Gerakan mengayuh sepeda terlentang untuk menargetkan otot samping perut (obliques).',
+    description: 'Gerakan mengayuh sepeda terlentang untuk menargetkan otot samping perut (obliques).',
     targetMuscles: 'Perut Samping (Obliques)',
     imageAssetPath: 'assets/images/exercises/bicycle_crunch.png',
   ),
@@ -214,8 +204,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Beginner',
-    description:
-        'Melompat membuka kaki dan merentangkan tangan ke atas untuk pemanasan kardio.',
+    description: 'Melompat membuka kaki dan merentangkan tangan ke atas untuk pemanasan kardio.',
     targetMuscles: 'Kardiovaskular & Seluruh Tubuh',
     imageAssetPath: 'assets/images/exercises/jumping_jack.png',
   ),
@@ -228,8 +217,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Beginner',
-    description:
-        'Lari di tempat dengan mengangkat lutut setinggi pinggang secara dinamis.',
+    description: 'Lari di tempat dengan mengangkat lutut setinggi pinggang secara dinamis.',
     targetMuscles: 'Ketahanan & Fleksor Pinggul',
     imageAssetPath: 'assets/images/exercises/high_knees.png',
   ),
@@ -242,8 +230,7 @@ const List<Exercise> kAllExercises = [
     isTimed: false,
     unit: 'Repetisi',
     difficulty: 'Intermediate',
-    description:
-        'Gerakan squat, plank, push-up, dan lompat dalam satu siklus pembakaran energi penuh.',
+    description: 'Gerakan squat, plank, push-up, dan lompat dalam satu siklus pembakaran energi penuh.',
     targetMuscles: 'Seluruh Tubuh & Daya Tahan',
     imageAssetPath: 'assets/images/exercises/burpee.png',
   ),

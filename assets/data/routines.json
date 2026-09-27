@@ -1,0 +1,51 @@
+[
+  {
+    "id": "morning_energy",
+    "name": "Morning Energy",
+    "subtitle": "Aktivasi saraf & postur",
+    "duration_minutes": 15,
+    "difficulty": "Beginner",
+    "exercise_ids": [
+      "jumping_jack",
+      "squat",
+      "pushup",
+      "lunge",
+      "plank",
+      "high_knees"
+    ],
+    "description": "Rutinitas pagi hari untuk membangunkan tubuh dan melancarkan sirkulasi energi."
+  },
+  {
+    "id": "full_body_burn",
+    "name": "Full Body Burn",
+    "subtitle": "Kekuatan & ketahanan",
+    "duration_minutes": 20,
+    "difficulty": "Intermediate",
+    "exercise_ids": [
+      "jumping_jack",
+      "squat",
+      "pushup",
+      "mountain_climber",
+      "lunge",
+      "diamond_pushup",
+      "burpee",
+      "plank"
+    ],
+    "description": "Latihan seluruh tubuh intensitas menengah untuk membentuk kekuatan dan daya tahan."
+  },
+  {
+    "id": "core_crusher",
+    "name": "Core Crusher",
+    "subtitle": "Kekuatan otot inti",
+    "duration_minutes": 10,
+    "difficulty": "Beginner",
+    "exercise_ids": [
+      "plank",
+      "crunch",
+      "mountain_climber",
+      "bicycle_crunch",
+      "wall_sit"
+    ],
+    "description": "Latihan terfokus untuk memperkuat otot perut, pinggul, dan stabilitas postur."
+  }
+]
