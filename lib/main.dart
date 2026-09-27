@@ -26,9 +26,15 @@ Future<void> main() async {
   // The DB open and SharedPreferences load are both async, so init must run
   // before the first frame.
   WidgetsFlutterBinding.ensureInitialized();
-  final db = await DatabaseHelper.instance.database;
+
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+  };
+
   final prefs = await SharedPreferences.getInstance();
   final preferences = PreferenceService(prefs);
+
+  final db = await DatabaseHelper.instance.database;
 
   // One shared Database backs every repository (spec §2.4).
   final users = UserRepository(db);
@@ -50,8 +56,12 @@ Future<void> main() async {
   );
 
   final notificationService = NotificationService();
-  await notificationService.initialize();
-  await notificationService.syncWithPreferences(preferences);
+  try {
+    await notificationService.initialize();
+    await notificationService.syncWithPreferences(preferences);
+  } catch (_) {
+    // Non-fatal: notification initialization failure must never block the app from starting.
+  }
 
   final router = buildRouter(
     prefs,

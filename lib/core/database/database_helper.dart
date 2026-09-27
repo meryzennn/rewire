@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -41,8 +43,16 @@ class DatabaseHelper {
   Future<Database> get database async => _database ??= await _open();
 
   Future<Database> _open() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final path = p.join(directory.path, _databaseName);
+    String path;
+    try {
+      final dbPath = await getDatabasesPath();
+      await Directory(dbPath).create(recursive: true);
+      path = p.join(dbPath, _databaseName);
+    } catch (_) {
+      final directory = await getApplicationDocumentsDirectory();
+      await directory.create(recursive: true);
+      path = p.join(directory.path, _databaseName);
+    }
     return openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
   }
 

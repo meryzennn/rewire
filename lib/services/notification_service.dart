@@ -154,26 +154,38 @@ class NotificationService {
   /// Initializes timezone data, sets local timezone offset, and registers
   /// Android notification channel.
   Future<bool> initialize() async {
-    tz_data.initializeTimeZones();
-    _configureLocalTimezone();
+    try {
+      tz_data.initializeTimeZones();
+      _configureLocalTimezone();
 
-    const androidSettings = AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
-    );
-    final result = await _adapter.initialize(androidSettings: androidSettings);
-    _initialized = true;
-    return result ?? true;
+      const androidSettings = AndroidInitializationSettings(
+        '@mipmap/ic_launcher',
+      );
+      final result = await _adapter.initialize(androidSettings: androidSettings);
+      _initialized = true;
+      return result ?? true;
+    } catch (_) {
+      _initialized = false;
+      return false;
+    }
   }
 
   /// Finds timezone matching current device UTC offset without extra dependencies.
   void _configureLocalTimezone() {
-    final now = DateTime.now();
-    final offsetMs = now.timeZoneOffset.inMilliseconds;
-    for (final loc in tz.timeZoneDatabase.locations.values) {
-      if (loc.currentTimeZone.offset == offsetMs) {
-        tz.setLocalLocation(loc);
-        return;
+    try {
+      final now = DateTime.now();
+      final offsetMs = now.timeZoneOffset.inMilliseconds;
+      for (final loc in tz.timeZoneDatabase.locations.values) {
+        if (loc.currentTimeZone.offset == offsetMs) {
+          tz.setLocalLocation(loc);
+          return;
+        }
       }
+      tz.setLocalLocation(tz.getLocation('UTC'));
+    } catch (_) {
+      try {
+        tz.setLocalLocation(tz.getLocation('UTC'));
+      } catch (_) {}
     }
   }
 
@@ -283,23 +295,27 @@ class NotificationService {
 
   /// Synchronizes scheduled notifications with stored preferences.
   Future<void> syncWithPreferences(PreferenceService preferences) async {
-    if (preferences.dailyReminderEnabled) {
-      final time = parseHhmm(preferences.dailyReminderTime);
-      await scheduleDailyReminder(time);
-    } else {
-      await cancelDailyReminder();
-    }
+    try {
+      if (preferences.dailyReminderEnabled) {
+        final time = parseHhmm(preferences.dailyReminderTime);
+        await scheduleDailyReminder(time);
+      } else {
+        await cancelDailyReminder();
+      }
 
-    if (preferences.meditationReminderEnabled) {
-      await scheduleMeditationReminder();
-    } else {
-      await cancelMeditationReminder();
-    }
+      if (preferences.meditationReminderEnabled) {
+        await scheduleMeditationReminder();
+      } else {
+        await cancelMeditationReminder();
+      }
 
-    if (preferences.workoutReminderEnabled) {
-      await scheduleWorkoutReminder();
-    } else {
-      await cancelWorkoutReminder();
+      if (preferences.workoutReminderEnabled) {
+        await scheduleWorkoutReminder();
+      } else {
+        await cancelWorkoutReminder();
+      }
+    } catch (_) {
+      // Ignored: notification sync should not crash app startup
     }
   }
 }
