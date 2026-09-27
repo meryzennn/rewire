@@ -92,6 +92,11 @@ void main() {
         'last_checkin_date': '2026-09-27',
         'last_quest_refresh_date': '2026-09-27',
         'last_weekly_refresh_date': '2026-09-27',
+        'user_name': 'Budi',
+        'user_age': 25,
+        'user_height': 175.0,
+        'user_weight': 70.0,
+        'user_pfp_path': '/path/to/pfp.jpg',
       });
       final prefs = await SharedPreferences.getInstance();
       final service = PreferenceService(prefs);
@@ -101,7 +106,49 @@ void main() {
       expect(service.onboardingCompleted, false);
       expect(service.themeMode, ThemeMode.system);
       expect(service.dailyReminderEnabled, false);
+      expect(service.userName, '');
+      expect(service.userAge, isNull);
+      expect(service.userHeight, isNull);
+      expect(service.userWeight, isNull);
+      expect(service.userPfpPath, isNull);
       expect(prefs.getKeys(), isEmpty);
+    });
+  });
+
+  group('profile fields round-trip', () {
+    test('name, age, height, weight, and pfp path round-trip', () async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final service = PreferenceService(prefs);
+
+      expect(service.userName, '');
+      expect(service.userAge, isNull);
+      expect(service.userHeight, isNull);
+      expect(service.userWeight, isNull);
+      expect(service.userPfpPath, isNull);
+
+      await service.setUserName('Budi Rewire');
+      await service.setUserAge(28);
+      await service.setUserHeight(175.5);
+      await service.setUserWeight(68.0);
+      await service.setUserPfpPath('/data/user/0/pfp.png');
+
+      expect(service.userName, 'Budi Rewire');
+      expect(service.userAge, 28);
+      expect(service.userHeight, 175.5);
+      expect(service.userWeight, 68.0);
+      expect(service.userPfpPath, '/data/user/0/pfp.png');
+
+      // Test clearing nullables
+      await service.setUserAge(null);
+      await service.setUserHeight(null);
+      await service.setUserWeight(null);
+      await service.setUserPfpPath(null);
+
+      expect(service.userAge, isNull);
+      expect(service.userHeight, isNull);
+      expect(service.userWeight, isNull);
+      expect(service.userPfpPath, isNull);
     });
   });
 
@@ -111,7 +158,9 @@ void main() {
     service.addListener(() => notified++);
     await service.setDarkMode(true);
     await service.setDailyReminderEnabled(true);
+    await service.setUserName('Test');
+    await service.setUserAge(20);
     await service.resetAll();
-    expect(notified, greaterThanOrEqualTo(3));
+    expect(notified, greaterThanOrEqualTo(5));
   });
 }
