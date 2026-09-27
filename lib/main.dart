@@ -17,6 +17,7 @@ import 'repositories/quest_repository.dart';
 import 'repositories/user_repository.dart';
 import 'repositories/workout_repository.dart';
 import 'services/achievement_service.dart';
+import 'services/preference_service.dart';
 import 'services/quest_service.dart';
 import 'services/xp_service.dart';
 
@@ -26,6 +27,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final db = await DatabaseHelper.instance.database;
   final prefs = await SharedPreferences.getInstance();
+  final preferences = PreferenceService(prefs);
 
   // One shared Database backs every repository (spec §2.4).
   final users = UserRepository(db);
@@ -46,7 +48,11 @@ Future<void> main() async {
     achievements,
   );
 
-  final router = buildRouter(prefs);
+  final router = buildRouter(
+    prefs,
+    preferences: preferences,
+    onResetData: () => DatabaseHelper.instance.resetData(),
+  );
 
   // Root providers (spec §2.2). Kept at the app root so Task 13 can preserve
   // them across the widget it wraps.
@@ -64,7 +70,7 @@ Future<void> main() async {
           create: (_) => AchievementProvider(achievementService),
         ),
       ],
-      child: RewireApp(router: router),
+      child: RewireApp(router: router, preferences: preferences),
     ),
   );
 }

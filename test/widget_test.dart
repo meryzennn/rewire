@@ -36,8 +36,10 @@ void main() {
 
     expect(find.text('Welcome to Rewire'), findsOneWidget);
     expect(find.byKey(const Key('welcome-brain')), findsOneWidget);
-    expect(find.text('Mulai Sekarang'), findsNothing);
-    expect(find.text('Sudah punya data?'), findsNothing);
+    expect(find.text('Selanjutnya'), findsOneWidget);
+    expect(find.text('Mulai Perjalanan'), findsNothing);
+    // Skip is available from the first page.
+    expect(find.text('Lewati'), findsOneWidget);
 
     await tester.drag(
       find.byKey(const Key('onboarding-pages')),
@@ -45,7 +47,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Tiga Pilar Rewire'), findsOneWidget);
-    expect(find.text('Mulai Sekarang'), findsNothing);
+    expect(find.text('Mulai Perjalanan'), findsNothing);
 
     await tester.drag(
       find.byKey(const Key('onboarding-pages')),
@@ -60,37 +62,8 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Atur Pengingat Harian'), findsOneWidget);
-    expect(find.text('Mulai Sekarang'), findsOneWidget);
-    expect(find.text('Sudah punya data?'), findsOneWidget);
-  });
-
-  testWidgets('last-page actions show their not-ready messages', (
-    tester,
-  ) async {
-    await _pumpOnboarding(tester);
-    await tester.drag(
-      find.byKey(const Key('onboarding-pages')),
-      const Offset(-700, 0),
-    );
-    await tester.pumpAndSettle();
-    await tester.drag(
-      find.byKey(const Key('onboarding-pages')),
-      const Offset(-700, 0),
-    );
-    await tester.pumpAndSettle();
-    await tester.drag(
-      find.byKey(const Key('onboarding-pages')),
-      const Offset(-700, 0),
-    );
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.text('Mulai Sekarang'));
-    await tester.pump();
-    expect(find.text('Onboarding berikutnya belum tersedia.'), findsOneWidget);
-
-    await tester.tap(find.text('Sudah punya data?'));
-    await tester.pump();
-    expect(find.text('Pemulihan data belum tersedia.'), findsOneWidget);
+    expect(find.text('Mulai Perjalanan'), findsOneWidget);
+    expect(find.text('Selanjutnya'), findsNothing);
   });
 
   testWidgets('swipe keeps each slide whole until the fade transition', (

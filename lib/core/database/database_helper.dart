@@ -4,6 +4,29 @@ import 'package:sqflite/sqflite.dart';
 
 import 'tables.dart';
 
+/// Every table name (spec §2.4), used by [clearAllData] for a full reset.
+const List<String> kTableNames = [
+  'user_profile',
+  'daily_checkins',
+  'triggers',
+  'meditation_sessions',
+  'workout_sessions',
+  'quests',
+  'achievements',
+  'streaks',
+];
+
+/// Deletes every row from every table on [db], leaving the schema intact.
+/// Used by the settings "Reset Semua Data" flow and testable against any
+/// [Database] (e.g. an in-memory one).
+Future<void> clearAllData(Database db) async {
+  final batch = db.batch();
+  for (final table in kTableNames) {
+    batch.delete(table);
+  }
+  await batch.commit(noResult: true);
+}
+
 /// Singleton access to the on-device SQLite database.
 class DatabaseHelper {
   DatabaseHelper._();
@@ -30,4 +53,8 @@ class DatabaseHelper {
     }
     await batch.commit(noResult: true);
   }
+
+  /// Wipes all local data (spec §2.4 tables), keeping the schema. Backs the
+  /// settings reset; SharedPreferences are cleared separately by the caller.
+  Future<void> resetData() async => clearAllData(await database);
 }
