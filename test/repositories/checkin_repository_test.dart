@@ -83,6 +83,15 @@ void main() {
     );
     expect(saved.mood, 3);
     expect(await repo.triggerCount(), 2);
+    expect(await repo.getTriggersByDate(dateStr), ['stress', 'boredom']);
+
+    // Re-saving with new triggers replaces previous triggers for this date
+    await repo.saveCheckin(
+      checkin(mood: 4),
+      triggers: ['loneliness'],
+    );
+    expect(await repo.triggerCount(), 1);
+    expect(await repo.getTriggersByDate(dateStr), ['loneliness']);
   });
 
   test('saveCheckin rolls back triggers when the check-in fails', () async {

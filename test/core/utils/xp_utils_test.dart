@@ -47,4 +47,37 @@ void main() {
     expect(brainStageForLevel(0), 'dormant');
     expect(brainStageForLevel(99), 'transcendent');
   });
+
+  test('level progress calculations accurately report progress within brackets', () {
+    // Level 1: 0 to 50 XP (span = 50)
+    expect(xpSpanForLevel(1), 50);
+    expect(xpProgressInLevel(0), 0);
+    expect(levelProgressFraction(0), 0.0);
+
+    expect(xpProgressInLevel(20), 20);
+    expect(levelProgressFraction(20), 0.4);
+
+    // Level 2: 50 to 174 XP (span = 124)
+    expect(xpSpanForLevel(2), 124);
+    expect(xpProgressInLevel(50), 0);
+    expect(levelProgressFraction(50), 0.0);
+
+    // Level 50 (max): progress is 1.0
+    expect(levelProgressFraction(55122), 1.0);
+  });
+
+  test('meditation XP mapping matches spec §3.1', () {
+    expect(xpForMeditationMinutes(0), 0);
+    expect(xpForMeditationMinutes(3), 0);
+    expect(xpForMeditationMinutes(5), 10);
+    expect(xpForMeditationMinutes(9), 10);
+    expect(xpForMeditationMinutes(10), 15);
+    expect(xpForMeditationMinutes(14), 15);
+    expect(xpForMeditationMinutes(15), 20);
+    expect(xpForMeditationMinutes(19), 20);
+    expect(xpForMeditationMinutes(20), 25);
+    expect(xpForMeditationMinutes(29), 25);
+    expect(xpForMeditationMinutes(30), 30);
+    expect(xpForMeditationMinutes(60), 30);
+  });
 }

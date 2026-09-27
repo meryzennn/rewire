@@ -94,17 +94,17 @@
 
 **Files:** `lib/screens/checkin/checkin_screen.dart`, `lib/screens/home/widgets/streak_card.dart`, check-in provider/repository updates, widget/integration tests.
 
-- [ ] Test clean/relapse, mood 1–5, trigger save, same-day duplicate prevention, streak reset and XP preservation; include relapse encouragement.
-- [ ] Implement save as one transaction; clean check-in awards +20 once; relapse ends streak without reducing lifetime XP; update quests/achievements.
-- [ ] Run targeted tests; commit `feat: add recovery check-ins and streaks`.
+- [x] Test clean/relapse, mood 1–5, trigger save, same-day duplicate prevention, streak reset and XP preservation; include relapse encouragement.
+- [x] Implement save as one transaction; clean check-in awards +20 once; relapse ends streak without reducing lifetime XP; update quests/achievements.
+- [x] Run targeted tests; commit `feat: add recovery check-ins and streaks`.
 
 ### Task 9: Home and brain evolution
 
 **Files:** `lib/screens/home/{home_screen.dart,widgets/brain_visual.dart,widgets/streak_card.dart,widgets/daily_quests_card.dart,widgets/quick_actions.dart}`, `lib/widgets/{xp_chip,celebration_overlay,level_up_dialog}.dart`.
 
-- [ ] Widget-test stage/level/streak/quest rendering and level-up event.
-- [ ] Implement spec UI; map brain stage to five local assets; subtle idle pulse and level-up transition. Missing asset must show styled fallback, not crash.
-- [ ] Run tests; commit `feat: build home and progression visuals`.
+- [x] Widget-test stage/level/streak/quest rendering and level-up event.
+- [x] Implement spec UI; map brain stage to five local assets; subtle idle pulse and level-up transition. Missing asset must show styled fallback, not crash.
+- [x] Run tests; commit `feat: build home and progression visuals`.
 
 ### Task 10: Meditation
 
@@ -112,9 +112,9 @@
 
 **Interfaces:** `AudioService.play(String trackName)`, `pause()`, `resume()`, `stop()`, `setVolume(double)`, `isPlaying`, `currentTrack`.
 
-- [ ] Test duration XP mapping, completion persistence, breathing phase timing; use fake audio service for widget tests.
-- [ ] Implement 5/10/15/20/30/custom timer, six looping bundled tracks, box and 4-7-8 breathing, wakelock during active session; award XP only on completion.
-- [ ] Run tests; commit `feat: add offline meditation`.
+- [x] Test duration XP mapping, completion persistence, breathing phase timing; use fake audio service for widget tests.
+- [x] Implement 5/10/15/20/30/custom timer, six looping bundled tracks, box and 4-7-8 breathing, wakelock during active session; award XP only on completion.
+- [x] Run tests; commit `feat: add offline meditation`.
 
 ### Task 11: Exercises and workouts
 

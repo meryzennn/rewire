@@ -28,3 +28,38 @@ String brainStageForLevel(int level) {
 }
 
 int _clampLevel(int level) => math.max(1, math.min(50, level));
+
+/// XP required to advance from [currentLevel] to [currentLevel + 1].
+int xpSpanForLevel(int currentLevel) {
+  final clamped = _clampLevel(currentLevel);
+  if (clamped >= 50) return 1;
+  return xpToReach(clamped + 1) - xpToReach(clamped);
+}
+
+/// XP accumulated within the current level bracket.
+int xpProgressInLevel(int totalXp) {
+  final level = levelForXp(totalXp);
+  final currentThreshold = xpToReach(level);
+  return totalXp - currentThreshold;
+}
+
+/// Progress ratio (0.0 to 1.0) towards the next level.
+double levelProgressFraction(int totalXp) {
+  final level = levelForXp(totalXp);
+  if (level >= 50) return 1.0;
+  final span = xpSpanForLevel(level);
+  final inLevel = xpProgressInLevel(totalXp);
+  return (inLevel / span).clamp(0.0, 1.0);
+}
+
+/// XP earned for a completed meditation session based on duration in minutes (spec §3.1).
+/// 5min=10, 10min=15, 15min=20, 20min=25, 30min=30.
+int xpForMeditationMinutes(int minutes) {
+  if (minutes < 5) return 0;
+  if (minutes < 10) return 10;
+  if (minutes < 15) return 15;
+  if (minutes < 20) return 20;
+  if (minutes < 30) return 25;
+  return 30;
+}
+

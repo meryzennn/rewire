@@ -59,13 +59,30 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider(users, xp)),
-        ChangeNotifierProvider(create: (_) => CheckinProvider(checkins, xp)),
         ChangeNotifierProvider(
-          create: (_) => MeditationProvider(meditation, xp),
+          create: (_) => UserProvider(users, xp)..loadProfile(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CheckinProvider(
+            checkins,
+            xp,
+            users: users,
+            quests: questService,
+            achievements: achievementService,
+          )..loadToday(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => MeditationProvider(
+            meditation,
+            xp,
+            quests: questService,
+            achievements: achievementService,
+          )..loadStats(),
         ),
         ChangeNotifierProvider(create: (_) => WorkoutProvider(workouts, xp)),
-        ChangeNotifierProvider(create: (_) => QuestProvider(questService)),
+        ChangeNotifierProvider(
+          create: (_) => QuestProvider(questService)..loadDailyQuests(),
+        ),
         ChangeNotifierProvider(
           create: (_) => AchievementProvider(achievementService),
         ),

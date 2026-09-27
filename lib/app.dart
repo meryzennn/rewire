@@ -3,9 +3,15 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/theme/app_theme.dart';
+import 'screens/checkin/checkin_screen.dart';
+import 'screens/home/home_screen.dart';
+import 'screens/meditation/active_meditation_screen.dart';
+import 'screens/meditation/meditation_complete_screen.dart';
+import 'screens/meditation/meditation_home_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/settings/settings_screen.dart';
 import 'services/preference_service.dart';
+import 'services/xp_service.dart';
 import 'widgets/app_bottom_nav.dart';
 
 /// SharedPreferences key for the first-run gate (spec §2.5). Aliases the
@@ -20,10 +26,13 @@ class Routes {
 
   static const String home = '/';
   static const String meditation = '/meditation';
+  static const String activeMeditation = '/meditation/active';
+  static const String meditationComplete = '/meditation/complete';
   static const String workout = '/workout';
   static const String progress = '/progress';
   static const String settings = '/settings';
   static const String onboarding = '/onboarding';
+  static const String checkin = '/checkin';
 }
 
 /// The root Rewire app: themed [MaterialApp.router] driven by [router].
@@ -95,6 +104,38 @@ GoRouter buildRouter(
         builder: (context, state) =>
             OnboardingScreen(preferences: prefService),
       ),
+      GoRoute(
+        path: Routes.checkin,
+        builder: (context, state) => const CheckinScreen(),
+      ),
+      GoRoute(
+        path: Routes.activeMeditation,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          return ActiveMeditationScreen(
+            durationMinutes: extra?['durationMinutes'] as int? ?? 10,
+            trackId: extra?['trackId'] as String? ?? 'rain',
+            breathingId: extra?['breathingId'] as String?,
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.meditationComplete,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          return MeditationCompleteScreen(
+            durationMinutes: extra?['durationMinutes'] as int? ?? 10,
+            xpAward: extra?['xpAward'] as XpAward? ??
+                const XpAward(
+                  amount: 15,
+                  totalXpBefore: 0,
+                  totalXpAfter: 15,
+                  levelBefore: 1,
+                  levelAfter: 1,
+                ),
+          );
+        },
+      ),
       StatefulShellRoute(
         builder: (context, state, navigationShell) =>
             _ShellScaffold(navigationShell: navigationShell),
@@ -109,7 +150,7 @@ GoRouter buildRouter(
               GoRoute(
                 path: Routes.home,
                 builder: (context, state) =>
-                    const _TabPlaceholder(navKey: 'screen-home', title: 'Home'),
+                    const HomeScreen(key: Key('screen-home')),
               ),
             ],
           ),
@@ -117,10 +158,8 @@ GoRouter buildRouter(
             routes: [
               GoRoute(
                 path: Routes.meditation,
-                builder: (context, state) => const _TabPlaceholder(
-                  navKey: 'screen-meditation',
-                  title: 'Meditasi',
-                ),
+                builder: (context, state) =>
+                    const MeditationHomeScreen(key: Key('screen-meditation')),
               ),
             ],
           ),
