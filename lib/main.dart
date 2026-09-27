@@ -88,10 +88,11 @@ Future<void> main() async {
           )..loadStats(),
         ),
         ChangeNotifierProvider(
-          create: (_) => QuestProvider(questService)..loadDailyQuests(),
+          create: (_) => QuestProvider(questService)..loadAllQuests(),
         ),
         ChangeNotifierProvider(
-          create: (_) => AchievementProvider(achievementService),
+          create: (_) =>
+              AchievementProvider(achievementService)..loadAchievements(),
         ),
       ],
       child: RewireApp(router: router, preferences: preferences),

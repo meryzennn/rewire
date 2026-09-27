@@ -11,6 +11,7 @@ import 'screens/meditation/active_meditation_screen.dart';
 import 'screens/meditation/meditation_complete_screen.dart';
 import 'screens/meditation/meditation_home_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
+import 'screens/progress/progress_screen.dart';
 import 'screens/settings/settings_screen.dart';
 import 'screens/workout/active_workout_screen.dart';
 import 'screens/workout/exercise_detail_screen.dart';
@@ -226,10 +227,8 @@ GoRouter buildRouter(
             routes: [
               GoRoute(
                 path: Routes.progress,
-                builder: (context, state) => const _TabPlaceholder(
-                  navKey: 'screen-progress',
-                  title: 'Progress',
-                ),
+                builder: (context, state) =>
+                    const ProgressScreen(key: Key('screen-progress')),
               ),
             ],
           ),

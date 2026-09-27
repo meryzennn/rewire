@@ -35,6 +35,12 @@ class AchievementService {
   final QuestRepository _quests;
   final AchievementRepository _achievements;
 
+  /// Returns all achievements, seeding them first if not yet seeded.
+  Future<List<Achievement>> getAllAchievements() async {
+    await _achievements.seedAll(kAchievementDefinitions);
+    return _achievements.getAll();
+  }
+
   /// Seeds definitions (idempotent), evaluates every badge, unlocks any newly
   /// earned ones, and returns those newly unlocked. [now] stamps the unlock date
   /// (injectable for tests; it does not affect which badges unlock).

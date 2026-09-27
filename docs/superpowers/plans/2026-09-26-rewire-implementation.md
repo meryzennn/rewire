@@ -128,9 +128,9 @@
 
 **Files:** `lib/screens/progress/{progress_screen.dart,widgets/brain_timeline.dart,widgets/stat_cards_grid.dart,widgets/streak_chart.dart,widgets/mood_trend_chart.dart,widgets/weekly_challenges.dart,widgets/achievement_grid.dart}`, widget tests.
 
-- [ ] Test empty and populated history rendering, stats, chart series and badge state.
-- [ ] Implement from `docs/UI.md` using `fl_chart`; query persisted aggregates, handle empty history without errors.
-- [ ] Run tests; commit `feat: add progress dashboard`.
+- [x] Test empty and populated history rendering, stats, chart series and badge state.
+- [x] Implement from `docs/UI.md` using `fl_chart`; query persisted aggregates, handle empty history without errors.
+- [x] Run tests; commit `feat: add progress dashboard`.
 
 ### Task 13: Notifications and lifecycle
 
