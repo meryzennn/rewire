@@ -60,7 +60,15 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider(users, xp)),
-        ChangeNotifierProvider(create: (_) => CheckinProvider(checkins, xp)),
+        ChangeNotifierProvider(
+          create: (_) => CheckinProvider(
+            checkins,
+            xp,
+            users: users,
+            quests: questService,
+            achievements: achievementService,
+          )..loadToday(),
+        ),
         ChangeNotifierProvider(
           create: (_) => MeditationProvider(meditation, xp),
         ),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/theme/app_theme.dart';
+import 'screens/checkin/checkin_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/settings/settings_screen.dart';
 import 'services/preference_service.dart';
@@ -24,6 +25,7 @@ class Routes {
   static const String progress = '/progress';
   static const String settings = '/settings';
   static const String onboarding = '/onboarding';
+  static const String checkin = '/checkin';
 }
 
 /// The root Rewire app: themed [MaterialApp.router] driven by [router].
@@ -94,6 +96,10 @@ GoRouter buildRouter(
         path: Routes.onboarding,
         builder: (context, state) =>
             OnboardingScreen(preferences: prefService),
+      ),
+      GoRoute(
+        path: Routes.checkin,
+        builder: (context, state) => const CheckinScreen(),
       ),
       StatefulShellRoute(
         builder: (context, state, navigationShell) =>

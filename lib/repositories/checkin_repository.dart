@@ -56,6 +56,11 @@ class CheckinRepository {
     List<String> triggers = const [],
   }) {
     return _db.transaction((txn) async {
+      await txn.delete(
+        'triggers',
+        where: 'date = ?',
+        whereArgs: [checkin.date],
+      );
       for (final description in triggers) {
         await txn.insert('triggers', {
           'date': checkin.date,
@@ -72,6 +77,17 @@ class CheckinRepository {
       return DailyCheckin.fromMap(row);
     });
   }
+
+  Future<List<String>> getTriggersByDate(String date) async {
+    final rows = await _db.query(
+      'triggers',
+      where: 'date = ?',
+      whereArgs: [date],
+      orderBy: 'id ASC',
+    );
+    return rows.map((r) => r['description'] as String).toList();
+  }
+
 
   Future<int> triggerCount() async =>
       Sqflite.firstIntValue(

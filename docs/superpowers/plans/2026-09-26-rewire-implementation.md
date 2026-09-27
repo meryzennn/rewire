@@ -94,9 +94,9 @@
 
 **Files:** `lib/screens/checkin/checkin_screen.dart`, `lib/screens/home/widgets/streak_card.dart`, check-in provider/repository updates, widget/integration tests.
 
-- [ ] Test clean/relapse, mood 1–5, trigger save, same-day duplicate prevention, streak reset and XP preservation; include relapse encouragement.
-- [ ] Implement save as one transaction; clean check-in awards +20 once; relapse ends streak without reducing lifetime XP; update quests/achievements.
-- [ ] Run targeted tests; commit `feat: add recovery check-ins and streaks`.
+- [x] Test clean/relapse, mood 1–5, trigger save, same-day duplicate prevention, streak reset and XP preservation; include relapse encouragement.
+- [x] Implement save as one transaction; clean check-in awards +20 once; relapse ends streak without reducing lifetime XP; update quests/achievements.
+- [x] Run targeted tests; commit `feat: add recovery check-ins and streaks`.
 
 ### Task 9: Home and brain evolution
 
