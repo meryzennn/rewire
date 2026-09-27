@@ -112,9 +112,9 @@
 
 **Interfaces:** `AudioService.play(String trackName)`, `pause()`, `resume()`, `stop()`, `setVolume(double)`, `isPlaying`, `currentTrack`.
 
-- [ ] Test duration XP mapping, completion persistence, breathing phase timing; use fake audio service for widget tests.
-- [ ] Implement 5/10/15/20/30/custom timer, six looping bundled tracks, box and 4-7-8 breathing, wakelock during active session; award XP only on completion.
-- [ ] Run tests; commit `feat: add offline meditation`.
+- [x] Test duration XP mapping, completion persistence, breathing phase timing; use fake audio service for widget tests.
+- [x] Implement 5/10/15/20/30/custom timer, six looping bundled tracks, box and 4-7-8 breathing, wakelock during active session; award XP only on completion.
+- [x] Run tests; commit `feat: add offline meditation`.
 
 ### Task 11: Exercises and workouts
 

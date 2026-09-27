@@ -65,4 +65,19 @@ void main() {
     // Level 50 (max): progress is 1.0
     expect(levelProgressFraction(55122), 1.0);
   });
+
+  test('meditation XP mapping matches spec §3.1', () {
+    expect(xpForMeditationMinutes(0), 0);
+    expect(xpForMeditationMinutes(3), 0);
+    expect(xpForMeditationMinutes(5), 10);
+    expect(xpForMeditationMinutes(9), 10);
+    expect(xpForMeditationMinutes(10), 15);
+    expect(xpForMeditationMinutes(14), 15);
+    expect(xpForMeditationMinutes(15), 20);
+    expect(xpForMeditationMinutes(19), 20);
+    expect(xpForMeditationMinutes(20), 25);
+    expect(xpForMeditationMinutes(29), 25);
+    expect(xpForMeditationMinutes(30), 30);
+    expect(xpForMeditationMinutes(60), 30);
+  });
 }

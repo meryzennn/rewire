@@ -51,3 +51,15 @@ double levelProgressFraction(int totalXp) {
   final inLevel = xpProgressInLevel(totalXp);
   return (inLevel / span).clamp(0.0, 1.0);
 }
+
+/// XP earned for a completed meditation session based on duration in minutes (spec §3.1).
+/// 5min=10, 10min=15, 15min=20, 20min=25, 30min=30.
+int xpForMeditationMinutes(int minutes) {
+  if (minutes < 5) return 0;
+  if (minutes < 10) return 10;
+  if (minutes < 15) return 15;
+  if (minutes < 20) return 20;
+  if (minutes < 30) return 25;
+  return 30;
+}
+

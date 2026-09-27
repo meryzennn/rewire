@@ -72,7 +72,12 @@ Future<void> main() async {
           )..loadToday(),
         ),
         ChangeNotifierProvider(
-          create: (_) => MeditationProvider(meditation, xp),
+          create: (_) => MeditationProvider(
+            meditation,
+            xp,
+            quests: questService,
+            achievements: achievementService,
+          )..loadStats(),
         ),
         ChangeNotifierProvider(create: (_) => WorkoutProvider(workouts, xp)),
         ChangeNotifierProvider(
