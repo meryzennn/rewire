@@ -17,6 +17,7 @@ import 'repositories/quest_repository.dart';
 import 'repositories/user_repository.dart';
 import 'repositories/workout_repository.dart';
 import 'services/achievement_service.dart';
+import 'services/notification_service.dart';
 import 'services/preference_service.dart';
 import 'services/quest_service.dart';
 import 'services/xp_service.dart';
@@ -48,10 +49,15 @@ Future<void> main() async {
     achievements,
   );
 
+  final notificationService = NotificationService();
+  await notificationService.initialize();
+  await notificationService.syncWithPreferences(preferences);
+
   final router = buildRouter(
     prefs,
     preferences: preferences,
     onResetData: () => DatabaseHelper.instance.resetData(),
+    notificationService: notificationService,
   );
 
   // Root providers (spec §2.2). Kept at the app root so Task 13 can preserve
@@ -59,6 +65,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
+        Provider<NotificationService>.value(value: notificationService),
         ChangeNotifierProvider(
           create: (_) => UserProvider(users, xp)..loadProfile(),
         ),

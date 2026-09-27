@@ -17,6 +17,7 @@ import 'screens/workout/active_workout_screen.dart';
 import 'screens/workout/exercise_detail_screen.dart';
 import 'screens/workout/workout_complete_screen.dart';
 import 'screens/workout/workout_home_screen.dart';
+import 'services/notification_service.dart';
 import 'services/preference_service.dart';
 import 'services/xp_service.dart';
 import 'widgets/app_bottom_nav.dart';
@@ -96,6 +97,7 @@ GoRouter buildRouter(
   SharedPreferences prefs, {
   PreferenceService? preferences,
   Future<void> Function()? onResetData,
+  NotificationService? notificationService,
 }) {
   final prefService = preferences ?? PreferenceService(prefs);
   final resetData = onResetData ?? () async {};
@@ -239,6 +241,7 @@ GoRouter buildRouter(
                 builder: (context, state) => SettingsScreen(
                   preferences: prefService,
                   onResetData: resetData,
+                  notificationService: notificationService,
                 ),
               ),
             ],
