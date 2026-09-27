@@ -199,6 +199,16 @@ class _CheckinScreenState extends State<CheckinScreen> {
             : _notesController.text.trim(),
         triggers: _selectedTriggers.toList(),
       );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gagal menyimpan check-in: $e'),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
+      }
+      return;
     } finally {
       if (mounted) {
         setState(() => _isSaving = false);

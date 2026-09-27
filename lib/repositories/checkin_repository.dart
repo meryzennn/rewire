@@ -7,13 +7,6 @@ import '../models/streak.dart';
 // ponytail: daily_checkins, triggers, and streaks share this repository because
 // the plan defines no separate trigger/streak repository. Split into their own
 // files if either grows its own query surface.
-const String _upsertCheckinSql =
-    'INSERT INTO daily_checkins (date, status, mood, notes, xp_earned) '
-    'VALUES (?, ?, ?, ?, ?) '
-    'ON CONFLICT(date) DO UPDATE SET '
-    'status = excluded.status, mood = excluded.mood, '
-    'notes = excluded.notes, xp_earned = excluded.xp_earned';
-
 /// Check-ins (one row per local date), their triggers, and streak history.
 class CheckinRepository {
   CheckinRepository(this._db);
@@ -44,9 +37,39 @@ class CheckinRepository {
       ) ??
       0;
 
+  Future<void> _upsertRow(
+    DatabaseExecutor executor,
+    DailyCheckin checkin,
+  ) async {
+    final values = <String, Object?>{
+      'date': checkin.date,
+      'status': checkin.status,
+      'mood': checkin.mood,
+      'notes': checkin.notes,
+      'xp_earned': checkin.xpEarned,
+    };
+    final existing = await executor.query(
+      'daily_checkins',
+      columns: ['id'],
+      where: 'date = ?',
+      whereArgs: [checkin.date],
+      limit: 1,
+    );
+    if (existing.isNotEmpty) {
+      await executor.update(
+        'daily_checkins',
+        values,
+        where: 'date = ?',
+        whereArgs: [checkin.date],
+      );
+    } else {
+      await executor.insert('daily_checkins', values);
+    }
+  }
+
   /// Inserts or updates the single check-in for its local date.
   Future<DailyCheckin> upsertCheckin(DailyCheckin checkin) async {
-    await _db.rawInsert(_upsertCheckinSql, _checkinArgs(checkin));
+    await _upsertRow(_db, checkin);
     return (await _byDateString(checkin.date))!;
   }
 
@@ -67,7 +90,7 @@ class CheckinRepository {
           'description': description,
         });
       }
-      await txn.rawInsert(_upsertCheckinSql, _checkinArgs(checkin));
+      await _upsertRow(txn, checkin);
       final row = (await txn.query(
         'daily_checkins',
         where: 'date = ?',
@@ -110,14 +133,6 @@ class CheckinRepository {
     );
     return rows.map(Streak.fromMap).toList();
   }
-
-  List<Object?> _checkinArgs(DailyCheckin c) => [
-    c.date,
-    c.status,
-    c.mood,
-    c.notes,
-    c.xpEarned,
-  ];
 
   Future<DailyCheckin?> _byDateString(String date) async {
     final rows = await _db.query(
