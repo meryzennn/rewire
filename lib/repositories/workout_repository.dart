@@ -33,4 +33,12 @@ class WorkoutRepository {
         await _db.rawQuery('SELECT COUNT(*) FROM workout_sessions'),
       ) ??
       0;
+
+  Future<int> totalCompletedSeconds() async =>
+      Sqflite.firstIntValue(
+        await _db.rawQuery(
+          'SELECT COALESCE(SUM(duration_seconds), 0) FROM workout_sessions',
+        ),
+      ) ??
+      0;
 }

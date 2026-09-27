@@ -63,3 +63,14 @@ int xpForMeditationMinutes(int minutes) {
   return 30;
 }
 
+/// XP earned for a completed workout based on routine duration in minutes (spec §3.1).
+/// <=10min=15, <=15min=25, <=20min=30, >20min=40.
+int xpForWorkoutDurationMinutes(int minutes) {
+  if (minutes <= 0) return 0;
+  if (minutes <= 10) return 15;
+  if (minutes <= 15) return 25;
+  if (minutes <= 20) return 30;
+  return 40;
+}
+
+

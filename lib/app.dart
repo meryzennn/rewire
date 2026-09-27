@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/theme/app_theme.dart';
+import 'data/exercises.dart';
+import 'data/routines.dart';
 import 'screens/checkin/checkin_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/meditation/active_meditation_screen.dart';
@@ -10,6 +12,10 @@ import 'screens/meditation/meditation_complete_screen.dart';
 import 'screens/meditation/meditation_home_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/settings/settings_screen.dart';
+import 'screens/workout/active_workout_screen.dart';
+import 'screens/workout/exercise_detail_screen.dart';
+import 'screens/workout/workout_complete_screen.dart';
+import 'screens/workout/workout_home_screen.dart';
 import 'services/preference_service.dart';
 import 'services/xp_service.dart';
 import 'widgets/app_bottom_nav.dart';
@@ -29,6 +35,9 @@ class Routes {
   static const String activeMeditation = '/meditation/active';
   static const String meditationComplete = '/meditation/complete';
   static const String workout = '/workout';
+  static const String activeWorkout = '/workout/active';
+  static const String workoutComplete = '/workout/complete';
+  static const String exerciseDetail = '/workout/exercise-detail';
   static const String progress = '/progress';
   static const String settings = '/settings';
   static const String onboarding = '/onboarding';
@@ -136,6 +145,47 @@ GoRouter buildRouter(
           );
         },
       ),
+      GoRoute(
+        path: Routes.activeWorkout,
+        builder: (context, state) {
+          final routine = state.extra as WorkoutRoutine? ?? kAllRoutines.first;
+          return ActiveWorkoutScreen(routine: routine);
+        },
+      ),
+      GoRoute(
+        path: Routes.workoutComplete,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final routine =
+              extra?['routine'] as WorkoutRoutine? ?? kAllRoutines.first;
+          final durationSeconds = extra?['durationSeconds'] as int? ?? 900;
+          final exercisesCompleted =
+              extra?['exercisesCompleted'] as int? ?? 6;
+          final exercisesTotal = extra?['exercisesTotal'] as int? ?? 6;
+          final xpAward = extra?['xpAward'] as XpAward? ??
+              const XpAward(
+                amount: 25,
+                totalXpBefore: 0,
+                totalXpAfter: 25,
+                levelBefore: 1,
+                levelAfter: 1,
+              );
+          return WorkoutCompleteScreen(
+            routine: routine,
+            durationSeconds: durationSeconds,
+            exercisesCompleted: exercisesCompleted,
+            exercisesTotal: exercisesTotal,
+            xpAward: xpAward,
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.exerciseDetail,
+        builder: (context, state) {
+          final exercise = state.extra as Exercise? ?? kAllExercises.first;
+          return ExerciseDetailScreen(exercise: exercise);
+        },
+      ),
       StatefulShellRoute(
         builder: (context, state, navigationShell) =>
             _ShellScaffold(navigationShell: navigationShell),
@@ -167,10 +217,8 @@ GoRouter buildRouter(
             routes: [
               GoRoute(
                 path: Routes.workout,
-                builder: (context, state) => const _TabPlaceholder(
-                  navKey: 'screen-workout',
-                  title: 'Olahraga',
-                ),
+                builder: (context, state) =>
+                    const WorkoutHomeScreen(key: Key('screen-workout')),
               ),
             ],
           ),

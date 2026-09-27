@@ -120,9 +120,9 @@
 
 **Files:** `lib/data/{exercises,routines}.dart`, `lib/screens/workout/{workout_home_screen,exercise_detail_screen,active_workout_screen,rest_timer_screen,workout_complete_screen}.dart`, provider/tests.
 
-- [ ] Test all 15 exercises/3 routines, set advancement, rest timer, completion XP brackets and persistence.
-- [ ] Implement definitions exactly from spec §4.1–4.2, category filter, active sets/rest, local illustration fallback; award XP on completion only.
-- [ ] Run tests; commit `feat: add bodyweight workouts`.
+- [x] Test all 15 exercises/3 routines, set advancement, rest timer, completion XP brackets and persistence.
+- [x] Implement definitions exactly from spec §4.1–4.2, category filter, active sets/rest, local illustration fallback; award XP on completion only.
+- [x] Run tests; commit `feat: add bodyweight workouts`.
 
 ### Task 12: Progress and charts
 

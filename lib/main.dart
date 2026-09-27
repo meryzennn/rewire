@@ -79,7 +79,14 @@ Future<void> main() async {
             achievements: achievementService,
           )..loadStats(),
         ),
-        ChangeNotifierProvider(create: (_) => WorkoutProvider(workouts, xp)),
+        ChangeNotifierProvider(
+          create: (_) => WorkoutProvider(
+            workouts,
+            xp,
+            quests: questService,
+            achievements: achievementService,
+          )..loadStats(),
+        ),
         ChangeNotifierProvider(
           create: (_) => QuestProvider(questService)..loadDailyQuests(),
         ),
