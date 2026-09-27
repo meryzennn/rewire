@@ -1,29 +1,174 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/theme/app_colors.dart';
 import 'core/theme/app_theme.dart';
+import 'widgets/app_bottom_nav.dart';
 
+/// SharedPreferences key for the first-run gate (spec §2.5).
+const String kOnboardingCompletedKey = 'onboarding_completed';
+
+/// Route paths, verbatim from spec §2.3. The five tab paths are the app's
+/// navigation contract; modal/full-screen routes (/checkin, /brain,
+/// /meditation/active, ...) are added by their owning screen tasks.
+class Routes {
+  const Routes._();
+
+  static const String home = '/';
+  static const String meditation = '/meditation';
+  static const String workout = '/workout';
+  static const String progress = '/progress';
+  static const String settings = '/settings';
+  static const String onboarding = '/onboarding';
+}
+
+/// The root Rewire app: themed [MaterialApp.router] driven by [router].
 class RewireApp extends StatelessWidget {
-  const RewireApp({super.key});
+  const RewireApp({super.key, required this.router});
+
+  final GoRouter router;
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) => MaterialApp.router(
     title: 'Rewire',
     theme: buildLightTheme(),
     darkTheme: buildDarkTheme(),
     themeMode: ThemeMode.system,
-    home: const _OnboardingScreen(),
+    routerConfig: router,
   );
 }
 
-class _OnboardingScreen extends StatefulWidget {
-  const _OnboardingScreen();
-
-  @override
-  State<_OnboardingScreen> createState() => _OnboardingScreenState();
+/// Builds the app router: a five-tab [StatefulShellRoute.indexedStack] so each
+/// tab keeps its own stack, plus the onboarding route and first-run gate.
+///
+/// [prefs] is read synchronously in the redirect, so the gate reacts to the
+/// onboarding-completed flag without an async round-trip on every navigation.
+GoRouter buildRouter(SharedPreferences prefs) {
+  return GoRouter(
+    initialLocation: Routes.home,
+    redirect: (context, state) {
+      final completed = prefs.getBool(kOnboardingCompletedKey) ?? false;
+      final atOnboarding = state.matchedLocation == Routes.onboarding;
+      if (!completed) return atOnboarding ? null : Routes.onboarding;
+      if (atOnboarding) return Routes.home;
+      return null;
+    },
+    routes: [
+      GoRoute(
+        path: Routes.onboarding,
+        builder: (context, state) => const OnboardingScreen(),
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            _ShellScaffold(navigationShell: navigationShell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.home,
+                builder: (context, state) =>
+                    const _TabPlaceholder(navKey: 'screen-home', title: 'Home'),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.meditation,
+                builder: (context, state) => const _TabPlaceholder(
+                  navKey: 'screen-meditation',
+                  title: 'Meditasi',
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.workout,
+                builder: (context, state) => const _TabPlaceholder(
+                  navKey: 'screen-workout',
+                  title: 'Olahraga',
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.progress,
+                builder: (context, state) => const _TabPlaceholder(
+                  navKey: 'screen-progress',
+                  title: 'Progress',
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.settings,
+                builder: (context, state) => const _TabPlaceholder(
+                  navKey: 'screen-settings',
+                  title: 'Pengaturan',
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  );
 }
 
-class _OnboardingScreenState extends State<_OnboardingScreen> {
+/// Shell around the active tab: the branch content plus the shared bottom nav.
+class _ShellScaffold extends StatelessWidget {
+  const _ShellScaffold({required this.navigationShell});
+
+  final StatefulNavigationShell navigationShell;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    body: navigationShell,
+    bottomNavigationBar: AppBottomNav(navigationShell: navigationShell),
+  );
+}
+
+/// Stand-in for a tab screen until its screen task lands (Tasks 7-12). Stateful
+/// so the router tests can prove each branch's state is retained across tab
+/// switches. Shows a single centered label; no placeholder logic beyond that.
+class _TabPlaceholder extends StatefulWidget {
+  const _TabPlaceholder({required this.navKey, required this.title});
+
+  final String navKey;
+  final String title;
+
+  @override
+  State<_TabPlaceholder> createState() => _TabPlaceholderState();
+}
+
+class _TabPlaceholderState extends State<_TabPlaceholder> {
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    key: Key(widget.navKey),
+    appBar: AppBar(title: Text(widget.title)),
+    body: Center(
+      child: Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
+    ),
+  );
+}
+
+/// First-run onboarding (from Task 1). Preserved as the /onboarding screen;
+/// Task 7 replaces it with the full flow. Behaviour is intentionally unchanged.
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
   int _page = 0;
   double _dragDistance = 0;
 
@@ -67,6 +212,7 @@ class _OnboardingScreenState extends State<_OnboardingScreen> {
     );
     _dragDistance = 0;
   }
+// ONBOARDING_ANCHOR
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -151,6 +297,7 @@ class _OnboardingScreenState extends State<_OnboardingScreen> {
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 }
+// TAIL_ANCHOR
 
 class _OnboardingPage {
   const _OnboardingPage({

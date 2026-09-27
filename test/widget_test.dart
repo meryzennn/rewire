@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rewire/app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+/// Pumps [RewireApp] with a router whose gate is unset, so the app opens on the
+/// onboarding screen. These tests cover the onboarding UI carried over from
+/// Task 1, now reached through the router.
+Future<void> _pumpOnboarding(WidgetTester tester) async {
+  SharedPreferences.setMockInitialValues(<String, Object>{});
+  final prefs = await SharedPreferences.getInstance();
+  final GoRouter router = buildRouter(prefs);
+  await tester.pumpWidget(RewireApp(router: router));
+  await tester.pumpAndSettle();
+}
 
 void main() {
   testWidgets('light theme button label meets WCAG AA contrast', (
     tester,
   ) async {
-    await tester.pumpWidget(const RewireApp());
+    await _pumpOnboarding(tester);
 
     final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
     final style = app.theme!.elevatedButtonTheme.style!;
@@ -19,7 +32,7 @@ void main() {
   testWidgets('onboarding shows its actions only on the final page', (
     tester,
   ) async {
-    await tester.pumpWidget(const RewireApp());
+    await _pumpOnboarding(tester);
 
     expect(find.text('Welcome to Rewire'), findsOneWidget);
     expect(find.byKey(const Key('welcome-brain')), findsOneWidget);
@@ -54,7 +67,7 @@ void main() {
   testWidgets('last-page actions show their not-ready messages', (
     tester,
   ) async {
-    await tester.pumpWidget(const RewireApp());
+    await _pumpOnboarding(tester);
     await tester.drag(
       find.byKey(const Key('onboarding-pages')),
       const Offset(-700, 0),
@@ -83,7 +96,7 @@ void main() {
   testWidgets('swipe keeps each slide whole until the fade transition', (
     tester,
   ) async {
-    await tester.pumpWidget(const RewireApp());
+    await _pumpOnboarding(tester);
     final gesture = await tester.startGesture(
       tester.getCenter(find.byKey(const Key('onboarding-pages'))),
     );
@@ -102,7 +115,7 @@ void main() {
   testWidgets('onboarding pages can be advanced with the next control', (
     tester,
   ) async {
-    await tester.pumpWidget(const RewireApp());
+    await _pumpOnboarding(tester);
 
     for (final title in ['Tiga Pilar Rewire', 'Level Up Otakmu']) {
       await tester.tap(find.text('Selanjutnya'));
@@ -119,8 +132,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await tester.pumpWidget(const RewireApp());
-    await tester.pumpAndSettle();
+    await _pumpOnboarding(tester);
 
     expect(tester.takeException(), isNull);
   });
