@@ -80,4 +80,16 @@ void main() {
     expect(xpForMeditationMinutes(30), 30);
     expect(xpForMeditationMinutes(60), 30);
   });
+
+  test('workout XP mapping matches spec §3.1', () {
+    expect(xpForWorkoutDurationMinutes(0), 0);
+    expect(xpForWorkoutDurationMinutes(5), 15);
+    expect(xpForWorkoutDurationMinutes(10), 15);
+    expect(xpForWorkoutDurationMinutes(11), 25);
+    expect(xpForWorkoutDurationMinutes(15), 25);
+    expect(xpForWorkoutDurationMinutes(16), 30);
+    expect(xpForWorkoutDurationMinutes(20), 30);
+    expect(xpForWorkoutDurationMinutes(21), 40);
+    expect(xpForWorkoutDurationMinutes(45), 40);
+  });
 }

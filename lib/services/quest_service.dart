@@ -42,6 +42,16 @@ class QuestService {
     return _quests.getQuestsForDate(formatLocalDate(now), type: 'daily');
   }
 
+  /// Returns all weekly quests for the week containing [now].
+  Future<List<Quest>> getWeeklyQuests(DateTime now) async {
+    final weekStart = formatLocalDate(_mondayOf(now));
+    final existing = await _quests.getQuestsForDate(weekStart, type: 'weekly');
+    if (existing.isEmpty) {
+      await _quests.insertQuests(_selectWeekly(now, weekStart));
+    }
+    return _quests.getQuestsForDate(weekStart, type: 'weekly');
+  }
+
   /// Advances every active quest that responds to [activity], marking newly
   /// completed quests done and awarding their XP once. Returns those newly
   /// completed quests.

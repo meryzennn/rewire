@@ -10,13 +10,12 @@ import '../repositories/checkin_repository.dart';
 import '../repositories/meditation_repository.dart';
 import '../repositories/quest_repository.dart';
 import '../repositories/user_repository.dart';
+import '../data/routines.dart';
 import '../repositories/workout_repository.dart';
 
 /// Number of distinct workout routines shipped in v1 (spec §4.2). Used by the
 /// `full_body` badge ("complete all routines at least once").
-// ponytail: hard-coded to the spec's routine count; source it from
-// `lib/data/routines.dart` once Task 11 defines the canonical routine registry.
-const int _kWorkoutRoutineCount = 3;
+final int _kWorkoutRoutineCount = kAllRoutines.length;
 
 /// Evaluates achievement conditions (spec §3.5) and unlocks badges one-time.
 class AchievementService {
@@ -35,6 +34,12 @@ class AchievementService {
   final WorkoutRepository _workouts;
   final QuestRepository _quests;
   final AchievementRepository _achievements;
+
+  /// Returns all achievements, seeding them first if not yet seeded.
+  Future<List<Achievement>> getAllAchievements() async {
+    await _achievements.seedAll(kAchievementDefinitions);
+    return _achievements.getAll();
+  }
 
   /// Seeds definitions (idempotent), evaluates every badge, unlocks any newly
   /// earned ones, and returns those newly unlocked. [now] stamps the unlock date

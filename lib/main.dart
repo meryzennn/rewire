@@ -79,12 +79,20 @@ Future<void> main() async {
             achievements: achievementService,
           )..loadStats(),
         ),
-        ChangeNotifierProvider(create: (_) => WorkoutProvider(workouts, xp)),
         ChangeNotifierProvider(
-          create: (_) => QuestProvider(questService)..loadDailyQuests(),
+          create: (_) => WorkoutProvider(
+            workouts,
+            xp,
+            quests: questService,
+            achievements: achievementService,
+          )..loadStats(),
         ),
         ChangeNotifierProvider(
-          create: (_) => AchievementProvider(achievementService),
+          create: (_) => QuestProvider(questService)..loadAllQuests(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) =>
+              AchievementProvider(achievementService)..loadAchievements(),
         ),
       ],
       child: RewireApp(router: router, preferences: preferences),
