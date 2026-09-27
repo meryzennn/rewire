@@ -60,19 +60,25 @@ class AppBottomNav extends StatelessWidget {
       label: 'Progress',
     ),
     _NavItem(
-      icon: Icons.settings_outlined,
-      activeIcon: Icons.settings_rounded,
-      label: 'Pengaturan',
+      icon: Icons.person_outline_rounded,
+      activeIcon: Icons.person_rounded,
+      label: 'Profil',
     ),
   ];
 
   void _onTap(int index) {
-    if (pageController != null && pageController!.hasClients) {
-      pageController!.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 280),
-        curve: Curves.easeInOutCubic,
-      );
+    final controller = pageController;
+    if (controller != null && controller.hasClients) {
+      final current = controller.page?.round() ?? navigationShell.currentIndex;
+      if ((index - current).abs() <= 1) {
+        controller.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
+        );
+      } else {
+        controller.jumpToPage(index);
+      }
     }
     navigationShell.goBranch(
       index,

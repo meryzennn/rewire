@@ -48,7 +48,7 @@ void main() {
     expect(find.text('Meditasi'), findsOneWidget);
     expect(find.text('Olahraga'), findsOneWidget);
     expect(find.text('Progress'), findsOneWidget);
-    expect(find.text('Pengaturan'), findsOneWidget);
+    expect(find.text('Profil'), findsOneWidget);
 
     // Verify there is exactly ONE sliding pill indicator box
     final decoratedBoxes = tester.widgetList<DecoratedBox>(

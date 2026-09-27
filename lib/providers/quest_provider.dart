@@ -5,9 +5,21 @@ import '../services/quest_service.dart';
 
 /// Root provider for quests: today's daily set and weekly challenges (§2.2).
 class QuestProvider extends ChangeNotifier {
-  QuestProvider(this._quests);
+  QuestProvider(this._quests) {
+    _quests.addListener(_onQuestsChanged);
+  }
 
   final QuestService _quests;
+
+  void _onQuestsChanged() {
+    loadAllQuests();
+  }
+
+  @override
+  void dispose() {
+    _quests.removeListener(_onQuestsChanged);
+    super.dispose();
+  }
 
   List<Quest> _dailyQuests = const [];
   List<Quest> _weeklyQuests = const [];

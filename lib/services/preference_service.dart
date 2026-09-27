@@ -18,6 +18,11 @@ class PrefKeys {
   static const lastCheckinDate = 'last_checkin_date';
   static const lastQuestRefreshDate = 'last_quest_refresh_date';
   static const lastWeeklyRefreshDate = 'last_weekly_refresh_date';
+  static const userName = 'user_name';
+  static const userAge = 'user_age';
+  static const userHeight = 'user_height';
+  static const userWeight = 'user_weight';
+  static const userPfpPath = 'user_pfp_path';
 
   /// Every app-owned key, swept by [PreferenceService.resetAll]. Includes the
   /// date bookkeeping keys later tasks write, so a reset leaves no stale state.
@@ -32,6 +37,11 @@ class PrefKeys {
     lastCheckinDate,
     lastQuestRefreshDate,
     lastWeeklyRefreshDate,
+    userName,
+    userAge,
+    userHeight,
+    userWeight,
+    userPfpPath,
   ];
 }
 
@@ -89,6 +99,55 @@ class PreferenceService extends ChangeNotifier {
 
   Future<void> setWorkoutReminderEnabled(bool value) =>
       _writeBool(PrefKeys.workoutReminderEnabled, value);
+
+  String get userName => _prefs.getString(PrefKeys.userName) ?? '';
+
+  Future<void> setUserName(String value) =>
+      _writeString(PrefKeys.userName, value);
+
+  int? get userAge => _prefs.getInt(PrefKeys.userAge);
+
+  Future<void> setUserAge(int? value) async {
+    if (value == null) {
+      await _prefs.remove(PrefKeys.userAge);
+    } else {
+      await _prefs.setInt(PrefKeys.userAge, value);
+    }
+    notifyListeners();
+  }
+
+  double? get userHeight => _prefs.getDouble(PrefKeys.userHeight);
+
+  Future<void> setUserHeight(double? value) async {
+    if (value == null) {
+      await _prefs.remove(PrefKeys.userHeight);
+    } else {
+      await _prefs.setDouble(PrefKeys.userHeight, value);
+    }
+    notifyListeners();
+  }
+
+  double? get userWeight => _prefs.getDouble(PrefKeys.userWeight);
+
+  Future<void> setUserWeight(double? value) async {
+    if (value == null) {
+      await _prefs.remove(PrefKeys.userWeight);
+    } else {
+      await _prefs.setDouble(PrefKeys.userWeight, value);
+    }
+    notifyListeners();
+  }
+
+  String? get userPfpPath => _prefs.getString(PrefKeys.userPfpPath);
+
+  Future<void> setUserPfpPath(String? value) async {
+    if (value == null) {
+      await _prefs.remove(PrefKeys.userPfpPath);
+    } else {
+      await _prefs.setString(PrefKeys.userPfpPath, value);
+    }
+    notifyListeners();
+  }
 
   /// Clears every app-owned pref (§2.5). The DB wipe is a separate step owned
   /// by the caller; this only touches preferences.

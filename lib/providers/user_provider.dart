@@ -7,10 +7,22 @@ import '../services/xp_service.dart';
 
 /// Root provider for user progression: level, XP, streak, brain stage (§2.2).
 class UserProvider extends ChangeNotifier {
-  UserProvider(this._users, this._xp);
+  UserProvider(this._users, this._xp) {
+    _xp.addListener(_onXpChanged);
+  }
 
   final UserRepository _users;
   final XpService _xp;
+
+  void _onXpChanged() {
+    loadProfile();
+  }
+
+  @override
+  void dispose() {
+    _xp.removeListener(_onXpChanged);
+    super.dispose();
+  }
 
   UserProfile? _profile;
   bool _isLoading = false;

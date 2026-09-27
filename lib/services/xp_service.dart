@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../core/utils/date_utils.dart';
 import '../core/utils/xp_utils.dart';
 import '../models/daily_checkin.dart';
@@ -31,7 +33,7 @@ class XpAward {
 ///
 /// XP total is the source of truth (`total_xp`); level and brain stage are pure
 /// functions of it, so they are recomputed and persisted on every award.
-class XpService {
+class XpService extends ChangeNotifier {
   XpService(this._users, this._checkins);
 
   final UserRepository _users;
@@ -63,6 +65,8 @@ class XpService {
         ),
       );
     }
+
+    notifyListeners();
 
     return XpAward(
       amount: amount,

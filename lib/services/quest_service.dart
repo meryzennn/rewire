@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../core/utils/date_utils.dart';
 import '../data/quests_definitions.dart';
 import '../models/quest.dart';
@@ -8,7 +10,7 @@ import 'xp_service.dart';
 enum QuestActivity { checkin, meditation, workout, trigger, streak }
 
 /// Assigns daily/weekly quests deterministically and advances their progress.
-class QuestService {
+class QuestService extends ChangeNotifier {
   QuestService(this._quests, this._xp);
 
   final QuestRepository _quests;
@@ -36,6 +38,7 @@ class QuestService {
         await _quests.insertQuests(_selectWeekly(now, weekStart));
       }
     }
+    notifyListeners();
   }
 
   /// Returns all daily quests for [now] (refreshing if needed).
@@ -101,6 +104,7 @@ class QuestService {
         newlyCompleted.add(quest);
       }
     }
+    notifyListeners();
     return newlyCompleted;
   }
 

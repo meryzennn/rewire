@@ -41,6 +41,7 @@ class Routes {
   static const String workoutComplete = '/workout/complete';
   static const String exerciseDetail = '/workout/exercise-detail';
   static const String progress = '/progress';
+  static const String profile = '/profile';
   static const String settings = '/settings';
   static const String onboarding = '/onboarding';
   static const String checkin = '/checkin';
@@ -291,8 +292,30 @@ class _SwipeableBranchContainer extends StatelessWidget {
           navigationShell.goBranch(index);
         }
       },
-      children: children,
+      children: [
+        for (final child in children) _KeepAliveWrapper(child: child),
+      ],
     );
+  }
+}
+
+class _KeepAliveWrapper extends StatefulWidget {
+  const _KeepAliveWrapper({required this.child});
+  final Widget child;
+
+  @override
+  State<_KeepAliveWrapper> createState() => _KeepAliveWrapperState();
+}
+
+class _KeepAliveWrapperState extends State<_KeepAliveWrapper>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.child;
   }
 }
 
@@ -327,11 +350,19 @@ class _ShellScaffoldState extends State<_ShellScaffold> {
       final current =
           _pageController.page?.round() ?? _pageController.initialPage;
       if (current != target) {
-        _pageController.animateToPage(
-          target,
-          duration: const Duration(milliseconds: 280),
-          curve: Curves.easeInOutCubic,
-        );
+        if ((target - current).abs() <= 1) {
+          _pageController.animateToPage(
+            target,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOutCubic,
+          );
+        } else {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted && _pageController.hasClients) {
+              _pageController.jumpToPage(target);
+            }
+          });
+        }
       }
     }
   }
