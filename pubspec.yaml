@@ -20,12 +20,14 @@ dependencies:
   lottie: ^3.1.0
   intl: ^0.19.0
   path_provider: ^2.1.0
+  path: ^1.9.0
   wakelock_plus: ^1.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  sqflite_common_ffi: ^2.3.0
 
 flutter:
   uses-material-design: true
