@@ -138,9 +138,9 @@
 
 **Interfaces:** `initialize()`, `scheduleDailyReminder(TimeOfDay time)`, `scheduleMeditationReminder(TimeOfDay time)`, `scheduleWorkoutReminder(TimeOfDay time)`, `cancelAll()`, `showInstant(String title,String body)`.
 
-- [ ] Test schedule/cancel decisions via injected plugin adapter or mock; verify disabled reminders are canceled and local time is used.
-- [ ] Implement Android permission/channel `rewire_reminders`, timezone-safe daily schedules; request notification permission only when user enables reminders.
-- [ ] Run tests; commit `feat: add local reminders`.
+- [x] Test schedule/cancel decisions via injected plugin adapter or mock; verify disabled reminders are canceled and local time is used.
+- [x] Implement Android permission/channel `rewire_reminders`, timezone-safe daily schedules; request notification permission only when user enables reminders.
+- [x] Run tests; commit `feat: add local reminders`.
 
 ### Task 14: Assets, integration, release check
 

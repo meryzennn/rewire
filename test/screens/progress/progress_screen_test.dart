@@ -21,7 +21,7 @@ class FakeUserProvider extends ChangeNotifier implements UserProvider {
               brainStage: 'awakening',
             );
 
-  UserProfile? _profile;
+  final UserProfile? _profile;
 
   @override
   UserProfile? get profile => _profile;
@@ -40,7 +40,7 @@ class FakeQuestProvider extends ChangeNotifier implements QuestProvider {
   FakeQuestProvider({List<Quest>? weeklyQuests})
       : _weeklyQuests = weeklyQuests ?? const [];
 
-  List<Quest> _weeklyQuests;
+  final List<Quest> _weeklyQuests;
 
   @override
   List<Quest> get weeklyQuests => _weeklyQuests;
@@ -63,7 +63,7 @@ class FakeAchievementProvider extends ChangeNotifier
   FakeAchievementProvider({List<Achievement>? items})
       : _items = items ?? const [];
 
-  List<Achievement> _items;
+  final List<Achievement> _items;
 
   @override
   List<Achievement> get items => _items;

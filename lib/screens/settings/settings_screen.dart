@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../services/notification_service.dart';
 import '../../services/preference_service.dart';
 
 /// Settings tab (`/settings`), restyled to the Stitch "Settings" screen
@@ -10,8 +11,9 @@ import '../../services/preference_service.dart';
 /// per row, and trailing switches / values.
 ///
 /// Persists ONLY spec §2.5 keys through [preferences]; reminder rows persist
-/// only (notification scheduling is Task 13). "Reset Semua Data" wipes the
-/// local DB (via [onResetData]) and prefs behind a confirmation dialog.
+/// and schedule alarms via [notificationService] (Task 13). "Reset Semua Data"
+/// wipes the local DB (via [onResetData]), cancels scheduled alarms, and wipes
+/// prefs behind a confirmation dialog.
 ///
 /// antislop Design Read: preferences screen for a recovery-app user, in the
 /// Rewire calm sage/cream language (DESIGN.md), dial ENERGY 1 / RHYTHM 1 /
@@ -23,6 +25,7 @@ class SettingsScreen extends StatefulWidget {
     super.key,
     required this.preferences,
     required this.onResetData,
+    this.notificationService,
   });
 
   final PreferenceService preferences;
@@ -30,6 +33,9 @@ class SettingsScreen extends StatefulWidget {
   /// Wipes local database rows. Kept as a callback so the screen stays testable
   /// without a real database.
   final Future<void> Function() onResetData;
+
+  /// Service managing local notification reminders (spec §8).
+  final NotificationService? notificationService;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -81,7 +87,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   tint: _Tint.primary,
                   title: 'Pengingat Harian',
                   value: _prefs.dailyReminderEnabled,
-                  onChanged: _prefs.setDailyReminderEnabled,
+                  onChanged: (val) async {
+                    await _prefs.setDailyReminderEnabled(val);
+                    if (val) {
+                      await widget.notificationService?.requestPermission();
+                      await widget.notificationService?.scheduleDailyReminder(
+                        NotificationService.parseHhmm(_prefs.dailyReminderTime),
+                      );
+                    } else {
+                      await widget.notificationService?.cancelDailyReminder();
+                    }
+                  },
                 ),
                 _NavRow(
                   rowKey: const Key('reminder-time'),
@@ -97,7 +113,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   tint: _Tint.primary,
                   title: 'Pengingat Meditasi',
                   value: _prefs.meditationReminderEnabled,
-                  onChanged: _prefs.setMeditationReminderEnabled,
+                  onChanged: (val) async {
+                    await _prefs.setMeditationReminderEnabled(val);
+                    if (val) {
+                      await widget.notificationService?.requestPermission();
+                      await widget.notificationService
+                          ?.scheduleMeditationReminder();
+                    } else {
+                      await widget.notificationService
+                          ?.cancelMeditationReminder();
+                    }
+                  },
                 ),
                 _SwitchRow(
                   switchKey: const Key('toggle-workout-reminder'),
@@ -105,7 +131,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   tint: _Tint.secondary,
                   title: 'Pengingat Olahraga',
                   value: _prefs.workoutReminderEnabled,
-                  onChanged: _prefs.setWorkoutReminderEnabled,
+                  onChanged: (val) async {
+                    await _prefs.setWorkoutReminderEnabled(val);
+                    if (val) {
+                      await widget.notificationService?.requestPermission();
+                      await widget.notificationService
+                          ?.scheduleWorkoutReminder();
+                    } else {
+                      await widget.notificationService?.cancelWorkoutReminder();
+                    }
+                  },
                 ),
               ],
             ),
@@ -140,9 +175,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  /// Notification scheduling is Task 13; here the picked time is persisted only.
   Future<void> _pickTime() async {
-    final current = _parseHhmm(_prefs.dailyReminderTime);
+    final current = NotificationService.parseHhmm(_prefs.dailyReminderTime);
     final picked = await showTimePicker(
       context: context,
       initialTime: current,
@@ -155,13 +189,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final hh = picked.hour.toString().padLeft(2, '0');
     final mm = picked.minute.toString().padLeft(2, '0');
     await _prefs.setDailyReminderTime('$hh:$mm');
-  }
-
-  TimeOfDay _parseHhmm(String value) {
-    final parts = value.split(':');
-    final hour = int.tryParse(parts.first) ?? 8;
-    final minute = parts.length > 1 ? int.tryParse(parts[1]) ?? 0 : 0;
-    return TimeOfDay(hour: hour, minute: minute);
+    if (_prefs.dailyReminderEnabled) {
+      await widget.notificationService?.scheduleDailyReminder(picked);
+    }
   }
 
   /// Destructive and irreversible: gate the wipe behind an explicit confirm.
@@ -190,10 +220,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
     if (confirmed != true) return;
-    // Wipe DB rows first, then the app's §2.5 prefs, then hand back to the gate:
-    // with onboarding_completed cleared, `.go('/')` redirects to onboarding.
+    // Wipe DB rows first, then the app's §2.5 prefs, cancel alarms, then hand
+    // back to the gate: with onboarding_completed cleared, `.go('/')` redirects
+    // to onboarding.
     await widget.onResetData();
     await _prefs.resetAll();
+    await widget.notificationService?.cancelAll();
     if (!mounted) return;
     context.go('/');
   }
