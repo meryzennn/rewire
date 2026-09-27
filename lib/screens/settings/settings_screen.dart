@@ -206,29 +206,32 @@ class _Palette {
   const _Palette(this.context);
   final BuildContext context;
 
-  bool get isDark => Theme.of(context).brightness == Brightness.dark;
-  Color get surface => isDark ? AppColors.darkSurface : AppColors.surface;
-  Color get divider => isDark ? AppColors.darkDivider : AppColors.divider;
-  Color get ink => isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+  ThemeData get _theme => Theme.of(context);
+  bool get isDark => _theme.brightness == Brightness.dark;
+  Color get surface => _theme.colorScheme.surface;
+  Color get divider => _theme.dividerColor;
+  Color get ink => _theme.colorScheme.onSurface;
   Color get muted =>
-      isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-  Color get danger => Theme.of(context).colorScheme.error;
+      _theme.textTheme.bodySmall?.color ??
+      (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary);
+  Color get danger => _theme.colorScheme.error;
 
   /// (chip background, icon color) for a tint. Chip bg is a soft wash; the icon
   /// stays in a readable ink so the glyph is legible in both themes.
   (Color, Color) chip(_Tint tint) {
     switch (tint) {
       case _Tint.primary:
-        final base = isDark ? AppColors.darkPrimary : AppColors.primary;
+        final base = _theme.colorScheme.primary;
         return (base.withValues(alpha: 0.18), ink);
       case _Tint.secondary:
-        final base = isDark ? AppColors.darkSecondary : AppColors.secondary;
+        final base = _theme.colorScheme.secondary;
         return (base.withValues(alpha: 0.20), ink);
       case _Tint.danger:
         return (danger.withValues(alpha: 0.16), danger);
       case _Tint.neutral:
         return (
-          isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant,
+          _theme.inputDecorationTheme.fillColor ??
+              (isDark ? AppColors.darkSurfaceVariant : AppColors.surfaceVariant),
           ink,
         );
     }

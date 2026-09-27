@@ -86,4 +86,21 @@ void main() {
       expect(identical(homeState1, homeState3), isTrue);
     });
   });
+
+  group('swipe navigation between tabs', () {
+    testWidgets('swiping horizontally transitions across tabs', (tester) async {
+      await _pumpApp(tester, onboarded: true);
+      expect(find.byKey(const Key('screen-home')), findsOneWidget);
+
+      // Drag left from home to meditation
+      await tester.drag(find.byType(PageView), const Offset(-500, 0));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('screen-meditation')), findsOneWidget);
+
+      // Drag right from meditation back to home
+      await tester.drag(find.byType(PageView), const Offset(500, 0));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('screen-home')), findsOneWidget);
+    });
+  });
 }
