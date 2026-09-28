@@ -42,7 +42,7 @@
   - `String? getSafeAlternativeExerciseId(String exerciseId)`
   - `(String, String) getLocalizedSafetyWarning(String exerciseId, String? langCode)`
 
-- [ ] **Step 1: Write the failing tests for HealthUtils and WorkoutSafetyUtils**
+- [x] **Step 1: Write the failing tests for HealthUtils and WorkoutSafetyUtils**
 
 ```dart
 // test/core/health_utils_test.dart
@@ -124,21 +124,21 @@ void main() {
 }
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `rtk flutter test test/core/health_utils_test.dart test/core/workout_safety_utils_test.dart`
 Expected: FAIL (files not found)
 
-- [ ] **Step 3: Implement `health_utils.dart` and `workout_safety_utils.dart`**
+- [x] **Step 3: Implement `health_utils.dart` and `workout_safety_utils.dart`**
 
 Implement BMI calculations, `BmiCategory` enum, contraindication checks, and localized warning messages.
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `rtk flutter test test/core/health_utils_test.dart test/core/workout_safety_utils_test.dart`
 Expected: PASS
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 rtk git add lib/core/utils/health_utils.dart lib/core/utils/workout_safety_utils.dart test/core/
@@ -164,7 +164,7 @@ rtk git commit -m "feat(utils): add health metrics and workout safety utilities"
   - `String get userFitnessLevel => _prefs.getString(PrefKeys.userFitnessLevel) ?? 'beginner'`
   - `Future<void> setUserFitnessLevel(String level)`
 
-- [ ] **Step 1: Write test assertions in `test/services/preference_service_test.dart`**
+- [x] **Step 1: Write test assertions in `test/services/preference_service_test.dart`**
 
 Add tests for:
 1. `language` defaults to `'en'`.
@@ -172,21 +172,21 @@ Add tests for:
 3. `userFitnessLevel` defaults to `'beginner'` and persists values (`'intermediate'`, `'expert'`).
 4. `resetAll()` clears `userBirthDate` and `userFitnessLevel`.
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `rtk flutter test test/services/preference_service_test.dart`
 Expected: FAIL
 
-- [ ] **Step 3: Implement preference additions in `lib/services/preference_service.dart`**
+- [x] **Step 3: Implement preference additions in `lib/services/preference_service.dart`**
 
 Update `PrefKeys`, default language, birthDate and fitnessLevel getters/setters, and `all` array.
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `rtk flutter test test/services/preference_service_test.dart`
 Expected: PASS
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 rtk git add lib/services/preference_service.dart test/services/preference_service_test.dart
@@ -203,7 +203,7 @@ rtk git commit -m "feat(prefs): update language default to english and add birth
 - Modify: `lib/l10n/app_es.arb`
 - Modify: `lib/l10n/app_ja.arb`
 
-- [ ] **Step 1: Add setup, health, and joint safety keys to all 4 ARB files**
+- [x] **Step 1: Add setup, health, and joint safety keys to all 4 ARB files**
 
 Keys:
 - `setupTitle`, `skip`, `continueToApp`, `languageChoice`
@@ -212,17 +212,17 @@ Keys:
 - `bmiLabel`, `bmiUnderweight`, `bmiNormal`, `bmiOverweight`, `bmiObese`
 - `jointSafetyWarningTitle`, `jointSafetyWarningDesc`, `useSafeAlternative`, `proceedAnyway`, `recommendedAlternativeLabel`
 
-- [ ] **Step 2: Run `rtk flutter gen-l10n`**
+- [x] **Step 2: Run `rtk flutter gen-l10n`**
 
 Run: `rtk flutter gen-l10n`
 Expected: Generation succeeds with 0 errors.
 
-- [ ] **Step 3: Verify with flutter test**
+- [x] **Step 3: Verify with flutter test**
 
 Run: `rtk flutter test`
 Expected: PASS
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 rtk git add lib/l10n/
@@ -243,7 +243,7 @@ rtk git commit -m "feat(l10n): add localization keys for setup, health metrics, 
 - Consumes: `PreferenceService`, `Routes`, `HealthUtils`
 - Produces: `InitialSetupScreen(preferences: ...)` accessible at `Routes.profileSetup = '/profile-setup'`
 
-- [ ] **Step 1: Write widget test for `InitialSetupScreen`**
+- [x] **Step 1: Write widget test for `InitialSetupScreen`**
 
 ```dart
 // test/screens/onboarding/initial_setup_screen_test.dart
@@ -254,12 +254,12 @@ rtk git commit -m "feat(l10n): add localization keys for setup, health metrics, 
 // 4. BMI pill updates live when height and weight are typed.
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `rtk flutter test test/screens/onboarding/initial_setup_screen_test.dart`
 Expected: FAIL (screen not implemented yet)
 
-- [ ] **Step 3: Implement `InitialSetupScreen`**
+- [x] **Step 3: Implement `InitialSetupScreen`**
 
 Create `InitialSetupScreen` with:
 - Top bar with `Skip` TextButton.
@@ -271,7 +271,7 @@ Create `InitialSetupScreen` with:
 - Fitness Level 3-card selector (Beginner, Intermediate, Expert).
 - Bottom sticky `Continue to App ✓` button.
 
-- [ ] **Step 4: Wire `Routes.profileSetup` in `lib/app.dart` and update `OnboardingScreen`**
+- [x] **Step 4: Wire `Routes.profileSetup` in `lib/app.dart` and update `OnboardingScreen`**
 
 In `lib/app.dart`:
 - Add `static const String profileSetup = '/profile-setup';`
@@ -279,12 +279,12 @@ In `lib/app.dart`:
 - Update router redirect logic to permit `Routes.profileSetup` when `onboarding_completed == false`.
 - In `OnboardingScreen`, change completion/skip destination from `Routes.home` to `Routes.profileSetup`.
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `rtk flutter test test/screens/onboarding/initial_setup_screen_test.dart`
 Expected: PASS
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 rtk git add lib/screens/onboarding/ lib/app.dart test/screens/onboarding/
@@ -303,28 +303,28 @@ rtk git commit -m "feat(onboarding): add initial setup screen and wire route gat
 - Consumes: `PreferenceService`, `HealthUtils`
 - Produces: Updated User Info card and Edit Profile modal with Birthday and Fitness Level fields.
 
-- [ ] **Step 1: Write test for Birthday and Fitness Level in Profile Screen**
+- [x] **Step 1: Write test for Birthday and Fitness Level in Profile Screen**
 
 Test that Birthday, dynamic age, Fitness Level, and BMI status appear in `ProfileScreen` and can be edited via the edit profile bottom sheet.
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `rtk flutter test test/screens/profile/profile_screen_test.dart`
 Expected: FAIL
 
-- [ ] **Step 3: Update `ProfileScreen`**
+- [x] **Step 3: Update `ProfileScreen`**
 
 - Add Birthday tile to profile stats card.
 - Add Fitness Level chip next to level/XP.
 - Add Birthday DatePicker and Fitness Level selector in `_showEditProfileDialog()`.
 - Save selections to `PreferenceService`.
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `rtk flutter test test/screens/profile/profile_screen_test.dart`
 Expected: PASS
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 rtk git add lib/screens/profile/profile_screen.dart test/screens/profile/
@@ -343,7 +343,7 @@ rtk git commit -m "feat(profile): display and edit birthday and fitness level in
 - Consumes: `PreferenceService`, `WorkoutSafetyUtils`, `HealthUtils`
 - Produces: Amber joint-safety warning banner and alternative switch confirmation dialog on start.
 
-- [ ] **Step 1: Write test for safety banner and dialog in `ExerciseDetailScreen`**
+- [x] **Step 1: Write test for safety banner and dialog in `ExerciseDetailScreen`**
 
 ```dart
 // test/screens/workout/exercise_detail_safety_test.dart
@@ -353,23 +353,23 @@ rtk git commit -m "feat(profile): display and edit birthday and fitness level in
 // 3. Tapping 'Mulai Latihan Ini' shows confirmation dialog with 'Gunakan Alternatif Aman' and 'Tetap Lanjutkan'.
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `rtk flutter test test/screens/workout/exercise_detail_safety_test.dart`
 Expected: FAIL
 
-- [ ] **Step 3: Implement safety UI in `ExerciseDetailScreen`**
+- [x] **Step 3: Implement safety UI in `ExerciseDetailScreen`**
 
 - Read user's fitness level and calculate BMI from `PreferenceService`.
 - If `isExerciseContraindicated`, show `_buildJointSafetyBanner(...)`.
 - When tapping start button, if contraindicated, display `showDialog` with option to start safe alternative or proceed.
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `rtk flutter test test/screens/workout/exercise_detail_safety_test.dart`
 Expected: PASS
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 rtk git add lib/screens/workout/exercise_detail_screen.dart test/screens/workout/exercise_detail_safety_test.dart
@@ -383,12 +383,12 @@ rtk git commit -m "feat(workout): integrate joint safety caution banner and alte
 **Files:**
 - All modified and existing test files.
 
-- [ ] **Step 1: Run full test suite with `rtk flutter test`**
+- [x] **Step 1: Run full test suite with `rtk flutter test`**
 
 Run: `rtk flutter test`
 Expected: All 208+ existing tests and new tests PASS.
 
-- [ ] **Step 2: Push changes to git origin**
+- [x] **Step 2: Push changes to git origin**
 
 ```bash
 rtk git push origin main
