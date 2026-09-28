@@ -202,7 +202,10 @@ GoRouter buildRouter(
         path: Routes.exerciseDetail,
         builder: (context, state) {
           final exercise = state.extra as Exercise? ?? kAllExercises.first;
-          return ExerciseDetailScreen(exercise: exercise);
+          return ExerciseDetailScreen(
+            exercise: exercise,
+            preferences: preferences,
+          );
         },
       ),
       StatefulShellRoute(

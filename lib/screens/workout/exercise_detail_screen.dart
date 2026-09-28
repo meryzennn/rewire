@@ -3,15 +3,24 @@ import 'package:go_router/go_router.dart';
 
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/health_utils.dart';
 import '../../core/utils/l10n_utils.dart';
+import '../../core/utils/provider_utils.dart';
+import '../../core/utils/workout_safety_utils.dart';
 import '../../data/exercises.dart';
 import '../../data/routines.dart';
+import '../../services/preference_service.dart';
 
 /// Screen displaying detailed exercise instructions, form guide, and target muscles (spec §5b).
 class ExerciseDetailScreen extends StatelessWidget {
-  const ExerciseDetailScreen({super.key, required this.exercise});
+  const ExerciseDetailScreen({
+    super.key,
+    required this.exercise,
+    this.preferences,
+  });
 
   final Exercise exercise;
+  final PreferenceService? preferences;
 
   IconData _iconForCategory(String category) {
     switch (category.toLowerCase()) {
@@ -47,6 +56,25 @@ class ExerciseDetailScreen extends StatelessWidget {
       langCode,
     );
     final unitLabel = getLocalizedExerciseUnit(exercise.unit, langCode);
+
+    final prefs = preferences ?? context.readOrNull<PreferenceService>();
+    final fitnessLevel = prefs?.userFitnessLevel ?? 'beginner';
+    final bmi = calculateBmi(prefs?.userHeight, prefs?.userWeight);
+    final isContraindicated = isExerciseContraindicated(
+      exercise.id,
+      fitnessLevel: fitnessLevel,
+      bmi: bmi,
+    );
+
+    final altExerciseId = isContraindicated
+        ? getSafeAlternativeExerciseId(exercise.id)
+        : null;
+    final altExercise = altExerciseId != null
+        ? kAllExercises.firstWhere(
+            (e) => e.id == altExerciseId,
+            orElse: () => exercise,
+          )
+        : null;
 
     final bg = theme.scaffoldBackgroundColor;
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -169,6 +197,14 @@ class ExerciseDetailScreen extends StatelessWidget {
                 ),
               ],
             ),
+            if (isContraindicated)
+              _buildJointSafetyBanner(
+                context: context,
+                l10n: l10n,
+                langCode: langCode,
+                alternativeExercise: altExercise,
+                isDark: isDark,
+              ),
             const SizedBox(height: 20),
 
             // Target Sets & Reps Info Cards
@@ -407,10 +443,234 @@ class ExerciseDetailScreen extends StatelessWidget {
                 exerciseIds: [exercise.id],
                 description: exerciseDetails.$2,
               );
-              context.push(Routes.activeWorkout, extra: singleRoutine);
+
+              if (isContraindicated) {
+                _showSafetyConfirmationDialog(
+                  context: context,
+                  l10n: l10n,
+                  langCode: langCode,
+                  singleRoutine: singleRoutine,
+                  alternativeExercise: altExercise,
+                );
+              } else {
+                context.push(Routes.activeWorkout, extra: singleRoutine);
+              }
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildJointSafetyBanner({
+    required BuildContext context,
+    required AppLocalizations? l10n,
+    required String langCode,
+    required Exercise? alternativeExercise,
+    required bool isDark,
+  }) {
+    final theme = Theme.of(context);
+    final (warningTitle, warningDesc) = getLocalizedSafetyWarning(
+      exercise.id,
+      langCode,
+    );
+    final warningColor = isDark ? const Color(0xFFFBBF24) : AppColors.warning;
+
+    return Container(
+      key: const Key('banner-joint-safety'),
+      margin: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: warningColor.withValues(alpha: isDark ? 0.15 : 0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: warningColor.withValues(alpha: isDark ? 0.4 : 0.3),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.warning_amber_rounded,
+                color: warningColor,
+                size: 22,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  warningTitle,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    color: warningColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            warningDesc,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+              height: 1.4,
+            ),
+          ),
+          if (alternativeExercise != null) ...[
+            const SizedBox(height: 12),
+            InkWell(
+              key: const Key('btn-switch-alternative'),
+              onTap: () {
+                context.push(
+                  Routes.exerciseDetail,
+                  extra: alternativeExercise,
+                );
+              },
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? AppColors.darkSurfaceVariant
+                      : AppColors.surfaceVariant,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: warningColor.withValues(alpha: 0.3),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.swap_horiz_rounded,
+                      size: 16,
+                      color: warningColor,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      '${l10n?.recommendedAlternativeLabel ?? 'Alternatif Direkomendasikan'}: ',
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : AppColors.textSecondary,
+                      ),
+                    ),
+                    Text(
+                      alternativeExercise.name,
+                      key: const Key('text-safe-alternative'),
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: warningColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  void _showSafetyConfirmationDialog({
+    required BuildContext context,
+    required AppLocalizations? l10n,
+    required String langCode,
+    required WorkoutRoutine singleRoutine,
+    required Exercise? alternativeExercise,
+  }) {
+    final (warningTitle, warningDesc) = getLocalizedSafetyWarning(
+      exercise.id,
+      langCode,
+    );
+
+    showDialog(
+      context: context,
+      builder: (dialogCtx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: Row(
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warning,
+              size: 26,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                l10n?.jointSafetyWarningTitle ?? warningTitle,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              warningDesc,
+              style: const TextStyle(fontSize: 14, height: 1.4),
+            ),
+            if (alternativeExercise != null) ...[
+              const SizedBox(height: 14),
+              Text(
+                '${l10n?.recommendedAlternativeLabel ?? 'Alternatif'}: ${alternativeExercise.name}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            key: const Key('btn-proceed-anyway'),
+            onPressed: () {
+              Navigator.pop(dialogCtx);
+              context.push(Routes.activeWorkout, extra: singleRoutine);
+            },
+            child: Text(
+              l10n?.proceedAnyway ?? 'Tetap Lanjutkan',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+          ),
+          if (alternativeExercise != null)
+            FilledButton(
+              key: const Key('btn-use-safe-alternative'),
+              onPressed: () {
+                Navigator.pop(dialogCtx);
+                final altRoutine = WorkoutRoutine(
+                  id: 'single_${alternativeExercise.id}',
+                  name: alternativeExercise.name,
+                  subtitle: getLocalizedCategory(
+                    alternativeExercise.category,
+                    langCode,
+                  ),
+                  durationMinutes: 5,
+                  difficulty: alternativeExercise.difficulty,
+                  exerciseIds: [alternativeExercise.id],
+                  description: alternativeExercise.description,
+                );
+                context.push(Routes.activeWorkout, extra: altRoutine);
+              },
+              child: Text(
+                l10n?.useSafeAlternative ?? 'Gunakan Alternatif Aman',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+        ],
       ),
     );
   }
