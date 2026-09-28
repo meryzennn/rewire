@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_utils.dart';
 import '../../../core/utils/provider_utils.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../../providers/user_provider.dart';
 
 bool get _isTestEnvironment {

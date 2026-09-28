@@ -10,7 +10,6 @@ import '../../core/utils/l10n_utils.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../core/utils/xp_utils.dart';
 import '../../data/meditation_definitions.dart';
-import '../../l10n/app_localizations.dart';
 import '../../providers/meditation_provider.dart';
 
 bool get _isTestEnvironment {

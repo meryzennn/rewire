@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_utils.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../../models/achievement.dart';
 
 /// Achievement grid widget displaying badge catalog and unlock states (spec §3.5, §9).

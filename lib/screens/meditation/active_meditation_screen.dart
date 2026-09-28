@@ -11,7 +11,6 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/l10n_utils.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../data/meditation_definitions.dart';
-import '../../l10n/app_localizations.dart';
 import '../../providers/meditation_provider.dart';
 import '../../services/audio_service.dart';
 import 'meditation_complete_screen.dart';

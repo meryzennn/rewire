@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../../core/utils/l10n_utils.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../../models/daily_checkin.dart';
 
 /// Line chart visualizing mood trends (1-5) over the past 7 days (spec §9, Screen 6).

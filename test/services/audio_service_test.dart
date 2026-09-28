@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rewire/services/audio_service.dart';
 
@@ -77,6 +79,40 @@ void main() {
       expect(service.currentTrack, isNull);
 
       service.dispose();
+    });
+
+    test('resolveAssetPath resolves all 6 ambient tracks to existing asset files', () {
+      const tracks = ['rain', 'waves', 'forest', 'campfire', 'lofi', 'whitenoise'];
+      for (final trackId in tracks) {
+        final resolved = DefaultAudioService.resolveAssetPath(trackId);
+        expect(resolved, startsWith('audio/'));
+        expect(resolved, endsWith('.mp3'));
+        final file = File('assets/$resolved');
+        expect(
+          file.existsSync(),
+          isTrue,
+          reason: 'Track $trackId resolved to assets/$resolved which must exist on disk',
+        );
+      }
+    });
+
+    test('resolveAssetPath handles aliases and direct paths', () {
+      expect(
+        DefaultAudioService.resolveAssetPath('ocean'),
+        'audio/ocean-waves.mp3',
+      );
+      expect(
+        DefaultAudioService.resolveAssetPath('white-noise'),
+        'audio/white-noise.mp3',
+      );
+      expect(
+        DefaultAudioService.resolveAssetPath('assets/audio/rain.mp3'),
+        'audio/rain.mp3',
+      );
+      expect(
+        DefaultAudioService.resolveAssetPath('audio/rain.mp3'),
+        'audio/rain.mp3',
+      );
     });
   });
 }

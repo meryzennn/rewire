@@ -3,6 +3,8 @@ import 'dart:io' show Platform;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 
+import '../data/meditation_definitions.dart';
+
 /// Audio service interface conforming to spec §7 and Task 10 requirements.
 abstract class AudioService {
   static AudioService instance = DefaultAudioService();
@@ -46,6 +48,45 @@ class DefaultAudioService implements AudioService {
     return Platform.environment.containsKey('FLUTTER_TEST');
   }
 
+  /// Resolves a track ID (e.g. 'rain', 'waves') or raw filename to the AssetSource path.
+  static String resolveAssetPath(String trackName) {
+    var path = trackName;
+    for (final track in kAmbientTracks) {
+      if (track.id == trackName ||
+          track.assetPath == trackName ||
+          track.assetPath.endsWith('/$trackName') ||
+          track.assetPath.endsWith('/$trackName.mp3')) {
+        path = track.assetPath;
+        break;
+      }
+    }
+
+    const aliases = {
+      'waves': 'assets/audio/ocean-waves.mp3',
+      'ocean': 'assets/audio/ocean-waves.mp3',
+      'forest': 'assets/audio/nature-forest-sound.mp3',
+      'campfire': 'assets/audio/fireplace-loop-original-noise.mp3',
+      'lofi': 'assets/audio/ambient-wave.mp3',
+      'whitenoise': 'assets/audio/white-noise.mp3',
+      'white-noise': 'assets/audio/white-noise.mp3',
+    };
+    if (aliases.containsKey(path)) {
+      path = aliases[path]!;
+    }
+
+    // Normalize asset path for AssetSource (which strips 'assets/')
+    if (path.startsWith('assets/')) {
+      path = path.substring('assets/'.length);
+    }
+    if (!path.contains('/')) {
+      path = 'audio/$path';
+    }
+    if (!path.endsWith('.mp3')) {
+      path = '$path.mp3';
+    }
+    return path;
+  }
+
   @override
   Future<void> play(String trackName) async {
     _currentTrack = trackName;
@@ -60,18 +101,7 @@ class DefaultAudioService implements AudioService {
       await _player.setReleaseMode(ReleaseMode.loop);
       await _player.setVolume(_volume);
 
-      // Normalize asset path for AssetSource (which strips 'assets/')
-      var path = trackName;
-      if (path.startsWith('assets/')) {
-        path = path.substring('assets/'.length);
-      }
-      if (!path.contains('/')) {
-        path = 'audio/$path';
-      }
-      if (!path.endsWith('.mp3')) {
-        path = '$path.mp3';
-      }
-
+      final path = resolveAssetPath(trackName);
       await _player.play(AssetSource(path));
     } catch (e) {
       debugPrint('AudioService.play non-fatal warning: $e');
