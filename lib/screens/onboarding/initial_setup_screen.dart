@@ -45,6 +45,7 @@ class _InitialSetupScreenState extends State<InitialSetupScreen> {
   @override
   void initState() {
     super.initState();
+    _prefs.addListener(_onPrefsChanged);
     _nameController = TextEditingController(text: _prefs.userName.isNotEmpty ? _prefs.userName : '');
     _heightController = TextEditingController(
       text: _prefs.userHeight != null ? _prefs.userHeight!.toStringAsFixed(0) : '',
@@ -62,12 +63,17 @@ class _InitialSetupScreenState extends State<InitialSetupScreen> {
 
   @override
   void dispose() {
+    _prefs.removeListener(_onPrefsChanged);
     _heightController.removeListener(_onMetricsChanged);
     _weightController.removeListener(_onMetricsChanged);
     _nameController.dispose();
     _heightController.dispose();
     _weightController.dispose();
     super.dispose();
+  }
+
+  void _onPrefsChanged() {
+    if (mounted) setState(() {});
   }
 
   void _onMetricsChanged() {
@@ -231,7 +237,7 @@ class _InitialSetupScreenState extends State<InitialSetupScreen> {
 
                   // 2. Identity Card (PFP + Name)
                   _buildSectionCard(
-                    title: 'Profile',
+                    title: l10n.profileSectionTitle,
                     surfaceColor: surfaceColor,
                     borderColor: cardBorder,
                     child: Column(
@@ -276,7 +282,7 @@ class _InitialSetupScreenState extends State<InitialSetupScreen> {
                           key: const Key('setup-name-input'),
                           controller: _nameController,
                           decoration: InputDecoration(
-                            labelText: 'Name',
+                            labelText: l10n.nameLabel,
                             hintText: 'Anon',
                             prefixIcon: const Icon(Icons.badge_outlined),
                             border: OutlineInputBorder(
@@ -330,7 +336,7 @@ class _InitialSetupScreenState extends State<InitialSetupScreen> {
 
                   // 4. Body Metrics Card (Height, Weight, Live BMI)
                   _buildSectionCard(
-                    title: 'Body Metrics',
+                    title: l10n.bodyMetricsTitle,
                     surfaceColor: surfaceColor,
                     borderColor: cardBorder,
                     child: Column(
@@ -344,7 +350,7 @@ class _InitialSetupScreenState extends State<InitialSetupScreen> {
                                 controller: _heightController,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
-                                  labelText: 'Height',
+                                  labelText: l10n.heightLabel,
                                   suffixText: 'cm',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
@@ -359,7 +365,7 @@ class _InitialSetupScreenState extends State<InitialSetupScreen> {
                                 controller: _weightController,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
-                                  labelText: 'Weight',
+                                  labelText: l10n.weightLabel,
                                   suffixText: 'kg',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
@@ -505,6 +511,7 @@ class _InitialSetupScreenState extends State<InitialSetupScreen> {
           selected: isSelected,
           onSelected: (_) async {
             await _prefs.setLanguage(lang.$1);
+            if (mounted) setState(() {});
           },
           selectedColor: primary.withValues(alpha: 0.25),
         );

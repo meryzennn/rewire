@@ -69,29 +69,45 @@ void main() {
     expect(find.text('Home Screen Placeholder'), findsOneWidget);
   });
 
-  testWidgets('language chips switch language reactively', (tester) async {
+  testWidgets('language chips switch language reactively and update section labels', (tester) async {
     final prefs = await _createPrefService({'language': 'en'});
     await _pumpSetupScreen(tester, prefService: prefs);
 
     expect(prefs.language, 'en');
+    expect(find.text('Body Metrics'), findsOneWidget);
+    expect(find.text('Height'), findsOneWidget);
+    expect(find.text('Weight'), findsOneWidget);
+    expect(find.text('Name'), findsOneWidget);
 
     // Tap Indonesian chip
     await tester.tap(find.byKey(const Key('lang-chip-id')));
     await tester.pumpAndSettle();
 
     expect(prefs.language, 'id');
+    expect(find.text('Metrik Tubuh'), findsOneWidget);
+    expect(find.text('Tinggi'), findsOneWidget);
+    expect(find.text('Berat'), findsOneWidget);
+    expect(find.text('Nama'), findsOneWidget);
 
     // Tap Spanish chip
     await tester.tap(find.byKey(const Key('lang-chip-es')));
     await tester.pumpAndSettle();
 
     expect(prefs.language, 'es');
+    expect(find.text('Métricas Corporales'), findsOneWidget);
+    expect(find.text('Altura'), findsOneWidget);
+    expect(find.text('Peso'), findsOneWidget);
+    expect(find.text('Nombre'), findsOneWidget);
 
     // Tap Japanese chip
     await tester.tap(find.byKey(const Key('lang-chip-ja')));
     await tester.pumpAndSettle();
 
     expect(prefs.language, 'ja');
+    expect(find.text('身体データ'), findsOneWidget);
+    expect(find.text('身長'), findsOneWidget);
+    expect(find.text('体重'), findsOneWidget);
+    expect(find.text('名前'), findsOneWidget);
   });
 
   testWidgets('live BMI indicator calculates and updates status pill', (tester) async {

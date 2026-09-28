@@ -740,4 +740,13 @@ class AppLocalizationsId extends AppLocalizations {
   String onboardingStepSemantics(int current, int total) {
     return 'Halaman $current dari $total';
   }
+
+  @override
+  String get nameLabel => 'Nama';
+
+  @override
+  String get bodyMetricsTitle => 'Metrik Tubuh';
+
+  @override
+  String get profileSectionTitle => 'Profil';
 }

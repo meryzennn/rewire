@@ -730,4 +730,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String onboardingStepSemantics(int current, int total) {
     return 'ページ $current / $total';
   }
+
+  @override
+  String get nameLabel => '名前';
+
+  @override
+  String get bodyMetricsTitle => '身体データ';
+
+  @override
+  String get profileSectionTitle => 'プロフィール';
 }

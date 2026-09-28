@@ -227,5 +227,8 @@
   "onboardingLevelUpDesc": "Aktivitas positif memberimu XP. Seiring progres, otakmu berkembang melalui lima tahap.",
   "onboardingRemindersTitle": "Atur Pengingat Harian",
   "onboardingRemindersDesc": "Pilih waktu pengingat check-in. Pengingat meditasi dan olahraga juga bisa diatur nanti.",
-  "onboardingStepSemantics": "Halaman {current} dari {total}"
+  "onboardingStepSemantics": "Halaman {current} dari {total}",
+  "nameLabel": "Nama",
+  "bodyMetricsTitle": "Metrik Tubuh",
+  "profileSectionTitle": "Profil"
 }

@@ -227,5 +227,8 @@
   "onboardingLevelUpDesc": "Las actividades positivas te dan XP. Con tu progreso, tu cerebro evoluciona a través de cinco etapas.",
   "onboardingRemindersTitle": "Configura Recordatorios Diarios",
   "onboardingRemindersDesc": "Elige la hora de tu check-in diario. Los recordatorios de meditación y ejercicio se pueden configurar más tarde.",
-  "onboardingStepSemantics": "Página {current} de {total}"
+  "onboardingStepSemantics": "Página {current} de {total}",
+  "nameLabel": "Nombre",
+  "bodyMetricsTitle": "Métricas Corporales",
+  "profileSectionTitle": "Perfil"
 }

@@ -1463,6 +1463,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Page {current} of {total}'**
   String onboardingStepSemantics(int current, int total);
+
+  /// No description provided for @nameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get nameLabel;
+
+  /// No description provided for @bodyMetricsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Metrics'**
+  String get bodyMetricsTitle;
+
+  /// No description provided for @profileSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileSectionTitle;
 }
 
 class _AppLocalizationsDelegate

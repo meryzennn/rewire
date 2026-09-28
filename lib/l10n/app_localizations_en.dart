@@ -741,4 +741,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String onboardingStepSemantics(int current, int total) {
     return 'Page $current of $total';
   }
+
+  @override
+  String get nameLabel => 'Name';
+
+  @override
+  String get bodyMetricsTitle => 'Body Metrics';
+
+  @override
+  String get profileSectionTitle => 'Profile';
 }

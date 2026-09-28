@@ -227,5 +227,8 @@
   "onboardingLevelUpDesc": "ポジティブな活動でXPを獲得。進捗に応じて、あなたの脳は5つのステージを通じて進化します。",
   "onboardingRemindersTitle": "毎日のリマインダーを設定",
   "onboardingRemindersDesc": "毎日のチェックイン時間を選択。瞑想や運動のリマインダーも後から設定できます。",
-  "onboardingStepSemantics": "ページ {current} / {total}"
+  "onboardingStepSemantics": "ページ {current} / {total}",
+  "nameLabel": "名前",
+  "bodyMetricsTitle": "身体データ",
+  "profileSectionTitle": "プロフィール"
 }

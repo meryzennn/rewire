@@ -318,5 +318,8 @@
       "current": { "type": "int" },
       "total": { "type": "int" }
     }
-  }
+  },
+  "nameLabel": "Name",
+  "bodyMetricsTitle": "Body Metrics",
+  "profileSectionTitle": "Profile"
 }
