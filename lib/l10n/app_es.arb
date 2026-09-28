@@ -177,5 +177,22 @@
   "freeBreathingTitle": "Libre",
   "naturalBreathingSubtitle": "Natural",
   "chooseSoundscapeSubtitle": "Elige 1 ambiente",
-  "focusAndBreatheNaturally": "Enfoque y respiración natural"
+  "focusAndBreatheNaturally": "Enfoque y respiración natural",
+  "cancelWorkoutTitle": "¿Cancelar entrenamiento?",
+  "cancelWorkoutMessage": "El progreso de esta sesión no se guardará si sales ahora.",
+  "continueWorkout": "Continuar entrenamiento",
+  "yesCancel": "Sí, cancelar",
+  "exerciseProgress": "Ejercicio {current} / {total}",
+  "currentSetProgress": "Serie {current} / {total}",
+  "completeSet": "Serie completada ✓",
+  "finishWorkout": "Terminar entrenamiento ✓",
+  "lastExerciseLabel": "¡Último ejercicio!",
+  "restTitle": "Descanso",
+  "skipRest": "Saltar descanso",
+  "workoutFinishedHeadline": "¡Entrenamiento completado! 💪",
+  "workoutFinishedSummary": "{minutes} min · {count} ejercicios completados",
+  "levelUpNotification": "¡Subida de nivel! Has alcanzado el nivel {level}",
+  "startThisExercise": "Comenzar este ejercicio",
+  "done": "Listo",
+  "secondsUnit": "{seconds} Segundos"
 }

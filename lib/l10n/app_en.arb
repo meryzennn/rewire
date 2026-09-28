@@ -234,5 +234,50 @@
   "freeBreathingTitle": "Free",
   "naturalBreathingSubtitle": "Natural",
   "chooseSoundscapeSubtitle": "Choose 1 Soundscape",
-  "focusAndBreatheNaturally": "Focus & Breathe Naturally"
+  "focusAndBreatheNaturally": "Focus & Breathe Naturally",
+  "cancelWorkoutTitle": "Cancel Workout?",
+  "cancelWorkoutMessage": "Progress from this session will not be saved if you exit now.",
+  "continueWorkout": "Continue Workout",
+  "yesCancel": "Yes, Cancel",
+  "exerciseProgress": "Exercise {current} / {total}",
+  "@exerciseProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "currentSetProgress": "Set {current} / {total}",
+  "@currentSetProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "completeSet": "Complete Set ✓",
+  "finishWorkout": "Finish Workout ✓",
+  "lastExerciseLabel": "Final Exercise!",
+  "restTitle": "Rest",
+  "skipRest": "Skip Rest",
+  "workoutFinishedHeadline": "Workout Complete! 💪",
+  "workoutFinishedSummary": "{minutes} mins · {count} exercises completed",
+  "@workoutFinishedSummary": {
+    "placeholders": {
+      "minutes": { "type": "int" },
+      "count": { "type": "int" }
+    }
+  },
+  "levelUpNotification": "Level Up! You reached Level {level}",
+  "@levelUpNotification": {
+    "placeholders": {
+      "level": { "type": "int" }
+    }
+  },
+  "startThisExercise": "Start This Exercise",
+  "done": "Done",
+  "secondsUnit": "{seconds} Seconds",
+  "@secondsUnit": {
+    "placeholders": {
+      "seconds": { "type": "int" }
+    }
+  }
 }

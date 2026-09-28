@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/l10n_utils.dart';
 
 bool get _isTestEnvironment {
   if (kIsWeb) return false;
@@ -73,6 +74,7 @@ class _RestTimerScreenState extends State<RestTimerScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final bg = theme.scaffoldBackgroundColor;
@@ -100,7 +102,7 @@ class _RestTimerScreenState extends State<RestTimerScreen> {
               const Spacer(),
               // Title
               Text(
-                'Istirahat',
+                l10n?.restTitle ?? 'Istirahat',
                 style: theme.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: textPrimary,
@@ -203,9 +205,9 @@ class _RestTimerScreenState extends State<RestTimerScreen> {
                   ),
                 ),
                 onPressed: _skip,
-                child: const Text(
-                  'Skip Istirahat',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                child: Text(
+                  l10n?.skipRest ?? 'Skip Istirahat',
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

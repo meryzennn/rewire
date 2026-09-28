@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/l10n_utils.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../data/exercises.dart';
 import '../../data/routines.dart';
@@ -189,24 +190,26 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
   Future<void> _confirmCancel() async {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context);
 
     final shouldCancel = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: isDark ? AppColors.darkSurface : AppColors.surface,
-        title: const Text('Batalkan Latihan?'),
-        content: const Text(
-          'Progres sesi ini belum akan tersimpan jika kamu keluar sekarang.',
+        title: Text(l10n?.cancelWorkoutTitle ?? 'Batalkan Latihan?'),
+        content: Text(
+          l10n?.cancelWorkoutMessage ??
+              'Progres sesi ini belum akan tersimpan jika kamu keluar sekarang.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Lanjut Latihan'),
+            child: Text(l10n?.continueWorkout ?? 'Lanjut Latihan'),
           ),
           TextButton(
             style: TextButton.styleFrom(foregroundColor: AppColors.danger),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Ya, Batalkan'),
+            child: Text(l10n?.yesCancel ?? 'Ya, Batalkan'),
           ),
         ],
       ),
@@ -236,29 +239,42 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
     }
   }
 
-  String _getNextExerciseInfo() {
+  String _getNextExerciseInfo(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final langCode = getAppLanguageCode(context);
+    final currentUnit = getLocalizedExerciseUnit(_currentExercise.unit, langCode);
+
     if (!_isLastSetOfCurrentExercise) {
-      return 'Set ${_currentSet + 1} / ${_currentExercise.defaultSets} (${_currentExercise.defaultReps} ${_currentExercise.unit})';
+      final nextSetText = l10n?.currentSetProgress(
+            _currentSet + 1,
+            _currentExercise.defaultSets,
+          ) ??
+          'Set ${_currentSet + 1} / ${_currentExercise.defaultSets}';
+      return '$nextSetText (${_currentExercise.defaultReps} $currentUnit)';
     }
     if (!_isLastExercise) {
       final nextEx = _exercises[_currentExerciseIndex + 1];
-      return '${nextEx.name} • ${nextEx.defaultSets} × ${nextEx.defaultReps} ${nextEx.unit}';
+      final nextUnit = getLocalizedExerciseUnit(nextEx.unit, langCode);
+      return '${nextEx.name} • ${nextEx.defaultSets} × ${nextEx.defaultReps} $nextUnit';
     }
-    return 'Latihan Terakhir!';
+    return l10n?.lastExerciseLabel ?? 'Latihan Terakhir!';
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final langCode = getAppLanguageCode(context);
+
     if (_isResting) {
       final nextTitle = !_isLastSetOfCurrentExercise
           ? _currentExercise.name
           : (!_isLastExercise
                 ? _exercises[_currentExerciseIndex + 1].name
-                : 'Selesai');
+                : (l10n?.done ?? 'Selesai'));
       return RestTimerScreen(
         durationSeconds: 30,
         nextExerciseName: nextTitle,
-        nextExerciseSetsReps: _getNextExerciseInfo(),
+        nextExerciseSetsReps: _getNextExerciseInfo(context),
         onRestComplete: _onRestComplete,
       );
     }
@@ -280,6 +296,19 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
     final accent = isDark ? AppColors.darkAccent : AppColors.accent;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
 
+    final routineTitle = l10n != null
+        ? getLocalizedRoutine(
+            widget.routine.id,
+            widget.routine.name,
+            widget.routine.subtitle,
+            langCode,
+          ).$1
+        : widget.routine.name;
+    final categoryLabel =
+        getLocalizedCategory(_currentExercise.category, langCode);
+    final exerciseUnitLabel =
+        getLocalizedExerciseUnit(_currentExercise.unit, langCode);
+
     final progress =
         (_currentExerciseIndex +
             (_currentSet - 1) / _currentExercise.defaultSets) /
@@ -292,7 +321,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Text(
-          widget.routine.name,
+          routineTitle,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: textPrimary,
@@ -304,7 +333,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
             onPressed: _confirmCancel,
             icon: Icon(Icons.close, color: textSecondary, size: 20),
             label: Text(
-              'Batal',
+              l10n?.cancel ?? 'Batal',
               style: TextStyle(
                 color: textSecondary,
                 fontWeight: FontWeight.w600,
@@ -324,7 +353,11 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Gerakan ${_currentExerciseIndex + 1} / ${_exercises.length}',
+                    l10n?.exerciseProgress(
+                          _currentExerciseIndex + 1,
+                          _exercises.length,
+                        ) ??
+                        'Gerakan ${_currentExerciseIndex + 1} / ${_exercises.length}',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: textSecondary,
                       fontWeight: FontWeight.w600,
@@ -374,7 +407,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            _currentExercise.category,
+                            categoryLabel,
                             style: theme.textTheme.labelMedium?.copyWith(
                               color: textSecondary,
                               fontWeight: FontWeight.w600,
@@ -414,7 +447,11 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Set $_currentSet / ${_currentExercise.defaultSets}',
+                      l10n?.currentSetProgress(
+                            _currentSet,
+                            _currentExercise.defaultSets,
+                          ) ??
+                          'Set $_currentSet / ${_currentExercise.defaultSets}',
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: accent,
                         fontWeight: FontWeight.w600,
@@ -428,7 +465,8 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '$_exerciseTimerSeconds Detik',
+                            l10n?.secondsUnit(_exerciseTimerSeconds) ??
+                                '$_exerciseTimerSeconds Detik',
                             style: theme.textTheme.headlineMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: textPrimary,
@@ -449,7 +487,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                       ),
                     ] else ...[
                       Text(
-                        '${_currentExercise.defaultReps} ${_currentExercise.unit}',
+                        '${_currentExercise.defaultReps} $exerciseUnitLabel',
                         style: theme.textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: textPrimary,
@@ -464,7 +502,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
               // Next Exercise Label
               Center(
                 child: Text(
-                  'Next: ${_getNextExerciseInfo()}',
+                  'Next: ${_getNextExerciseInfo(context)}',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: textSecondary,
                   ),
@@ -488,8 +526,8 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                 onPressed: _completeSet,
                 child: Text(
                   _isEntireWorkoutComplete
-                      ? 'Selesai Latihan ✓'
-                      : 'Set Selesai ✓',
+                      ? (l10n?.finishWorkout ?? 'Selesai Latihan ✓')
+                      : (l10n?.completeSet ?? 'Set Selesai ✓'),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

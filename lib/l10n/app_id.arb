@@ -177,5 +177,22 @@
   "freeBreathingTitle": "Bebas",
   "naturalBreathingSubtitle": "Alami",
   "chooseSoundscapeSubtitle": "Pilih 1 Suasana",
-  "focusAndBreatheNaturally": "Fokus & Bernapas Alami"
+  "focusAndBreatheNaturally": "Fokus & Bernapas Alami",
+  "cancelWorkoutTitle": "Batalkan Latihan?",
+  "cancelWorkoutMessage": "Progres sesi ini belum akan tersimpan jika kamu keluar sekarang.",
+  "continueWorkout": "Lanjut Latihan",
+  "yesCancel": "Ya, Batalkan",
+  "exerciseProgress": "Gerakan {current} / {total}",
+  "currentSetProgress": "Set {current} / {total}",
+  "completeSet": "Set Selesai ✓",
+  "finishWorkout": "Selesai Latihan ✓",
+  "lastExerciseLabel": "Latihan Terakhir!",
+  "restTitle": "Istirahat",
+  "skipRest": "Skip Istirahat",
+  "workoutFinishedHeadline": "Workout Selesai! 💪",
+  "workoutFinishedSummary": "{minutes} menit · {count} gerakan selesai",
+  "levelUpNotification": "Level Up! Kamu mencapai Level {level}",
+  "startThisExercise": "Mulai Latihan Ini",
+  "done": "Selesai",
+  "secondsUnit": "{seconds} Detik"
 }

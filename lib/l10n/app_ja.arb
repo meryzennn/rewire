@@ -177,5 +177,22 @@
   "freeBreathingTitle": "自由",
   "naturalBreathingSubtitle": "自然",
   "chooseSoundscapeSubtitle": "音を1つ選択",
-  "focusAndBreatheNaturally": "集中して自然に呼吸"
+  "focusAndBreatheNaturally": "集中して自然に呼吸",
+  "cancelWorkoutTitle": "ワークアウトを中止しますか？",
+  "cancelWorkoutMessage": "今終了すると、このセッションの進行状況は保存されません。",
+  "continueWorkout": "続ける",
+  "yesCancel": "中止する",
+  "exerciseProgress": "種目 {current} / {total}",
+  "currentSetProgress": "セット {current} / {total}",
+  "completeSet": "セット完了 ✓",
+  "finishWorkout": "ワークアウト終了 ✓",
+  "lastExerciseLabel": "最後のエクササイズ！",
+  "restTitle": "休憩",
+  "skipRest": "休憩をスキップ",
+  "workoutFinishedHeadline": "ワークアウト完了！💪",
+  "workoutFinishedSummary": "{minutes}分 · {count}種目完了",
+  "levelUpNotification": "レベルアップ！レベル{level}に到達",
+  "startThisExercise": "このエクササイズを開始",
+  "done": "完了",
+  "secondsUnit": "{seconds} 秒"
 }

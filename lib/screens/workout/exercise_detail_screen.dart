@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/l10n_utils.dart';
 import '../../data/exercises.dart';
+import '../../data/routines.dart';
 
 /// Screen displaying detailed exercise instructions, form guide, and target muscles (spec §5b).
 class ExerciseDetailScreen extends StatelessWidget {
@@ -371,6 +373,43 @@ class ExerciseDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+          child: ElevatedButton.icon(
+            key: const Key('exercise-detail-start-button'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: accent,
+              foregroundColor: Colors.white,
+              minimumSize: const Size.fromHeight(52),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              elevation: 2,
+            ),
+            icon: const Icon(Icons.play_arrow_rounded, size: 24),
+            label: Text(
+              l10n?.startThisExercise ?? 'Mulai Latihan Ini',
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () {
+              final singleRoutine = WorkoutRoutine(
+                id: 'single_${exercise.id}',
+                name: exercise.name,
+                subtitle: categoryLabel,
+                durationMinutes: 5,
+                difficulty: exercise.difficulty,
+                exerciseIds: [exercise.id],
+                description: exerciseDetails.$2,
+              );
+              context.push(Routes.activeWorkout, extra: singleRoutine);
+            },
+          ),
         ),
       ),
     );

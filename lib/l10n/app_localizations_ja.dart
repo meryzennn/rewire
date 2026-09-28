@@ -568,4 +568,65 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get focusAndBreatheNaturally => '集中して自然に呼吸';
+
+  @override
+  String get cancelWorkoutTitle => 'ワークアウトを中止しますか？';
+
+  @override
+  String get cancelWorkoutMessage => '今終了すると、このセッションの進行状況は保存されません。';
+
+  @override
+  String get continueWorkout => '続ける';
+
+  @override
+  String get yesCancel => '中止する';
+
+  @override
+  String exerciseProgress(int current, int total) {
+    return '種目 $current / $total';
+  }
+
+  @override
+  String currentSetProgress(int current, int total) {
+    return 'セット $current / $total';
+  }
+
+  @override
+  String get completeSet => 'セット完了 ✓';
+
+  @override
+  String get finishWorkout => 'ワークアウト終了 ✓';
+
+  @override
+  String get lastExerciseLabel => '最後のエクササイズ！';
+
+  @override
+  String get restTitle => '休憩';
+
+  @override
+  String get skipRest => '休憩をスキップ';
+
+  @override
+  String get workoutFinishedHeadline => 'ワークアウト完了！💪';
+
+  @override
+  String workoutFinishedSummary(int minutes, int count) {
+    return '$minutes分 · $count種目完了';
+  }
+
+  @override
+  String levelUpNotification(int level) {
+    return 'レベルアップ！レベル$levelに到達';
+  }
+
+  @override
+  String get startThisExercise => 'このエクササイズを開始';
+
+  @override
+  String get done => '完了';
+
+  @override
+  String secondsUnit(int seconds) {
+    return '$seconds 秒';
+  }
 }

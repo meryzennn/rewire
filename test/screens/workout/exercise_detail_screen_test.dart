@@ -29,5 +29,12 @@ void main() {
 
     // Tips card
     expect(find.text('Tips Pemulihan & Postur'), findsOneWidget);
+
+    // Start button
+    expect(
+      find.byKey(const Key('exercise-detail-start-button')),
+      findsOneWidget,
+    );
+    expect(find.text('Mulai Latihan Ini'), findsOneWidget);
   });
 }

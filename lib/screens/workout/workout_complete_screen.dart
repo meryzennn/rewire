@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/l10n_utils.dart';
 import '../../data/routines.dart';
 import '../../services/xp_service.dart';
 import '../../widgets/celebration_overlay.dart';
@@ -28,7 +29,18 @@ class WorkoutCompleteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final langCode = getAppLanguageCode(context);
     final isDark = theme.brightness == Brightness.dark;
+
+    final routineTitle = l10n != null
+        ? getLocalizedRoutine(
+            routine.id,
+            routine.name,
+            routine.subtitle,
+            langCode,
+          ).$1
+        : routine.name;
 
     final bg = theme.scaffoldBackgroundColor;
     final textPrimary = isDark
@@ -82,7 +94,7 @@ class WorkoutCompleteScreen extends StatelessWidget {
 
                   // Headline
                   Text(
-                    'Workout Selesai! 💪',
+                    l10n?.workoutFinishedHeadline ?? 'Workout Selesai! 💪',
                     style: theme.textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: textPrimary,
@@ -93,7 +105,7 @@ class WorkoutCompleteScreen extends StatelessWidget {
 
                   // Routine Name
                   Text(
-                    routine.name,
+                    routineTitle,
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: accent,
@@ -104,7 +116,11 @@ class WorkoutCompleteScreen extends StatelessWidget {
 
                   // Duration and exercises completed text
                   Text(
-                    '$displayMinutes menit · $exercisesCompleted gerakan selesai',
+                    l10n?.workoutFinishedSummary(
+                          displayMinutes,
+                          exercisesCompleted,
+                        ) ??
+                        '$displayMinutes menit · $exercisesCompleted gerakan selesai',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: textSecondary,
                     ),
@@ -136,7 +152,8 @@ class WorkoutCompleteScreen extends StatelessWidget {
                           Icon(Icons.stars, color: AppColors.warning, size: 20),
                           const SizedBox(width: 8),
                           Text(
-                            'Level Up! Kamu mencapai Level ${xpAward.levelAfter}',
+                            l10n?.levelUpNotification(xpAward.levelAfter) ??
+                                'Level Up! Kamu mencapai Level ${xpAward.levelAfter}',
                             style: theme.textTheme.labelLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: isDark
@@ -170,9 +187,9 @@ class WorkoutCompleteScreen extends StatelessWidget {
                         context.go(Routes.workout);
                       }
                     },
-                    child: const Text(
-                      'Selesai',
-                      style: TextStyle(
+                    child: Text(
+                      l10n?.done ?? 'Selesai',
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),

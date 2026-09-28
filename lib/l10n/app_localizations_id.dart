@@ -575,4 +575,66 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get focusAndBreatheNaturally => 'Fokus & Bernapas Alami';
+
+  @override
+  String get cancelWorkoutTitle => 'Batalkan Latihan?';
+
+  @override
+  String get cancelWorkoutMessage =>
+      'Progres sesi ini belum akan tersimpan jika kamu keluar sekarang.';
+
+  @override
+  String get continueWorkout => 'Lanjut Latihan';
+
+  @override
+  String get yesCancel => 'Ya, Batalkan';
+
+  @override
+  String exerciseProgress(int current, int total) {
+    return 'Gerakan $current / $total';
+  }
+
+  @override
+  String currentSetProgress(int current, int total) {
+    return 'Set $current / $total';
+  }
+
+  @override
+  String get completeSet => 'Set Selesai ✓';
+
+  @override
+  String get finishWorkout => 'Selesai Latihan ✓';
+
+  @override
+  String get lastExerciseLabel => 'Latihan Terakhir!';
+
+  @override
+  String get restTitle => 'Istirahat';
+
+  @override
+  String get skipRest => 'Skip Istirahat';
+
+  @override
+  String get workoutFinishedHeadline => 'Workout Selesai! 💪';
+
+  @override
+  String workoutFinishedSummary(int minutes, int count) {
+    return '$minutes menit · $count gerakan selesai';
+  }
+
+  @override
+  String levelUpNotification(int level) {
+    return 'Level Up! Kamu mencapai Level $level';
+  }
+
+  @override
+  String get startThisExercise => 'Mulai Latihan Ini';
+
+  @override
+  String get done => 'Selesai';
+
+  @override
+  String secondsUnit(int seconds) {
+    return '$seconds Detik';
+  }
 }

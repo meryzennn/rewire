@@ -1169,6 +1169,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Focus & Breathe Naturally'**
   String get focusAndBreatheNaturally;
+
+  /// No description provided for @cancelWorkoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Workout?'**
+  String get cancelWorkoutTitle;
+
+  /// No description provided for @cancelWorkoutMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress from this session will not be saved if you exit now.'**
+  String get cancelWorkoutMessage;
+
+  /// No description provided for @continueWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Workout'**
+  String get continueWorkout;
+
+  /// No description provided for @yesCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, Cancel'**
+  String get yesCancel;
+
+  /// No description provided for @exerciseProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise {current} / {total}'**
+  String exerciseProgress(int current, int total);
+
+  /// No description provided for @currentSetProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Set {current} / {total}'**
+  String currentSetProgress(int current, int total);
+
+  /// No description provided for @completeSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Set ✓'**
+  String get completeSet;
+
+  /// No description provided for @finishWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish Workout ✓'**
+  String get finishWorkout;
+
+  /// No description provided for @lastExerciseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Final Exercise!'**
+  String get lastExerciseLabel;
+
+  /// No description provided for @restTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest'**
+  String get restTitle;
+
+  /// No description provided for @skipRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip Rest'**
+  String get skipRest;
+
+  /// No description provided for @workoutFinishedHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Complete! 💪'**
+  String get workoutFinishedHeadline;
+
+  /// No description provided for @workoutFinishedSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} mins · {count} exercises completed'**
+  String workoutFinishedSummary(int minutes, int count);
+
+  /// No description provided for @levelUpNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Level Up! You reached Level {level}'**
+  String levelUpNotification(int level);
+
+  /// No description provided for @startThisExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Start This Exercise'**
+  String get startThisExercise;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @secondsUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds} Seconds'**
+  String secondsUnit(int seconds);
 }
 
 class _AppLocalizationsDelegate
