@@ -107,8 +107,17 @@ void main() {
     expect(find.text('Tenang'), findsOneWidget);
     expect(find.text('Penuh Daya'), findsOneWidget);
 
-    // Trigger Section
-    expect(find.text('Trigger hari ini?'), findsOneWidget);
+    // Clean status by default: trigger chips should NOT appear
+    expect(find.text('Pemicu (trigger) relapse?'), findsNothing);
+    expect(
+      find.text('Catatan & Rasa Syukur Hari Ini (Opsional)'),
+      findsOneWidget,
+    );
+
+    // Switching to Relapse reveals trigger section
+    await tester.tap(find.text('Relapse Hari ini'));
+    await tester.pumpAndSettle();
+    expect(find.text('Pemicu (trigger) relapse?'), findsOneWidget);
     expect(find.text('Opsional'), findsOneWidget);
     expect(find.text('Stres'), findsOneWidget);
     expect(find.text('Bosan'), findsOneWidget);
@@ -123,7 +132,7 @@ void main() {
     );
   });
 
-  testWidgets('allows selecting status, mood, triggers, and notes', (
+  testWidgets('allows selecting clean status, mood, and notes without triggers', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(800, 1400);
@@ -142,13 +151,6 @@ void main() {
     await tester.tap(find.text('Tenang'));
     await tester.pumpAndSettle();
 
-    // Select triggers
-    await tester.tap(find.text('Stres'));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.text('Sosial Media'));
-    await tester.pumpAndSettle();
-
     // Enter notes
     await tester.enterText(
       find.byType(TextField),
@@ -163,8 +165,42 @@ void main() {
     expect(provider.submitCalled, isTrue);
     expect(provider.lastStatus, 'clean');
     expect(provider.lastMood, 4);
-    expect(provider.lastTriggers, containsAll(['Stres', 'Sosial Media']));
+    expect(provider.lastTriggers, isEmpty);
     expect(provider.lastNotes, 'Sedikit cemas tapi berhasil jalan santai.');
+  });
+
+  testWidgets('selecting relapse allows selecting triggers and notes', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    final provider = FakeCheckinProvider(currentStreak: 3, longestStreak: 5);
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pumpAndSettle();
+
+    // Select relapse
+    await tester.tap(find.text('Relapse Hari ini'));
+    await tester.pumpAndSettle();
+
+    // Select triggers
+    await tester.tap(find.text('Stres'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Sosial Media'));
+    await tester.pumpAndSettle();
+
+    // Submit
+    await tester.tap(find.text('Simpan Check-in'));
+    await tester.pumpAndSettle();
+
+    expect(provider.submitCalled, isTrue);
+    expect(provider.lastStatus, 'relapse');
+    expect(provider.lastTriggers, containsAll(['Stres', 'Sosial Media']));
   });
 
   testWidgets(
@@ -233,6 +269,8 @@ void main() {
       await tester.pumpWidget(buildScreen(provider));
       await tester.pumpAndSettle();
 
+      expect(find.text('Kamu sudah check-in hari ini'), findsOneWidget);
+      expect(find.text('Perbarui Check-in'), findsOneWidget);
       expect(find.text('Hari yang sangat produktif!'), findsOneWidget);
       expect(find.text('Hari ke-7'), findsOneWidget);
     },

@@ -203,6 +203,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
 
     final provider = _getProvider(context);
     final isRelapse = _selectedStatus == 'relapse';
+    final wasAlreadyCheckedIn = provider.hasCheckedInToday;
 
     try {
       await provider.submitCheckin(
@@ -238,17 +239,21 @@ class _CheckinScreenState extends State<CheckinScreen> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.white, size: 20),
-              SizedBox(width: 8),
-              Text('Check-in berhasil disimpan!'),
+              const Icon(Icons.check_circle, color: Colors.white, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                wasAlreadyCheckedIn
+                    ? 'Check-in berhasil diperbarui!'
+                    : 'Check-in berhasil disimpan!',
+              ),
             ],
           ),
           backgroundColor: AppColors.primary,
           behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
       Navigator.of(context).maybePop();
@@ -389,6 +394,56 @@ class _CheckinScreenState extends State<CheckinScreen> {
                     ),
                     const SizedBox(height: 24),
 
+                    // 1b. ALREADY CHECKED IN BANNER
+                    if (hasCheckedIn) ...[
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 20),
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? primaryContainer.withValues(alpha: 0.25)
+                              : primaryContainer.withValues(alpha: 0.45),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: primaryColor.withValues(alpha: 0.35),
+                          ),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.verified_rounded,
+                              color: primaryColor,
+                              size: 22,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Kamu sudah check-in hari ini',
+                                    style: theme.textTheme.titleSmall?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryColor,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Data check-in hari ini sudah tersimpan. Kamu bisa memperbarui data jika kondisi berubah di malam hari (seperti mood atau jika terjadi relapse).',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: textPrimary.withValues(alpha: 0.85),
+                                      height: 1.4,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+
                     // 2. STATUS QUESTION & SELECTION CARDS
                     Text(
                       'Bagaimana hari ini?',
@@ -411,7 +466,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
                       dividerColor: dividerColor,
                       textPrimary: textPrimary,
                       textSecondary: textSecondary,
-                      onTap: () => setState(() => _selectedStatus = 'clean'),
+                      onTap: () => setState(() {
+                        _selectedStatus = 'clean';
+                        _selectedTriggers.clear();
+                      }),
                     ),
                     const SizedBox(height: 12),
                     // Card 2: Relapse Hari ini
@@ -517,84 +575,97 @@ class _CheckinScreenState extends State<CheckinScreen> {
                     ),
                     const SizedBox(height: 24),
 
-                    // 4. TRIGGER SECTION
-                    Row(
-                      children: [
-                        Text(
-                          'Trigger hari ini?',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: textPrimary,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 2,
-                          ),
-                          decoration: BoxDecoration(
-                            color: surfaceVariantColor,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            'Opsional',
-                            style: theme.textTheme.labelSmall?.copyWith(
-                              color: textSecondary,
+                    // 4. TRIGGER SECTION (Hanya tampil saat status Relapse)
+                    if (_selectedStatus == 'relapse') ...[
+                      Row(
+                        children: [
+                          Text(
+                            'Pemicu (trigger) relapse?',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: textPrimary,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: kAvailableTriggers.map((trigger) {
-                        final isSelected = _selectedTriggers.contains(trigger);
-                        return FilterChip(
-                          selected: isSelected,
-                          showCheckmark: true,
-                          label: Text(trigger),
-                          labelStyle: TextStyle(
-                            fontSize: 13,
-                            fontWeight: isSelected
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                            color: isSelected ? primaryColor : textSecondary,
-                          ),
-                          backgroundColor: surfaceColor,
-                          selectedColor: primaryContainer,
-                          checkmarkColor: primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(
-                              color: isSelected
-                                  ? primaryColor.withValues(alpha: 0.5)
-                                  : dividerColor,
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: surfaceVariantColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              'Opsional',
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: textSecondary,
+                              ),
                             ),
                           ),
-                          onSelected: (selected) {
-                            setState(() {
-                              if (selected) {
-                                _selectedTriggers.add(trigger);
-                              } else {
-                                _selectedTriggers.remove(trigger);
-                              }
-                            });
-                          },
-                        );
-                      }).toList(),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: kAvailableTriggers.map((trigger) {
+                          final isSelected = _selectedTriggers.contains(trigger);
+                          return FilterChip(
+                            selected: isSelected,
+                            showCheckmark: true,
+                            label: Text(trigger),
+                            labelStyle: TextStyle(
+                              fontSize: 13,
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              color: isSelected ? primaryColor : textSecondary,
+                            ),
+                            backgroundColor: surfaceColor,
+                            selectedColor: primaryContainer,
+                            checkmarkColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              side: BorderSide(
+                                color: isSelected
+                                    ? primaryColor.withValues(alpha: 0.5)
+                                    : dividerColor,
+                              ),
+                            ),
+                            onSelected: (selected) {
+                              setState(() {
+                                if (selected) {
+                                  _selectedTriggers.add(trigger);
+                                } else {
+                                  _selectedTriggers.remove(trigger);
+                                }
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                    Text(
+                      _selectedStatus == 'relapse'
+                          ? 'Catatan Evaluasi (Opsional)'
+                          : 'Catatan & Rasa Syukur Hari Ini (Opsional)',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: textPrimary,
+                      ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
                     TextField(
                       controller: _notesController,
                       maxLines: 3,
                       maxLength: 250,
                       style: TextStyle(color: textPrimary, fontSize: 14),
                       decoration: InputDecoration(
-                        hintText:
-                            'Tulis trigger atau catatan singkat jika ada...',
+                        hintText: _selectedStatus == 'relapse'
+                            ? 'Tulis apa yang memicu relapse atau hal yang bisa dipelajari...'
+                            : 'Tulis hal positif atau rasa syukur yang membantumu tetap bersih...',
                         hintStyle: TextStyle(
                           color: textSecondary,
                           fontSize: 14,
@@ -649,9 +720,18 @@ class _CheckinScreenState extends State<CheckinScreen> {
                                 color: Colors.white,
                               ),
                             )
-                          : const Icon(Icons.task_alt, size: 22),
+                          : Icon(
+                              hasCheckedIn
+                                  ? Icons.sync_rounded
+                                  : Icons.task_alt,
+                              size: 22,
+                            ),
                       label: Text(
-                        _isSaving ? 'Menyimpan...' : 'Simpan Check-in',
+                        _isSaving
+                            ? 'Menyimpan...'
+                            : (hasCheckedIn
+                                ? 'Perbarui Check-in'
+                                : 'Simpan Check-in'),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
