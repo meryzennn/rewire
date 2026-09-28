@@ -73,6 +73,7 @@ Future<_Harness> _pumpSettings(
 }) async {
   SharedPreferences.setMockInitialValues({
     'onboarding_completed': true,
+    'language': 'id',
     ...seed,
   });
   final prefs = await SharedPreferences.getInstance();

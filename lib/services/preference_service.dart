@@ -20,6 +20,8 @@ class PrefKeys {
   static const lastWeeklyRefreshDate = 'last_weekly_refresh_date';
   static const userName = 'user_name';
   static const userAge = 'user_age';
+  static const userBirthDate = 'user_birth_date';
+  static const userFitnessLevel = 'user_fitness_level';
   static const userHeight = 'user_height';
   static const userWeight = 'user_weight';
   static const userPfpPath = 'user_pfp_path';
@@ -39,6 +41,8 @@ class PrefKeys {
     lastWeeklyRefreshDate,
     userName,
     userAge,
+    userBirthDate,
+    userFitnessLevel,
     userHeight,
     userWeight,
     userPfpPath,
@@ -76,7 +80,7 @@ class PreferenceService extends ChangeNotifier {
 
   Future<void> setDarkMode(bool value) => _writeBool(PrefKeys.darkMode, value);
 
-  String get language => _prefs.getString(PrefKeys.language) ?? 'id';
+  String get language => _prefs.getString(PrefKeys.language) ?? 'en';
 
   Future<void> setLanguage(String value) =>
       _writeString(PrefKeys.language, value);
@@ -110,7 +114,38 @@ class PreferenceService extends ChangeNotifier {
   Future<void> setUserName(String value) =>
       _writeString(PrefKeys.userName, value);
 
-  int? get userAge => _prefs.getInt(PrefKeys.userAge);
+  DateTime? get userBirthDate {
+    final str = _prefs.getString(PrefKeys.userBirthDate);
+    return str != null ? DateTime.tryParse(str) : null;
+  }
+
+  Future<void> setUserBirthDate(DateTime? value) async {
+    if (value == null) {
+      await _prefs.remove(PrefKeys.userBirthDate);
+    } else {
+      await _prefs.setString(
+        PrefKeys.userBirthDate,
+        '${value.year.toString().padLeft(4, '0')}-${value.month.toString().padLeft(2, '0')}-${value.day.toString().padLeft(2, '0')}',
+      );
+    }
+    notifyListeners();
+  }
+
+  int? get userBirthYear => userBirthDate?.year;
+
+  int? get userAge {
+    final bday = userBirthDate;
+    if (bday != null) {
+      final now = DateTime.now();
+      var age = now.year - bday.year;
+      if (now.month < bday.month ||
+          (now.month == bday.month && now.day < bday.day)) {
+        age--;
+      }
+      return age;
+    }
+    return _prefs.getInt(PrefKeys.userAge);
+  }
 
   Future<void> setUserAge(int? value) async {
     if (value == null) {
@@ -120,6 +155,12 @@ class PreferenceService extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  String get userFitnessLevel =>
+      _prefs.getString(PrefKeys.userFitnessLevel) ?? 'beginner';
+
+  Future<void> setUserFitnessLevel(String value) =>
+      _writeString(PrefKeys.userFitnessLevel, value);
 
   double? get userHeight => _prefs.getDouble(PrefKeys.userHeight);
 

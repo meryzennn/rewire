@@ -97,6 +97,8 @@ void main() {
         'user_height': 175.0,
         'user_weight': 70.0,
         'user_pfp_path': '/path/to/pfp.jpg',
+        'user_birth_date': '1998-05-20',
+        'user_fitness_level': 'expert',
       });
       final prefs = await SharedPreferences.getInstance();
       final service = PreferenceService(prefs);
@@ -108,6 +110,9 @@ void main() {
       expect(service.dailyReminderEnabled, false);
       expect(service.userName, '');
       expect(service.userAge, isNull);
+      expect(service.userBirthDate, isNull);
+      expect(service.userBirthYear, isNull);
+      expect(service.userFitnessLevel, 'beginner');
       expect(service.userHeight, isNull);
       expect(service.userWeight, isNull);
       expect(service.userPfpPath, isNull);
@@ -150,6 +155,57 @@ void main() {
       expect(service.userWeight, isNull);
       expect(service.userPfpPath, isNull);
     });
+
+    test('userBirthDate, userBirthYear, and dynamic userAge round-trip', () async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final service = PreferenceService(prefs);
+
+      expect(service.userBirthDate, isNull);
+      expect(service.userBirthYear, isNull);
+      expect(service.userAge, isNull);
+
+      final birthDate = DateTime(1998, 5, 20);
+      await service.setUserBirthDate(birthDate);
+
+      expect(service.userBirthDate, isNotNull);
+      expect(service.userBirthDate!.year, 1998);
+      expect(service.userBirthDate!.month, 5);
+      expect(service.userBirthDate!.day, 20);
+      expect(service.userBirthYear, 1998);
+
+      // Verify dynamic userAge calculation from birth date
+      final now = DateTime.now();
+      var expectedAge = now.year - 1998;
+      if (now.month < 5 || (now.month == 5 && now.day < 20)) {
+        expectedAge--;
+      }
+      expect(service.userAge, expectedAge);
+
+      // Clearing birth date restores fallback to stored userAge or null
+      await service.setUserBirthDate(null);
+      expect(service.userBirthDate, isNull);
+      expect(service.userBirthYear, isNull);
+      expect(service.userAge, isNull);
+
+      // Explicit userAge fallback when birthDate is null
+      await service.setUserAge(30);
+      expect(service.userAge, 30);
+    });
+
+    test('userFitnessLevel defaults to beginner and round-trips', () async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final service = PreferenceService(prefs);
+
+      expect(service.userFitnessLevel, 'beginner');
+
+      await service.setUserFitnessLevel('intermediate');
+      expect(service.userFitnessLevel, 'intermediate');
+
+      await service.setUserFitnessLevel('expert');
+      expect(service.userFitnessLevel, 'expert');
+    });
   });
 
   test('setters notify listeners', () async {
@@ -160,14 +216,16 @@ void main() {
     await service.setDailyReminderEnabled(true);
     await service.setUserName('Test');
     await service.setUserAge(20);
+    await service.setUserBirthDate(DateTime(1995, 10, 10));
+    await service.setUserFitnessLevel('expert');
     await service.resetAll();
-    expect(notified, greaterThanOrEqualTo(5));
+    expect(notified, greaterThanOrEqualTo(7));
   });
 
   group('language preference', () {
-    test('defaults to id', () async {
+    test('defaults to en', () async {
       final service = await _service();
-      expect(service.language, 'id');
+      expect(service.language, 'en');
     });
 
     test('setLanguage persists and notifies', () async {
@@ -175,12 +233,12 @@ void main() {
       var notified = false;
       service.addListener(() => notified = true);
 
-      await service.setLanguage('en');
-      expect(service.language, 'en');
+      await service.setLanguage('id');
+      expect(service.language, 'id');
       expect(notified, isTrue);
 
       await service.resetAll();
-      expect(service.language, 'id');
+      expect(service.language, 'en');
     });
   });
 }
