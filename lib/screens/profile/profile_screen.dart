@@ -1011,7 +1011,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: Icons.info_rounded,
                     tint: _Tint.neutral,
                     title: l10n?.appVersion ?? 'Versi Aplikasi',
-                    trailing: '1.0.0',
+                    trailing: '1.1.0',
                   ),
                 ],
               ),
