@@ -71,6 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           '${appDir.path}/pfp_${DateTime.now().millisecondsSinceEpoch}.$ext';
       await File(picked.path).copy(targetPath);
       await _prefs.setUserPfpPath(targetPath);
+      if (mounted) setState(() {});
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -202,6 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   await _prefs.setUserHeight(height);
                   final weight = double.tryParse(weightCtrl.text.trim());
                   await _prefs.setUserWeight(weight);
+                  if (mounted) setState(() {});
                   if (ctx.mounted) Navigator.pop(ctx);
                 },
                 style: FilledButton.styleFrom(
@@ -215,6 +217,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _showEditNameDialog() {
+    final nameCtrl = TextEditingController(text: _prefs.userName);
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Ubah Nama'),
+        content: TextField(
+          key: const Key('input-edit-name'),
+          controller: nameCtrl,
+          autofocus: true,
+          textCapitalization: TextCapitalization.words,
+          decoration: const InputDecoration(
+            labelText: 'Nama Lengkap',
+            hintText: 'Masukkan nama kamu',
+            prefixIcon: Icon(Icons.person_outline_rounded),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Batal'),
+          ),
+          FilledButton(
+            key: const Key('btn-save-name'),
+            onPressed: () async {
+              await _prefs.setUserName(nameCtrl.text.trim());
+              if (mounted) setState(() {});
+              if (ctx.mounted) Navigator.pop(ctx);
+            },
+            child: const Text('Simpan'),
+          ),
+        ],
       ),
     );
   }
@@ -296,10 +338,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
           const SizedBox(height: 12),
-          Text(
-            displayName,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+          InkWell(
+            key: const Key('btn-edit-name'),
+            onTap: _showEditNameDialog,
+            borderRadius: BorderRadius.circular(12),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      displayName,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Icon(
+                    Icons.edit_rounded,
+                    size: 18,
+                    color: theme.colorScheme.primary,
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 6),

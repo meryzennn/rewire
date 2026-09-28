@@ -103,4 +103,50 @@ void main() {
     expect(prefService.userHeight, 178.0);
     expect(prefService.userWeight, 74.0);
   });
+
+  testWidgets('tapping pencil icon under PFP opens edit name dialog and updates name', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({'user_name': 'Budi'});
+    final prefs = await SharedPreferences.getInstance();
+    final prefService = PreferenceService(prefs);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildLightTheme(),
+        home: Scaffold(
+          body: ProfileScreen(
+            preferences: prefService,
+            onResetData: () async {},
+          ),
+        ),
+      ),
+    );
+
+    // Initial name and pencil icon
+    expect(find.text('Budi'), findsOneWidget);
+    expect(find.byKey(const Key('btn-edit-name')), findsOneWidget);
+    expect(find.byIcon(Icons.edit_rounded), findsWidgets);
+
+    // Tap pencil icon button
+    await tester.tap(find.byKey(const Key('btn-edit-name')));
+    await tester.pumpAndSettle();
+
+    // Dialog opens
+    expect(find.text('Ubah Nama'), findsOneWidget);
+    expect(find.byKey(const Key('input-edit-name')), findsOneWidget);
+
+    // Enter new name and save
+    await tester.enterText(
+      find.byKey(const Key('input-edit-name')),
+      'Budi Prakoso',
+    );
+    await tester.tap(find.byKey(const Key('btn-save-name')));
+    await tester.pumpAndSettle();
+
+    // Dialog dismissed and UI updated
+    expect(find.text('Ubah Nama'), findsNothing);
+    expect(find.text('Budi Prakoso'), findsOneWidget);
+    expect(prefService.userName, 'Budi Prakoso');
+  });
 }
