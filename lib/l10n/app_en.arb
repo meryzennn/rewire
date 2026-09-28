@@ -1,0 +1,129 @@
+{
+  "@@locale": "en",
+  "appName": "Rewire",
+  "appSubtitle": "Restore your brain & take control of your life",
+  "cancel": "Cancel",
+  "save": "Save",
+  "reset": "Reset",
+  "close": "Close",
+  "continueAction": "Continue",
+  "next": "Next",
+  "skip": "Skip",
+  "startJourney": "Start Journey",
+  "level": "Level {level}",
+  "@level": {
+    "placeholders": {
+      "level": { "type": "int" }
+    }
+  },
+  "days": "{count} Days",
+  "@days": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "minutes": "{count} Minutes",
+  "@minutes": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "dayCount": "Day {day}",
+  "@dayCount": {
+    "placeholders": {
+      "day": { "type": "int" }
+    }
+  },
+  "navHome": "Home",
+  "navMeditation": "Meditation",
+  "navWorkout": "Workout",
+  "navProgress": "Progress",
+  "navProfile": "Profile",
+  "cleanStreakTitle": "Clean Streak",
+  "relapseStreakTitle": "Streak Reset",
+  "longestStreakSubtitle": "Longest: {count} Days",
+  "@longestStreakSubtitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "cleanTodayBanner": "You stayed clean today! Keep up the focus.",
+  "relapseTodayBanner": "Relapse recorded today. Rise up again!",
+  "checkinCta": "Check-in Now",
+  "alreadyCheckedIn": "Checked in for today",
+  "dailyQuestsTitle": "Daily Quests",
+  "quickActionsTitle": "Quick Actions",
+  "quickMeditation": "Quick Meditation",
+  "quickWorkout": "Quick Workout",
+  "emergencyUrge": "Panic Button",
+  "brainEvolutionTitle": "Brain Evolution",
+  "brainStageDormant": "Dormant (Initial Stage)",
+  "brainStageAwakening": "Awakening (First Sparks)",
+  "brainStageGrowing": "Growing (Strengthening)",
+  "brainStageThriving": "Thriving (Thriving Network)",
+  "brainStageTranscendent": "Transcendent (Rewired)",
+  "checkinTitle": "Daily Check-in",
+  "checkinSubtitle": "How did today go?",
+  "checkinClean": "Clean Day",
+  "checkinCleanDesc": "I stayed strong and clean without PMO today.",
+  "checkinRelapse": "I Relapsed",
+  "checkinRelapseDesc": "I stumbled today, but I am ready to get back up.",
+  "howAreYouFeeling": "How are you feeling?",
+  "moodVeryBad": "Very Bad",
+  "moodBad": "Bad",
+  "moodNeutral": "Neutral",
+  "moodGood": "Good",
+  "moodVeryGood": "Very Good",
+  "triggersTitle": "What were the triggers today?",
+  "notesTitle": "Notes & Reflections",
+  "notesHint": "Write down what you learned or how you feel...",
+  "submitCheckin": "Save Check-in",
+  "updateCheckin": "Update Check-in",
+  "meditationTitle": "Meditation Hub",
+  "meditationSubtitle": "Calm your mind and master your urges",
+  "selectDuration": "Select Duration",
+  "soundscapeTitle": "Soundscape",
+  "breathingTechnique": "Breathing Technique",
+  "startMeditation": "Start Session",
+  "meditationComplete": "Session Completed!",
+  "totalMeditationMinutes": "Total Meditation",
+  "workoutTitle": "Physical Workout",
+  "workoutSubtitle": "Channel your energy into positive action",
+  "allRoutines": "All Routines",
+  "startWorkout": "Start Workout",
+  "workoutComplete": "Workout Completed!",
+  "totalWorkoutMinutes": "Total Workout",
+  "progressTitle": "Progress & Achievements",
+  "streakSummary": "Streak Summary",
+  "achievementsTitle": "Achievements",
+  "unlockedCount": "{unlocked} of {total} Unlocked",
+  "@unlockedCount": {
+    "placeholders": {
+      "unlocked": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "profileTitle": "Profile & Settings",
+  "editProfile": "Edit Profile",
+  "editName": "Change Name",
+  "fullName": "Full Name",
+  "physicalData": "PHYSICAL DATA",
+  "ageLabel": "Age",
+  "heightLabel": "Height",
+  "weightLabel": "Weight",
+  "appearanceSection": "Appearance",
+  "darkModeTitle": "Dark Mode",
+  "darkModeSubtitle": "Switch to dark theme",
+  "languageTitle": "Language",
+  "selectLanguage": "Select Language",
+  "notificationsSection": "Notifications",
+  "dailyReminderTitle": "Daily Reminder",
+  "meditationReminderTitle": "Meditation Reminder",
+  "workoutReminderTitle": "Workout Reminder",
+  "dataSection": "Data",
+  "resetDataTitle": "Reset All Data",
+  "resetDataConfirmTitle": "Reset All Data?",
+  "resetDataConfirmContent": "This action will permanently delete all your progress, streaks, and workout history. You will be returned to onboarding.",
+  "aboutSection": "About",
+  "appVersion": "App Version"
+}

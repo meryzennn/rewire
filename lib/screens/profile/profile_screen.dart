@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/provider_utils.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/achievement_provider.dart';
 import '../../providers/checkin_provider.dart';
 import '../../providers/meditation_provider.dart';
@@ -264,6 +265,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  String _currentLanguageLabel(String code) {
+    switch (code) {
+      case 'en':
+        return 'English';
+      case 'es':
+        return 'Español';
+      case 'ja':
+        return '日本語';
+      case 'ar':
+        return 'العربية';
+      case 'id':
+      default:
+        return 'Bahasa Indonesia';
+    }
+  }
+
+  void _showLanguageSelector() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (sheetContext) {
+        final currentLang = _prefs.language;
+        final theme = Theme.of(sheetContext);
+        const languages = [
+          ('id', 'Bahasa Indonesia', '🇮🇩'),
+          ('en', 'English', '🇺🇸'),
+          ('es', 'Español', '🇪🇸'),
+          ('ja', '日本語', '🇯🇵'),
+          ('ar', 'العربية', '🇸🇦'),
+        ];
+
+        return SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                  child: Text(
+                    'Pilih Bahasa / Select Language',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                for (final (code, name, flag) in languages)
+                  ListTile(
+                    key: Key('lang-option-$code'),
+                    leading: Text(flag, style: const TextStyle(fontSize: 24)),
+                    title: Text(name),
+                    trailing: currentLang == code
+                        ? Icon(
+                            Icons.check_circle_rounded,
+                            color: theme.colorScheme.primary,
+                          )
+                        : null,
+                    onTap: () async {
+                      await _prefs.setLanguage(code);
+                      if (sheetContext.mounted) Navigator.pop(sheetContext);
+                      if (mounted) setState(() {});
+                    },
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -567,11 +644,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     value: Theme.of(context).brightness == Brightness.dark,
                     onChanged: _prefs.setDarkMode,
                   ),
-                  const _InfoRow(
+                  _NavRow(
+                    rowKey: const Key('row-select-language'),
                     icon: Icons.language_rounded,
                     tint: _Tint.primary,
                     title: 'Bahasa',
-                    trailing: 'Indonesia',
+                    trailing: _currentLanguageLabel(_prefs.language),
+                    onTap: _showLanguageSelector,
                   ),
                 ],
               ),

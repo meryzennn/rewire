@@ -17,6 +17,7 @@ import 'screens/workout/active_workout_screen.dart';
 import 'screens/workout/exercise_detail_screen.dart';
 import 'screens/workout/workout_complete_screen.dart';
 import 'screens/workout/workout_home_screen.dart';
+import 'l10n/app_localizations.dart';
 import 'services/notification_service.dart';
 import 'services/preference_service.dart';
 import 'services/xp_service.dart';
@@ -58,11 +59,14 @@ class RewireApp extends StatelessWidget {
   final GoRouter router;
   final PreferenceService? preferences;
 
-  Widget _app(ThemeMode mode) => MaterialApp.router(
+  Widget _app(ThemeMode mode, [Locale? locale]) => MaterialApp.router(
     title: 'Rewire',
     theme: buildLightTheme(),
     darkTheme: buildDarkTheme(),
     themeMode: mode,
+    locale: locale,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
     routerConfig: router,
     builder: (context, child) {
       final theme = Theme.of(context);
@@ -81,7 +85,10 @@ class RewireApp extends StatelessWidget {
     if (prefs == null) return _app(ThemeMode.system);
     return AnimatedBuilder(
       animation: prefs,
-      builder: (context, _) => _app(prefs.themeMode),
+      builder: (context, _) => _app(
+        prefs.themeMode,
+        Locale(prefs.language),
+      ),
     );
   }
 }

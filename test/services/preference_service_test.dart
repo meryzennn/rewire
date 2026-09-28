@@ -163,4 +163,24 @@ void main() {
     await service.resetAll();
     expect(notified, greaterThanOrEqualTo(5));
   });
+
+  group('language preference', () {
+    test('defaults to id', () async {
+      final service = await _service();
+      expect(service.language, 'id');
+    });
+
+    test('setLanguage persists and notifies', () async {
+      final service = await _service();
+      var notified = false;
+      service.addListener(() => notified = true);
+
+      await service.setLanguage('en');
+      expect(service.language, 'en');
+      expect(notified, isTrue);
+
+      await service.resetAll();
+      expect(service.language, 'id');
+    });
+  });
 }

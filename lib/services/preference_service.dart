@@ -76,6 +76,11 @@ class PreferenceService extends ChangeNotifier {
 
   Future<void> setDarkMode(bool value) => _writeBool(PrefKeys.darkMode, value);
 
+  String get language => _prefs.getString(PrefKeys.language) ?? 'id';
+
+  Future<void> setLanguage(String value) =>
+      _writeString(PrefKeys.language, value);
+
   bool get dailyReminderEnabled =>
       _prefs.getBool(PrefKeys.dailyReminderEnabled) ?? false;
 

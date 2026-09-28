@@ -209,6 +209,48 @@ void main() {
     expect(prefService.onboardingCompleted, isFalse);
     expect(prefService.userName, isEmpty);
   });
+
+  testWidgets('tapping language row opens selector and updates language preference', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({'language': 'id'});
+    final prefs = await SharedPreferences.getInstance();
+    final prefService = PreferenceService(prefs);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildLightTheme(),
+        home: Scaffold(
+          body: ProfileScreen(
+            preferences: prefService,
+            onResetData: () async {},
+          ),
+        ),
+      ),
+    );
+
+    // Initial state: Bahasa Indonesia
+    expect(find.text('Bahasa'), findsOneWidget);
+    expect(find.text('Bahasa Indonesia'), findsOneWidget);
+
+    // Tap language row
+    await tester.tap(find.byKey(const Key('row-select-language')));
+    await tester.pumpAndSettle();
+
+    // Modal sheet opens with language options
+    expect(find.text('Pilih Bahasa / Select Language'), findsOneWidget);
+    expect(find.byKey(const Key('lang-option-en')), findsOneWidget);
+    expect(find.byKey(const Key('lang-option-es')), findsOneWidget);
+
+    // Select English
+    await tester.tap(find.byKey(const Key('lang-option-en')));
+    await tester.pumpAndSettle();
+
+    // Verify modal dismissed, language updated in preferences and UI
+    expect(find.text('Pilih Bahasa / Select Language'), findsNothing);
+    expect(prefService.language, 'en');
+    expect(find.text('English'), findsOneWidget);
+  });
 }
 
 class _TestUserProvider extends ChangeNotifier implements UserProvider {
