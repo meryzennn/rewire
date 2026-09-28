@@ -23,6 +23,8 @@ String getAppLanguageCode(BuildContext context) {
 /// (English, Spanish, Japanese, and Indonesian).
 String getLocalizedQuestTitle(String questId, String fallback, String? langCode) {
   final lang = langCode ?? 'id';
+  if (lang == 'id') return fallback;
+
   switch (questId) {
     case 'checkin_today':
       switch (lang) {
@@ -32,8 +34,6 @@ String getLocalizedQuestTitle(String questId, String fallback, String? langCode)
           return '本日のチェックイン';
         case 'es':
           return 'Registro de hoy';
-        default:
-          return fallback;
       }
     case 'meditate_5min':
       switch (lang) {
@@ -43,8 +43,6 @@ String getLocalizedQuestTitle(String questId, String fallback, String? langCode)
           return '最低5分間の瞑想';
         case 'es':
           return 'Meditar al menos 5 minutos';
-        default:
-          return fallback;
       }
     case 'workout_1':
       switch (lang) {
@@ -54,8 +52,6 @@ String getLocalizedQuestTitle(String questId, String fallback, String? langCode)
           return 'ワークアウトを1回完了';
         case 'es':
           return 'Completar 1 entrenamiento';
-        default:
-          return fallback;
       }
     case 'log_trigger_1':
       switch (lang) {
@@ -65,8 +61,6 @@ String getLocalizedQuestTitle(String questId, String fallback, String? langCode)
           return 'トリガーを1件記録';
         case 'es':
           return 'Registrar 1 detonante';
-        default:
-          return fallback;
       }
     case 'meditate_10min':
       switch (lang) {
@@ -76,8 +70,6 @@ String getLocalizedQuestTitle(String questId, String fallback, String? langCode)
           return '10分間の瞑想';
         case 'es':
           return 'Meditar 10 minutos';
-        default:
-          return fallback;
       }
     case 'workout_2':
       switch (lang) {
@@ -87,8 +79,6 @@ String getLocalizedQuestTitle(String questId, String fallback, String? langCode)
           return 'ワークアウトを2回完了';
         case 'es':
           return 'Completar 2 entrenamientos';
-        default:
-          return fallback;
       }
     case 'weekly_meditate_5days':
       switch (lang) {
@@ -98,8 +88,6 @@ String getLocalizedQuestTitle(String questId, String fallback, String? langCode)
           return '今週5日間瞑想する';
         case 'es':
           return 'Meditar 5 días esta semana';
-        default:
-          return fallback;
       }
     case 'weekly_workout_3':
       switch (lang) {
@@ -109,30 +97,35 @@ String getLocalizedQuestTitle(String questId, String fallback, String? langCode)
           return '今週3回ワークアウト';
         case 'es':
           return '3 entrenamientos esta semana';
-        default:
-          return fallback;
       }
-    case 'weekly_checkin_all':
+    case 'weekly_streak_7':
       switch (lang) {
         case 'en':
-          return 'Check-in every day this week';
+          return '7-day streak';
         case 'ja':
-          return '今週毎日チェックイン';
+          return '7日連続ストリーク';
         case 'es':
-          return 'Registrarse todos los días esta semana';
-        default:
-          return fallback;
+          return 'Racha de 7 días';
       }
+    case 'weekly_meditate_30min':
     case 'weekly_meditate_60min':
       switch (lang) {
         case 'en':
-          return '60 total meditation minutes this week';
+          return 'Total 30 minutes meditation';
         case 'ja':
-          return '今週合計60分の瞑想';
+          return '合計30分間の瞑想';
         case 'es':
-          return '60 minutos totales de meditación esta semana';
-        default:
-          return fallback;
+          return '30 minutos totales de meditación';
+      }
+    case 'weekly_checkin_daily':
+    case 'weekly_checkin_all':
+      switch (lang) {
+        case 'en':
+          return 'Check-in every day';
+        case 'ja':
+          return '毎日チェックイン';
+        case 'es':
+          return 'Registro diario';
       }
     case 'weekly_workout_5':
       switch (lang) {
@@ -142,12 +135,113 @@ String getLocalizedQuestTitle(String questId, String fallback, String? langCode)
           return '今週合計5回ワークアウト';
         case 'es':
           return '5 entrenamientos totales esta semana';
-        default:
-          return fallback;
       }
-    default:
-      return fallback;
   }
+
+  // Also support matching by raw Indonesian fallback title if questId is dynamic
+  switch (fallback.toLowerCase().trim()) {
+    case 'check-in setiap hari':
+      switch (lang) {
+        case 'en':
+          return 'Check-in every day';
+        case 'ja':
+          return '毎日チェックイン';
+        case 'es':
+          return 'Registro diario';
+      }
+    case 'streak 7 hari':
+      switch (lang) {
+        case 'en':
+          return '7-day streak';
+        case 'ja':
+          return '7日連続ストリーク';
+        case 'es':
+          return 'Racha de 7 días';
+      }
+    case 'total 30 menit meditasi':
+      switch (lang) {
+        case 'en':
+          return 'Total 30 minutes meditation';
+        case 'ja':
+          return '合計30分間の瞑想';
+        case 'es':
+          return '30 minutos totales de meditación';
+      }
+    case 'meditasi 5 hari minggu ini':
+      switch (lang) {
+        case 'en':
+          return 'Meditate 5 days this week';
+        case 'ja':
+          return '今週5日間瞑想する';
+        case 'es':
+          return 'Meditar 5 días esta semana';
+      }
+    case '3 workout minggu ini':
+      switch (lang) {
+        case 'en':
+          return '3 workouts this week';
+        case 'ja':
+          return '今週3回ワークアウト';
+        case 'es':
+          return '3 entrenamientos esta semana';
+      }
+    case 'check-in hari ini':
+      switch (lang) {
+        case 'en':
+          return 'Check-in today';
+        case 'ja':
+          return '本日のチェックイン';
+        case 'es':
+          return 'Registro de hoy';
+      }
+    case 'meditasi minimal 5 menit':
+      switch (lang) {
+        case 'en':
+          return 'Meditate at least 5 minutes';
+        case 'ja':
+          return '最低5分間の瞑想';
+        case 'es':
+          return 'Meditar al menos 5 minutos';
+      }
+    case 'selesaikan 1 workout':
+      switch (lang) {
+        case 'en':
+          return 'Complete 1 workout';
+        case 'ja':
+          return 'ワークアウトを1回完了';
+        case 'es':
+          return 'Completar 1 entrenamiento';
+      }
+    case 'catat 1 trigger':
+      switch (lang) {
+        case 'en':
+          return 'Log 1 trigger';
+        case 'ja':
+          return 'トリガーを1件記録';
+        case 'es':
+          return 'Registrar 1 detonante';
+      }
+    case 'meditasi 10 menit':
+      switch (lang) {
+        case 'en':
+          return 'Meditate for 10 minutes';
+        case 'ja':
+          return '10分間の瞑想';
+        case 'es':
+          return 'Meditar 10 minutos';
+      }
+    case 'selesaikan 2 workout':
+      switch (lang) {
+        case 'en':
+          return 'Complete 2 workouts';
+        case 'ja':
+          return 'ワークアウトを2回完了';
+        case 'es':
+          return 'Completar 2 entrenamientos';
+      }
+  }
+
+  return fallback;
 }
 
 (String, String) getLocalizedAmbientTrack(
