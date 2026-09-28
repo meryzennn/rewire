@@ -413,4 +413,159 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get allFilter => 'すべて';
+
+  @override
+  String get workoutXpRewardSubtitle => 'セッション完了ごとに+35 XP';
+
+  @override
+  String exercisesCount(int count) {
+    return '$count 種目';
+  }
+
+  @override
+  String get repsShort => '回';
+
+  @override
+  String get secondsShort => '秒';
+
+  @override
+  String get targetSet => '目標セット';
+
+  @override
+  String setsCount(int count) {
+    return '$count セット';
+  }
+
+  @override
+  String get durationPerSet => '時間 / セット';
+
+  @override
+  String get targetPerSet => '目標 / セット';
+
+  @override
+  String get targetMusclesTitle => '主な対象筋肉';
+
+  @override
+  String get instructionsTitle => '手順・解説';
+
+  @override
+  String get recoveryTipsTitle => '回復と姿勢のヒント';
+
+  @override
+  String get recoveryTipsContent =>
+      '安定した呼吸と正確な動作に集中しましょう。急ぐよりもゆっくりと正確な動きの方が、脳の神経回路の再構築により効果的です。';
+
+  @override
+  String get timeBadge => '時間';
+
+  @override
+  String get cleanStreakActive => '継続中';
+
+  @override
+  String get streakStartFresh => '再スタート';
+
+  @override
+  String get cleanSubtitle => '気を散らさずにクリーン';
+
+  @override
+  String get recoverySubtitle => '回復の一歩';
+
+  @override
+  String get alreadyCheckedInToday => '本日は既にチェックイン済みです';
+
+  @override
+  String get alreadyCheckedInDesc =>
+      '本日のチェックインは保存済みです。夜間に気分が変わったりスリップした場合でも、いつでも更新できます。';
+
+  @override
+  String get selectOne => '1つ選択';
+
+  @override
+  String get optionalLabel => '任意';
+
+  @override
+  String get triggersRelapseTitle => 'スリップの引き金は何でしたか？';
+
+  @override
+  String get notesEvaluationTitle => '振り返りノート（任意）';
+
+  @override
+  String get notesGratitudeTitle => '本日のメモと感謝（任意）';
+
+  @override
+  String get hintRelapseNotes => '引き金となった要因や学んだことを書き留めましょう...';
+
+  @override
+  String get hintCleanNotes => '今日クリーンを保てた要因や前向きな感謝を書きましょう...';
+
+  @override
+  String get checkinSuccessSaved => 'チェックインを保存しました！';
+
+  @override
+  String get checkinSuccessUpdated => 'チェックインを更新しました！';
+
+  @override
+  String get checkinEncourageTitle => '大丈夫です。';
+
+  @override
+  String get checkinEncourageDesc => '回復には時間がかかります。一番大切なのは、正直に向き合い再び立ち上がる勇気です。';
+
+  @override
+  String get checkinEncourageStreakNotice =>
+      '連続記録はリセットされますが、総XPとレベルは完全に保持されます。';
+
+  @override
+  String get startAgainAction => '再スタート 💪';
+
+  @override
+  String get checkinBottomMotto => '脳の新しい神経回路を形成する小さな意識的な一歩。';
+
+  @override
+  String get unlockedBadge => '解除済み';
+
+  @override
+  String get lockedBadge => '未解除';
+
+  @override
+  String get noAchievementsYet => '実績データがまだありません';
+
+  @override
+  String get xpProgressTitle => 'XP 進捗';
+
+  @override
+  String xpToNextLevel(int xp, int nextLevel) {
+    return 'レベル $nextLevel まであと $xp XP';
+  }
+
+  @override
+  String get maxLevelReached => '最大レベル到達！🌟';
+
+  @override
+  String get cleanDayLegend => 'クリーンな日';
+
+  @override
+  String get relapseDayLegend => 'スリップした日';
+
+  @override
+  String get brainRewiringProgress => '脳の再構築の進捗';
+
+  @override
+  String maxLevelWithXp(int xp) {
+    return '最大レベル ($xp XP)';
+  }
+
+  @override
+  String get brainEvolutionStagesTitle => '脳の進化段階（神経可塑性）';
+
+  @override
+  String get freeBreathingTitle => '自由';
+
+  @override
+  String get naturalBreathingSubtitle => '自然';
+
+  @override
+  String get chooseSoundscapeSubtitle => '音を1つ選択';
+
+  @override
+  String get focusAndBreatheNaturally => '集中して自然に呼吸';
 }

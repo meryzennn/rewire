@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/l10n_utils.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../core/utils/xp_utils.dart';
 import '../../data/meditation_definitions.dart';
@@ -71,6 +72,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
   ) {
     var minutes = provider?.selectedDurationMinutes ?? 10;
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     showDialog<void>(
@@ -86,7 +88,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                 borderRadius: BorderRadius.circular(20),
               ),
               title: Text(
-                'Durasi Kustom',
+                l10n?.customDuration ?? 'Durasi Kustom',
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -95,7 +97,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    '$minutes Menit',
+                    l10n?.minutes(minutes) ?? '$minutes Menit',
                     style: theme.textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.secondary,
@@ -120,7 +122,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(),
                   child: Text(
-                    'Batal',
+                    l10n?.cancel ?? 'Batal',
                     style: TextStyle(
                       color: isDark
                           ? AppColors.darkTextSecondary
@@ -140,7 +142,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                     provider?.setDuration(minutes);
                     Navigator.of(ctx).pop();
                   },
-                  child: const Text('Terapkan'),
+                  child: Text(l10n?.save ?? 'Terapkan'),
                 ),
               ],
             );
@@ -155,6 +157,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final langCode = getAppLanguageCode(context);
 
     final provider =
         context.watchOrNull<MeditationProvider>() ?? widget.provider;
@@ -464,7 +467,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      'Pilih 1 Suasana',
+                      l10n?.chooseSoundscapeSubtitle ?? 'Pilih 1 Suasana',
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: lavenderAccent,
                         fontWeight: FontWeight.bold,
@@ -487,6 +490,12 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                 itemBuilder: (context, index) {
                   final track = kAmbientTracks[index];
                   final isSelected = selectedTrackId == track.id;
+                  final localized = getLocalizedAmbientTrack(
+                    track.id,
+                    track.title,
+                    track.subtitle,
+                    langCode,
+                  );
 
                   return InkWell(
                     onTap: () => provider?.setTrack(track.id),
@@ -545,7 +554,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  track.title,
+                                  localized.$1,
                                   style: theme.textTheme.titleSmall?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: textPrimary,
@@ -555,7 +564,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Text(
-                                  track.subtitle,
+                                  localized.$2,
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: textSecondary,
                                     fontSize: 11,
@@ -586,7 +595,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                     ),
                   ),
                   Text(
-                    'Opsional',
+                    l10n?.optionalLabel ?? 'Opsional',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: textSecondary,
                     ),
@@ -631,14 +640,14 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Bebas',
+                              l10n?.freeBreathingTitle ?? 'Bebas',
                               style: theme.textTheme.labelMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: textPrimary,
                               ),
                             ),
                             Text(
-                              'Alami',
+                              l10n?.naturalBreathingSubtitle ?? 'Alami',
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: textSecondary,
                                 fontSize: 11,
@@ -687,14 +696,24 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Box',
+                              getLocalizedBreathingPattern(
+                                'box',
+                                'Box',
+                                '4-4-4-4',
+                                langCode,
+                              ).$1,
                               style: theme.textTheme.labelMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: textPrimary,
                               ),
                             ),
                             Text(
-                              '4-4-4-4',
+                              getLocalizedBreathingPattern(
+                                'box',
+                                'Box',
+                                '4-4-4-4',
+                                langCode,
+                              ).$2,
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: textSecondary,
                                 fontSize: 11,
@@ -743,14 +762,24 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '4-7-8',
+                              getLocalizedBreathingPattern(
+                                '478',
+                                '4-7-8',
+                                'Rileks',
+                                langCode,
+                              ).$1,
                               style: theme.textTheme.labelMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: textPrimary,
                               ),
                             ),
                             Text(
-                              'Rileks',
+                              getLocalizedBreathingPattern(
+                                '478',
+                                '4-7-8',
+                                'Rileks',
+                                langCode,
+                              ).$2,
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: textSecondary,
                                 fontSize: 11,
@@ -794,30 +823,75 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                 },
               ),
               const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.bolt, size: 16, color: AppColors.warning),
-                  const SizedBox(width: 4),
-                  Text.rich(
-                    TextSpan(
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: textSecondary,
-                      ),
-                      children: [
-                        const TextSpan(text: 'Dapatkan '),
-                        TextSpan(
-                          text: '+$potentialXp XP',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: textPrimary,
-                          ),
+              Builder(
+                builder: (context) {
+                  List<InlineSpan> spans;
+                  if (langCode == 'ja') {
+                    spans = [
+                      const TextSpan(text: '完了時に '),
+                      TextSpan(
+                        text: '+$potentialXp XP',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary,
                         ),
-                        const TextSpan(text: ' Brain Rewiring setelah selesai'),
-                      ],
-                    ),
-                  ),
-                ],
+                      ),
+                      const TextSpan(text: ' Brain Rewiring を獲得'),
+                    ];
+                  } else if (langCode == 'es') {
+                    spans = [
+                      const TextSpan(text: 'Gana '),
+                      TextSpan(
+                        text: '+$potentialXp XP',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary,
+                        ),
+                      ),
+                      const TextSpan(text: ' de Brain Rewiring al completar'),
+                    ];
+                  } else if (langCode == 'en') {
+                    spans = [
+                      const TextSpan(text: 'Earn '),
+                      TextSpan(
+                        text: '+$potentialXp XP',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary,
+                        ),
+                      ),
+                      const TextSpan(text: ' Brain Rewiring on completion'),
+                    ];
+                  } else {
+                    spans = [
+                      const TextSpan(text: 'Dapatkan '),
+                      TextSpan(
+                        text: '+$potentialXp XP',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary,
+                        ),
+                      ),
+                      const TextSpan(text: ' Brain Rewiring setelah selesai'),
+                    ];
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.bolt, size: 16, color: AppColors.warning),
+                      const SizedBox(width: 4),
+                      Text.rich(
+                        TextSpan(
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: textSecondary,
+                          ),
+                          children: spans,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 16),
             ],

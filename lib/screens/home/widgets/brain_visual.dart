@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/l10n_utils.dart';
 import '../../../core/utils/provider_utils.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../providers/user_provider.dart';
 
 bool get _isTestEnvironment {
@@ -71,6 +73,8 @@ class _BrainVisualState extends State<BrainVisual>
   void _showStageTimeline(BuildContext context, String currentStage) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context);
+    final langCode = getAppLanguageCode(context);
 
     showModalBottomSheet<void>(
       context: context,
@@ -105,7 +109,8 @@ class _BrainVisualState extends State<BrainVisual>
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Tahapan Evolusi Otak (Neuroplastisitas)',
+                    l10n?.brainEvolutionStagesTitle ??
+                        'Tahapan Evolusi Otak (Neuroplastisitas)',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -113,7 +118,11 @@ class _BrainVisualState extends State<BrainVisual>
                   const SizedBox(height: 12),
                   ...kBrainStageDescriptions.entries.map((entry) {
                     final stage = entry.key;
-                    final desc = entry.value;
+                    final desc = getLocalizedBrainStageDescription(
+                      stage,
+                      entry.value,
+                      langCode,
+                    );
                     final isCurrent = stage == currentStage;
 
                     return Container(
@@ -196,6 +205,7 @@ class _BrainVisualState extends State<BrainVisual>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final userProvider = widget.provider ?? context.watchOrNull<UserProvider>();
 
@@ -282,7 +292,7 @@ class _BrainVisualState extends State<BrainVisual>
 
                 // Level & Brain Stage Subheading
                 Text(
-                  'Level $level',
+                  l10n?.level(level) ?? 'Level $level',
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w800,
                     color: textPrimary,
@@ -305,7 +315,7 @@ class _BrainVisualState extends State<BrainVisual>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Brain Rewiring Progress',
+                      l10n?.brainRewiringProgress ?? 'Brain Rewiring Progress',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: textSecondary,
                         fontWeight: FontWeight.w600,
@@ -313,7 +323,8 @@ class _BrainVisualState extends State<BrainVisual>
                     ),
                     Text(
                       level >= 50
-                          ? 'Max Level ($totalXp XP)'
+                          ? (l10n?.maxLevelWithXp(totalXp) ??
+                              'Max Level ($totalXp XP)')
                           : '$inLevelXp / $spanXp XP',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: textSecondary,

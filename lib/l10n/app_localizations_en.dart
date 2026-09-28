@@ -415,4 +415,164 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get allFilter => 'All';
+
+  @override
+  String get workoutXpRewardSubtitle => '+35 XP per session completed';
+
+  @override
+  String exercisesCount(int count) {
+    return '$count Exercises';
+  }
+
+  @override
+  String get repsShort => 'Reps';
+
+  @override
+  String get secondsShort => 's';
+
+  @override
+  String get targetSet => 'Target Sets';
+
+  @override
+  String setsCount(int count) {
+    return '$count Sets';
+  }
+
+  @override
+  String get durationPerSet => 'Duration / Set';
+
+  @override
+  String get targetPerSet => 'Target / Set';
+
+  @override
+  String get targetMusclesTitle => 'Target Primary Muscles';
+
+  @override
+  String get instructionsTitle => 'Instructions';
+
+  @override
+  String get recoveryTipsTitle => 'Recovery & Posture Tips';
+
+  @override
+  String get recoveryTipsContent =>
+      'Focus on steady breathing and controlled motion. Slow, precise movements rewire neural pathways far more effectively than rushing.';
+
+  @override
+  String get timeBadge => 'Time';
+
+  @override
+  String get cleanStreakActive => 'Active Streak';
+
+  @override
+  String get streakStartFresh => 'Fresh Start';
+
+  @override
+  String get cleanSubtitle => 'clean without distraction';
+
+  @override
+  String get recoverySubtitle => 'recovery step';
+
+  @override
+  String get alreadyCheckedInToday => 'You already checked in today';
+
+  @override
+  String get alreadyCheckedInDesc =>
+      'Today\'s check-in has been saved. You can update it anytime if circumstances change later tonight (such as your mood or a relapse).';
+
+  @override
+  String get selectOne => 'Select one';
+
+  @override
+  String get optionalLabel => 'Optional';
+
+  @override
+  String get triggersRelapseTitle => 'What triggered the relapse?';
+
+  @override
+  String get notesEvaluationTitle => 'Evaluation Notes (Optional)';
+
+  @override
+  String get notesGratitudeTitle => 'Notes & Gratitude Today (Optional)';
+
+  @override
+  String get hintRelapseNotes =>
+      'Write what triggered the relapse or what you learned...';
+
+  @override
+  String get hintCleanNotes =>
+      'Write positive reflections or gratitude that kept you clean...';
+
+  @override
+  String get checkinSuccessSaved => 'Check-in saved successfully!';
+
+  @override
+  String get checkinSuccessUpdated => 'Check-in updated successfully!';
+
+  @override
+  String get checkinEncourageTitle => 'It\'s okay.';
+
+  @override
+  String get checkinEncourageDesc =>
+      'Every recovery journey takes time. What matters most is your honesty and courage to rise up again.';
+
+  @override
+  String get checkinEncourageStreakNotice =>
+      'Your streak will reset, but your total XP and level remain completely intact.';
+
+  @override
+  String get startAgainAction => 'Start Again 💪';
+
+  @override
+  String get checkinBottomMotto =>
+      'One conscious step toward building a newly wired brain.';
+
+  @override
+  String get unlockedBadge => 'Unlocked';
+
+  @override
+  String get lockedBadge => 'Locked';
+
+  @override
+  String get noAchievementsYet => 'No achievement data yet';
+
+  @override
+  String get xpProgressTitle => 'XP Progress';
+
+  @override
+  String xpToNextLevel(int xp, int nextLevel) {
+    return '$xp XP to Level $nextLevel';
+  }
+
+  @override
+  String get maxLevelReached => 'Maximum Level Reached! 🌟';
+
+  @override
+  String get cleanDayLegend => 'Clean Day';
+
+  @override
+  String get relapseDayLegend => 'Relapse Day';
+
+  @override
+  String get brainRewiringProgress => 'Brain Rewiring Progress';
+
+  @override
+  String maxLevelWithXp(int xp) {
+    return 'Max Level ($xp XP)';
+  }
+
+  @override
+  String get brainEvolutionStagesTitle =>
+      'Brain Evolution Stages (Neuroplasticity)';
+
+  @override
+  String get freeBreathingTitle => 'Free';
+
+  @override
+  String get naturalBreathingSubtitle => 'Natural';
+
+  @override
+  String get chooseSoundscapeSubtitle => 'Choose 1 Soundscape';
+
+  @override
+  String get focusAndBreatheNaturally => 'Focus & Breathe Naturally';
 }

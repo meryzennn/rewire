@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/l10n_utils.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/quest.dart';
 
@@ -14,6 +15,7 @@ class WeeklyChallenges extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+    final langCode = getAppLanguageCode(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -133,7 +135,11 @@ class WeeklyChallenges extends StatelessWidget {
                                 children: [
                                   Flexible(
                                     child: Text(
-                                      quest.title,
+                                      getLocalizedQuestTitle(
+                                        quest.questId,
+                                        quest.title,
+                                        langCode,
+                                      ),
                                       style: theme.textTheme.bodyMedium
                                           ?.copyWith(
                                             fontWeight: FontWeight.w600,

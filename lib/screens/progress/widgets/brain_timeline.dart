@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/xp_utils.dart';
+import '../../../l10n/app_localizations.dart';
 
 /// Brain evolution hero card and 5-stage timeline widget (spec §3.3, §9).
 class BrainTimeline extends StatelessWidget {
@@ -39,26 +40,44 @@ class BrainTimeline extends StatelessWidget {
     return idx >= 0 ? idx : 0;
   }
 
-  String _stageTitle(String stage) {
+  String _stageTitle(String stage, AppLocalizations? l10n) {
     switch (stage.toLowerCase()) {
       case 'dormant':
-        return 'Dormant 🌑';
+        return '${l10n?.brainStageDormant ?? 'Dormant'} 🌑';
       case 'awakening':
-        return 'Awakening 🌱';
+        return '${l10n?.brainStageAwakening ?? 'Awakening'} 🌱';
       case 'growing':
-        return 'Growing 🌿';
+        return '${l10n?.brainStageGrowing ?? 'Growing'} 🌿';
       case 'thriving':
-        return 'Thriving 🌳';
+        return '${l10n?.brainStageThriving ?? 'Thriving'} 🌳';
       case 'transcendent':
-        return 'Transcendent 🧠';
+        return '${l10n?.brainStageTranscendent ?? 'Transcendent'} 🧠';
       default:
         return 'Dormant 🌑';
+    }
+  }
+
+  String _stageName(String stageId, AppLocalizations? l10n) {
+    switch (stageId.toLowerCase()) {
+      case 'dormant':
+        return l10n?.brainStageDormant.split(' ').first ?? 'Dormant';
+      case 'awakening':
+        return l10n?.brainStageAwakening.split(' ').first ?? 'Awakening';
+      case 'growing':
+        return l10n?.brainStageGrowing.split(' ').first ?? 'Growing';
+      case 'thriving':
+        return l10n?.brainStageThriving.split(' ').first ?? 'Thriving';
+      case 'transcendent':
+        return l10n?.brainStageTranscendent.split(' ').first ?? 'Transcendent';
+      default:
+        return stageId;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -131,7 +150,7 @@ class BrainTimeline extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Text(
-              'Level $level',
+              l10n?.level(level) ?? 'Level $level',
               style: TextStyle(
                 color: primaryColor,
                 fontSize: 12,
@@ -144,7 +163,7 @@ class BrainTimeline extends StatelessWidget {
 
           // Stage title
           Text(
-            _stageTitle(brainStage),
+            _stageTitle(brainStage, l10n),
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: textPrimary,
@@ -166,7 +185,7 @@ class BrainTimeline extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Pengalaman Jiwa',
+                      l10n?.xpProgressTitle ?? 'Pengalaman Jiwa',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: textSecondary,
                         fontWeight: FontWeight.w600,
@@ -194,8 +213,9 @@ class BrainTimeline extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   level < 50
-                      ? '$remainingXp XP lagi menuju Level ${level + 1}'
-                      : 'Level Maksimal Tercapai! 🌟',
+                      ? (l10n?.xpToNextLevel(remainingXp, level + 1) ??
+                          '$remainingXp XP lagi menuju Level ${level + 1}')
+                      : (l10n?.maxLevelReached ?? 'Level Maksimal Tercapai! 🌟'),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: textSecondary,
                     fontSize: 11,
@@ -253,7 +273,7 @@ class BrainTimeline extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      stageData['name'] as String,
+                      _stageName(stageData['id'] as String, l10n),
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: isCurrent

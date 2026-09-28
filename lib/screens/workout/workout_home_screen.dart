@@ -6,7 +6,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../data/exercises.dart';
 import '../../data/routines.dart';
-import '../../l10n/app_localizations.dart';
+import '../../core/utils/l10n_utils.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/workout_provider.dart';
 
@@ -52,6 +52,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final langCode = getAppLanguageCode(context);
 
     final bg = theme.scaffoldBackgroundColor;
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -159,7 +160,8 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                         ),
                                   ),
                                   Text(
-                                    '+35 XP tiap sesi selesai',
+                                    l10n?.workoutXpRewardSubtitle ??
+                                        '+35 XP tiap sesi selesai',
                                     style: theme.textTheme.bodySmall?.copyWith(
                                       color: textSecondary,
                                     ),
@@ -217,23 +219,30 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      l10n?.totalSessions ?? 'Total Sesi',
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(color: textSecondary),
-                                    ),
-                                    Text(
-                                      '$totalSessions',
-                                      style: theme.textTheme.titleMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: textPrimary,
-                                          ),
-                                    ),
-                                  ],
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        l10n?.totalSessions ?? 'Total Sesi',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: theme.textTheme.bodySmall
+                                            ?.copyWith(color: textSecondary),
+                                      ),
+                                      Text(
+                                        '$totalSessions',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: textPrimary,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -264,23 +273,30 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      l10n?.totalMinutesLabel ?? 'Total Menit',
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(color: textSecondary),
-                                    ),
-                                    Text(
-                                      '$totalMinutes',
-                                      style: theme.textTheme.titleMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: textPrimary,
-                                          ),
-                                    ),
-                                  ],
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        l10n?.totalMinutesLabel ?? 'Total Menit',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: theme.textTheme.bodySmall
+                                            ?.copyWith(color: textSecondary),
+                                      ),
+                                      Text(
+                                        '$totalMinutes',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: textPrimary,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -382,7 +398,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                               final isSelected = selectedCategory == cat;
                               final label = cat == 'Semua'
                                   ? (l10n?.allFilter ?? 'Semua')
-                                  : cat;
+                                  : getLocalizedCategory(cat, langCode);
                               return Padding(
                                 padding: const EdgeInsets.only(right: 8),
                                 child: InkWell(
@@ -477,64 +493,97 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                     ),
                                   ),
                                   const SizedBox(height: 2),
-                                  Text(
-                                    '${exercise.category} • ${exercise.targetMuscles}',
-                                    style: theme.textTheme.bodySmall?.copyWith(
-                                      color: textSecondary,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 2,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color:
-                                              (isDark
-                                                      ? AppColors
-                                                            .darkPrimaryContainer
-                                                      : AppColors
-                                                            .primaryContainer)
-                                                  .withValues(alpha: 0.6),
-                                          borderRadius: BorderRadius.circular(
-                                            8,
+                                  Builder(
+                                    builder: (context) {
+                                      final details = getLocalizedExerciseDetails(
+                                        exercise.id,
+                                        exercise.targetMuscles,
+                                        exercise.description,
+                                        langCode,
+                                      );
+                                      final catLabel = getLocalizedCategory(
+                                        exercise.category,
+                                        langCode,
+                                      );
+                                      final diffLabel = getLocalizedDifficulty(
+                                        exercise.difficulty,
+                                        langCode,
+                                      );
+                                      final unitLabel = getLocalizedExerciseUnit(
+                                        exercise.unit,
+                                        langCode,
+                                      );
+
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '$catLabel • ${details.$1}',
+                                            style: theme.textTheme.bodySmall
+                                                ?.copyWith(
+                                                  color: textSecondary,
+                                                ),
                                           ),
-                                        ),
-                                        child: Text(
-                                          exercise.difficulty,
-                                          style: TextStyle(
-                                            color: isDark
-                                                ? AppColors.darkPrimary
-                                                : AppColors.primary,
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w600,
+                                          const SizedBox(height: 6),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 8,
+                                                  vertical: 2,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      (isDark
+                                                              ? AppColors
+                                                                    .darkPrimaryContainer
+                                                                : AppColors
+                                                                    .primaryContainer)
+                                                          .withValues(
+                                                            alpha: 0.6,
+                                                          ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: Text(
+                                                  diffLabel,
+                                                  style: TextStyle(
+                                                    color: isDark
+                                                        ? AppColors.darkPrimary
+                                                        : AppColors.primary,
+                                                    fontSize: 11,
+                                                    fontWeight:
+                                                        FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 6),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 8,
+                                                  vertical: 2,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: surfaceVariant,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: Text(
+                                                  '${exercise.defaultSets}×${exercise.defaultReps} $unitLabel',
+                                                  style: TextStyle(
+                                                    color: textSecondary,
+                                                    fontSize: 11,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 2,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: surfaceVariant,
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          '${exercise.defaultSets}×${exercise.defaultReps} ${exercise.unit}',
-                                          style: TextStyle(
-                                            color: textSecondary,
-                                            fontSize: 11,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                        ],
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
@@ -582,6 +631,16 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
     required bool isDark,
   }) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final langCode = getAppLanguageCode(context);
+    final routineData = getLocalizedRoutine(
+      routine.id,
+      routine.name,
+      routine.subtitle,
+      langCode,
+    );
+    final diffLabel = getLocalizedDifficulty(routine.difficulty, langCode);
+
     return InkWell(
       key: Key('routine-card-${routine.id}'),
       borderRadius: BorderRadius.circular(20),
@@ -621,7 +680,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          routine.difficulty,
+                          diffLabel,
                           style: TextStyle(
                             color: isDark
                                 ? AppColors.darkPrimary
@@ -653,7 +712,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  routine.name,
+                  routineData.$1,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: textPrimary,
@@ -661,7 +720,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  routine.subtitle,
+                  routineData.$2,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: textSecondary,
                   ),
@@ -679,7 +738,8 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${routine.exerciseIds.length} Gerakan',
+                    l10n?.exercisesCount(routine.exerciseIds.length) ??
+                        '${routine.exerciseIds.length} Gerakan',
                     style: TextStyle(
                       fontSize: 12,
                       color: textSecondary,

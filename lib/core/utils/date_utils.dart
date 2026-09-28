@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 String formatLocalDate(DateTime date) =>
     '${date.year.toString().padLeft(4, '0')}-'
     '${date.month.toString().padLeft(2, '0')}-'
@@ -26,3 +28,12 @@ const List<String> kIndonesianMonths = [
 
 String formatIndonesianDate(DateTime date) =>
     '${date.day} ${kIndonesianMonths[date.month - 1]} ${date.year}';
+
+String formatLocalizedDate(DateTime date, [String? langCode]) {
+  try {
+    return DateFormat.yMMMMd(langCode ?? 'id').format(date);
+  } catch (_) {
+    return formatIndonesianDate(date);
+  }
+}
+

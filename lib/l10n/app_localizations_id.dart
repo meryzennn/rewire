@@ -415,4 +415,164 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get allFilter => 'Semua';
+
+  @override
+  String get workoutXpRewardSubtitle => '+35 XP tiap sesi selesai';
+
+  @override
+  String exercisesCount(int count) {
+    return '$count Gerakan';
+  }
+
+  @override
+  String get repsShort => 'Repetisi';
+
+  @override
+  String get secondsShort => 'detik';
+
+  @override
+  String get targetSet => 'Target Set';
+
+  @override
+  String setsCount(int count) {
+    return '$count Set';
+  }
+
+  @override
+  String get durationPerSet => 'Durasi / Set';
+
+  @override
+  String get targetPerSet => 'Target / Set';
+
+  @override
+  String get targetMusclesTitle => 'Target Otot Utama';
+
+  @override
+  String get instructionsTitle => 'Instruksi';
+
+  @override
+  String get recoveryTipsTitle => 'Tips Pemulihan & Postur';
+
+  @override
+  String get recoveryTipsContent =>
+      'Fokus pada pernapasan teratur dan kendalikan setiap repetisi. Gerakan lambat dan presisi lebih efektif mengaktifkan jalur saraf positif dibanding kecepatan.';
+
+  @override
+  String get timeBadge => 'Waktu';
+
+  @override
+  String get cleanStreakActive => 'Streak Berjalan';
+
+  @override
+  String get streakStartFresh => 'Mulai Baru';
+
+  @override
+  String get cleanSubtitle => 'bersih tanpa distraksi';
+
+  @override
+  String get recoverySubtitle => 'langkah pemulihan';
+
+  @override
+  String get alreadyCheckedInToday => 'Kamu sudah check-in hari ini';
+
+  @override
+  String get alreadyCheckedInDesc =>
+      'Data check-in hari ini sudah tersimpan. Kamu bisa memperbarui data jika kondisi berubah di malam hari (seperti mood atau jika terjadi relapse).';
+
+  @override
+  String get selectOne => 'Pilih salah satu';
+
+  @override
+  String get optionalLabel => 'Opsional';
+
+  @override
+  String get triggersRelapseTitle => 'Pemicu (trigger) relapse?';
+
+  @override
+  String get notesEvaluationTitle => 'Catatan Evaluasi (Opsional)';
+
+  @override
+  String get notesGratitudeTitle => 'Catatan & Rasa Syukur Hari Ini (Opsional)';
+
+  @override
+  String get hintRelapseNotes =>
+      'Tulis apa yang memicu relapse atau hal yang bisa dipelajari...';
+
+  @override
+  String get hintCleanNotes =>
+      'Tulis hal positif atau rasa syukur yang membantumu tetap bersih...';
+
+  @override
+  String get checkinSuccessSaved => 'Check-in berhasil disimpan!';
+
+  @override
+  String get checkinSuccessUpdated => 'Check-in berhasil diperbarui!';
+
+  @override
+  String get checkinEncourageTitle => 'Tidak apa-apa.';
+
+  @override
+  String get checkinEncourageDesc =>
+      'Setiap proses butuh waktu. Yang terpenting adalah keberanianmu untuk jujur dan bangkit kembali.';
+
+  @override
+  String get checkinEncourageStreakNotice =>
+      'Streak kamu akan direset, tapi total XP dan level tetap tersimpan utuh.';
+
+  @override
+  String get startAgainAction => 'Mulai Lagi 💪';
+
+  @override
+  String get checkinBottomMotto =>
+      'Satu langkah kecil sadar untuk membentuk jalur otak yang baru.';
+
+  @override
+  String get unlockedBadge => 'Terbuka';
+
+  @override
+  String get lockedBadge => 'Terkunci';
+
+  @override
+  String get noAchievementsYet => 'Belum ada data pencapaian';
+
+  @override
+  String get xpProgressTitle => 'Pengalaman Jiwa';
+
+  @override
+  String xpToNextLevel(int xp, int nextLevel) {
+    return '$xp XP lagi menuju Level $nextLevel';
+  }
+
+  @override
+  String get maxLevelReached => 'Level Maksimal Tercapai! 🌟';
+
+  @override
+  String get cleanDayLegend => 'Hari Bersih';
+
+  @override
+  String get relapseDayLegend => 'Hari Relapse';
+
+  @override
+  String get brainRewiringProgress => 'Progres Pemulihan Otak';
+
+  @override
+  String maxLevelWithXp(int xp) {
+    return 'Level Maksimal ($xp XP)';
+  }
+
+  @override
+  String get brainEvolutionStagesTitle =>
+      'Tahapan Evolusi Otak (Neuroplastisitas)';
+
+  @override
+  String get freeBreathingTitle => 'Bebas';
+
+  @override
+  String get naturalBreathingSubtitle => 'Alami';
+
+  @override
+  String get chooseSoundscapeSubtitle => 'Pilih 1 Suasana';
+
+  @override
+  String get focusAndBreatheNaturally => 'Fokus & Bernapas Alami';
 }

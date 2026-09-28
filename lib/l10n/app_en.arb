@@ -165,5 +165,74 @@
   "totalSessions": "Total Sessions",
   "totalMinutesLabel": "Total Minutes",
   "seeAll": "See All",
-  "allFilter": "All"
+  "allFilter": "All",
+  "workoutXpRewardSubtitle": "+35 XP per session completed",
+  "exercisesCount": "{count} Exercises",
+  "@exercisesCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "repsShort": "Reps",
+  "secondsShort": "s",
+  "targetSet": "Target Sets",
+  "setsCount": "{count} Sets",
+  "@setsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "durationPerSet": "Duration / Set",
+  "targetPerSet": "Target / Set",
+  "targetMusclesTitle": "Target Primary Muscles",
+  "instructionsTitle": "Instructions",
+  "recoveryTipsTitle": "Recovery & Posture Tips",
+  "recoveryTipsContent": "Focus on steady breathing and controlled motion. Slow, precise movements rewire neural pathways far more effectively than rushing.",
+  "timeBadge": "Time",
+  "cleanStreakActive": "Active Streak",
+  "streakStartFresh": "Fresh Start",
+  "cleanSubtitle": "clean without distraction",
+  "recoverySubtitle": "recovery step",
+  "alreadyCheckedInToday": "You already checked in today",
+  "alreadyCheckedInDesc": "Today's check-in has been saved. You can update it anytime if circumstances change later tonight (such as your mood or a relapse).",
+  "selectOne": "Select one",
+  "optionalLabel": "Optional",
+  "triggersRelapseTitle": "What triggered the relapse?",
+  "notesEvaluationTitle": "Evaluation Notes (Optional)",
+  "notesGratitudeTitle": "Notes & Gratitude Today (Optional)",
+  "hintRelapseNotes": "Write what triggered the relapse or what you learned...",
+  "hintCleanNotes": "Write positive reflections or gratitude that kept you clean...",
+  "checkinSuccessSaved": "Check-in saved successfully!",
+  "checkinSuccessUpdated": "Check-in updated successfully!",
+  "checkinEncourageTitle": "It's okay.",
+  "checkinEncourageDesc": "Every recovery journey takes time. What matters most is your honesty and courage to rise up again.",
+  "checkinEncourageStreakNotice": "Your streak will reset, but your total XP and level remain completely intact.",
+  "startAgainAction": "Start Again 💪",
+  "checkinBottomMotto": "One conscious step toward building a newly wired brain.",
+  "unlockedBadge": "Unlocked",
+  "lockedBadge": "Locked",
+  "noAchievementsYet": "No achievement data yet",
+  "xpProgressTitle": "XP Progress",
+  "xpToNextLevel": "{xp} XP to Level {nextLevel}",
+  "@xpToNextLevel": {
+    "placeholders": {
+      "xp": { "type": "int" },
+      "nextLevel": { "type": "int" }
+    }
+  },
+  "maxLevelReached": "Maximum Level Reached! 🌟",
+  "cleanDayLegend": "Clean Day",
+  "relapseDayLegend": "Relapse Day",
+  "brainRewiringProgress": "Brain Rewiring Progress",
+  "maxLevelWithXp": "Max Level ({xp} XP)",
+  "@maxLevelWithXp": {
+    "placeholders": {
+      "xp": { "type": "int" }
+    }
+  },
+  "brainEvolutionStagesTitle": "Brain Evolution Stages (Neuroplasticity)",
+  "freeBreathingTitle": "Free",
+  "naturalBreathingSubtitle": "Natural",
+  "chooseSoundscapeSubtitle": "Choose 1 Soundscape",
+  "focusAndBreatheNaturally": "Focus & Breathe Naturally"
 }

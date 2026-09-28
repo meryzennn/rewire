@@ -881,6 +881,294 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All'**
   String get allFilter;
+
+  /// No description provided for @workoutXpRewardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'+35 XP per session completed'**
+  String get workoutXpRewardSubtitle;
+
+  /// No description provided for @exercisesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Exercises'**
+  String exercisesCount(int count);
+
+  /// No description provided for @repsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Reps'**
+  String get repsShort;
+
+  /// No description provided for @secondsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'s'**
+  String get secondsShort;
+
+  /// No description provided for @targetSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Sets'**
+  String get targetSet;
+
+  /// No description provided for @setsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Sets'**
+  String setsCount(int count);
+
+  /// No description provided for @durationPerSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration / Set'**
+  String get durationPerSet;
+
+  /// No description provided for @targetPerSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Target / Set'**
+  String get targetPerSet;
+
+  /// No description provided for @targetMusclesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Primary Muscles'**
+  String get targetMusclesTitle;
+
+  /// No description provided for @instructionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructions'**
+  String get instructionsTitle;
+
+  /// No description provided for @recoveryTipsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery & Posture Tips'**
+  String get recoveryTipsTitle;
+
+  /// No description provided for @recoveryTipsContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus on steady breathing and controlled motion. Slow, precise movements rewire neural pathways far more effectively than rushing.'**
+  String get recoveryTipsContent;
+
+  /// No description provided for @timeBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get timeBadge;
+
+  /// No description provided for @cleanStreakActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Streak'**
+  String get cleanStreakActive;
+
+  /// No description provided for @streakStartFresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Fresh Start'**
+  String get streakStartFresh;
+
+  /// No description provided for @cleanSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'clean without distraction'**
+  String get cleanSubtitle;
+
+  /// No description provided for @recoverySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'recovery step'**
+  String get recoverySubtitle;
+
+  /// No description provided for @alreadyCheckedInToday.
+  ///
+  /// In en, this message translates to:
+  /// **'You already checked in today'**
+  String get alreadyCheckedInToday;
+
+  /// No description provided for @alreadyCheckedInDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s check-in has been saved. You can update it anytime if circumstances change later tonight (such as your mood or a relapse).'**
+  String get alreadyCheckedInDesc;
+
+  /// No description provided for @selectOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Select one'**
+  String get selectOne;
+
+  /// No description provided for @optionalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optionalLabel;
+
+  /// No description provided for @triggersRelapseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What triggered the relapse?'**
+  String get triggersRelapseTitle;
+
+  /// No description provided for @notesEvaluationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Evaluation Notes (Optional)'**
+  String get notesEvaluationTitle;
+
+  /// No description provided for @notesGratitudeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes & Gratitude Today (Optional)'**
+  String get notesGratitudeTitle;
+
+  /// No description provided for @hintRelapseNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Write what triggered the relapse or what you learned...'**
+  String get hintRelapseNotes;
+
+  /// No description provided for @hintCleanNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Write positive reflections or gratitude that kept you clean...'**
+  String get hintCleanNotes;
+
+  /// No description provided for @checkinSuccessSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in saved successfully!'**
+  String get checkinSuccessSaved;
+
+  /// No description provided for @checkinSuccessUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in updated successfully!'**
+  String get checkinSuccessUpdated;
+
+  /// No description provided for @checkinEncourageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s okay.'**
+  String get checkinEncourageTitle;
+
+  /// No description provided for @checkinEncourageDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Every recovery journey takes time. What matters most is your honesty and courage to rise up again.'**
+  String get checkinEncourageDesc;
+
+  /// No description provided for @checkinEncourageStreakNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Your streak will reset, but your total XP and level remain completely intact.'**
+  String get checkinEncourageStreakNotice;
+
+  /// No description provided for @startAgainAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Again 💪'**
+  String get startAgainAction;
+
+  /// No description provided for @checkinBottomMotto.
+  ///
+  /// In en, this message translates to:
+  /// **'One conscious step toward building a newly wired brain.'**
+  String get checkinBottomMotto;
+
+  /// No description provided for @unlockedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocked'**
+  String get unlockedBadge;
+
+  /// No description provided for @lockedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get lockedBadge;
+
+  /// No description provided for @noAchievementsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No achievement data yet'**
+  String get noAchievementsYet;
+
+  /// No description provided for @xpProgressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'XP Progress'**
+  String get xpProgressTitle;
+
+  /// No description provided for @xpToNextLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'{xp} XP to Level {nextLevel}'**
+  String xpToNextLevel(int xp, int nextLevel);
+
+  /// No description provided for @maxLevelReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum Level Reached! 🌟'**
+  String get maxLevelReached;
+
+  /// No description provided for @cleanDayLegend.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean Day'**
+  String get cleanDayLegend;
+
+  /// No description provided for @relapseDayLegend.
+  ///
+  /// In en, this message translates to:
+  /// **'Relapse Day'**
+  String get relapseDayLegend;
+
+  /// No description provided for @brainRewiringProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Brain Rewiring Progress'**
+  String get brainRewiringProgress;
+
+  /// No description provided for @maxLevelWithXp.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Level ({xp} XP)'**
+  String maxLevelWithXp(int xp);
+
+  /// No description provided for @brainEvolutionStagesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Brain Evolution Stages (Neuroplasticity)'**
+  String get brainEvolutionStagesTitle;
+
+  /// No description provided for @freeBreathingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get freeBreathingTitle;
+
+  /// No description provided for @naturalBreathingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Natural'**
+  String get naturalBreathingSubtitle;
+
+  /// No description provided for @chooseSoundscapeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose 1 Soundscape'**
+  String get chooseSoundscapeSubtitle;
+
+  /// No description provided for @focusAndBreatheNaturally.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus & Breathe Naturally'**
+  String get focusAndBreatheNaturally;
 }
 
 class _AppLocalizationsDelegate

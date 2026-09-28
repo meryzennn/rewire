@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/l10n_utils.dart';
 import '../../../core/utils/provider_utils.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/quest.dart';
@@ -18,13 +19,21 @@ class DailyQuestsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+    final langCode = getAppLanguageCode(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final questList =
+    final rawList =
         quests ??
         provider?.dailyQuests ??
         context.watchOrNull<QuestProvider>()?.dailyQuests ??
         const [];
+    final Map<String, Quest> uniqueQuests = {};
+    for (final q in rawList) {
+      if (!uniqueQuests.containsKey(q.questId)) {
+        uniqueQuests[q.questId] = q;
+      }
+    }
+    final questList = uniqueQuests.values.toList();
 
     final completedCount = questList.where((q) => q.completed == 1).length;
     final totalCount = questList.length;
@@ -151,7 +160,11 @@ class DailyQuestsCard extends StatelessWidget {
                     // Quest Title
                     Expanded(
                       child: Text(
-                        quest.title,
+                        getLocalizedQuestTitle(
+                          quest.questId,
+                          quest.title,
+                          langCode,
+                        ),
                         style: TextStyle(
                           fontSize: 14,
                           color: isDone ? textSecondary : textPrimary,

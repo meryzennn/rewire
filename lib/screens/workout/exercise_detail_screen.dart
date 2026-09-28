@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/l10n_utils.dart';
 import '../../data/exercises.dart';
 
 /// Screen displaying detailed exercise instructions, form guide, and target muscles (spec §5b).
@@ -28,7 +29,22 @@ class ExerciseDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final langCode = getAppLanguageCode(context);
+
+    final exerciseDetails = getLocalizedExerciseDetails(
+      exercise.id,
+      exercise.targetMuscles,
+      exercise.description,
+      langCode,
+    );
+    final categoryLabel = getLocalizedCategory(exercise.category, langCode);
+    final difficultyLabel = getLocalizedDifficulty(
+      exercise.difficulty,
+      langCode,
+    );
+    final unitLabel = getLocalizedExerciseUnit(exercise.unit, langCode);
 
     final bg = theme.scaffoldBackgroundColor;
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -131,19 +147,21 @@ class ExerciseDetailScreen extends StatelessWidget {
             Row(
               children: [
                 _buildBadge(
-                  label: exercise.category,
+                  label: categoryLabel,
                   color: isDark ? AppColors.darkPrimary : AppColors.primary,
                   isDark: isDark,
                 ),
                 const SizedBox(width: 8),
                 _buildBadge(
-                  label: exercise.difficulty,
+                  label: difficultyLabel,
                   color: accent,
                   isDark: isDark,
                 ),
                 const SizedBox(width: 8),
                 _buildBadge(
-                  label: exercise.isTimed ? 'Waktu' : 'Repetisi',
+                  label: exercise.isTimed
+                      ? (l10n?.timeBadge ?? 'Waktu')
+                      : (l10n?.repsShort ?? 'Repetisi'),
                   color: isDark ? AppColors.darkSecondary : AppColors.secondary,
                   isDark: isDark,
                 ),
@@ -169,14 +187,15 @@ class ExerciseDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Target Set',
+                          l10n?.targetSet ?? 'Target Set',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: textSecondary,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${exercise.defaultSets} Set',
+                          l10n?.setsCount(exercise.defaultSets) ??
+                              '${exercise.defaultSets} Set',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: textPrimary,
@@ -202,14 +221,16 @@ class ExerciseDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          exercise.isTimed ? 'Durasi / Set' : 'Target / Set',
+                          exercise.isTimed
+                              ? (l10n?.durationPerSet ?? 'Durasi / Set')
+                              : (l10n?.targetPerSet ?? 'Target / Set'),
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: textSecondary,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${exercise.defaultReps} ${exercise.unit}',
+                          '${exercise.defaultReps} $unitLabel',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: textPrimary,
@@ -249,14 +270,14 @@ class ExerciseDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Target Otot Utama',
+                          l10n?.targetMusclesTitle ?? 'Target Otot Utama',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: textSecondary,
                           ),
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          exercise.targetMuscles,
+                          exerciseDetails.$1,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: textPrimary,
@@ -272,7 +293,7 @@ class ExerciseDetailScreen extends StatelessWidget {
 
             // Instructions Section
             Text(
-              'Instruksi',
+              l10n?.instructionsTitle ?? 'Instruksi',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: textPrimary,
@@ -288,7 +309,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                 border: Border.all(color: dividerColor),
               ),
               child: Text(
-                exercise.description,
+                exerciseDetails.$2,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: textPrimary,
                   height: 1.5,
@@ -327,7 +348,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Tips Pemulihan & Postur',
+                          l10n?.recoveryTipsTitle ?? 'Tips Pemulihan & Postur',
                           style: theme.textTheme.labelLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: textPrimary,
@@ -335,7 +356,8 @@ class ExerciseDetailScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Fokus pada pernapasan teratur dan kendalikan setiap repetisi. Gerakan lambat dan presisi lebih efektif mengaktifkan jalur saraf positif dibanding kecepatan.',
+                          l10n?.recoveryTipsContent ??
+                              'Fokus pada pernapasan teratur dan kendalikan setiap repetisi. Gerakan lambat dan presisi lebih efektif mengaktifkan jalur saraf positif dibanding kecepatan.',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: textSecondary,
                             height: 1.4,

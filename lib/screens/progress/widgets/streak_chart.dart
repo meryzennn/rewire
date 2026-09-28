@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/date_utils.dart';
+import '../../../core/utils/l10n_utils.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/daily_checkin.dart';
 
@@ -32,7 +33,7 @@ class StreakChart extends StatelessWidget {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final localeCode = Localizations.maybeLocaleOf(context)?.languageCode;
+    final localeCode = getAppLanguageCode(context);
     final dayLabels = _dayLabelsFor(localeCode);
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -222,7 +223,7 @@ class StreakChart extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        'Clean Day',
+                        l10n?.cleanDayLegend ?? 'Clean Day',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: textSecondary,
                         ),
@@ -242,7 +243,7 @@ class StreakChart extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        'Relapse Day',
+                        l10n?.relapseDayLegend ?? 'Relapse Day',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: textSecondary,
                         ),

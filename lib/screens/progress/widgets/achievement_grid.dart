@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/l10n_utils.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/achievement.dart';
 
 /// Achievement grid widget displaying badge catalog and unlock states (spec §3.5, §9).
@@ -11,8 +13,16 @@ class AchievementGrid extends StatelessWidget {
 
   void _showAchievementDetail(BuildContext context, Achievement achievement) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final langCode = getAppLanguageCode(context);
     final isDark = theme.brightness == Brightness.dark;
     final isUnlocked = achievement.unlocked == 1;
+    final loc = getLocalizedAchievement(
+      achievement.badgeId,
+      achievement.title,
+      achievement.description ?? '',
+      langCode,
+    );
 
     showDialog<void>(
       context: context,
@@ -28,7 +38,7 @@ class AchievementGrid extends StatelessWidget {
             const SizedBox(width: 10),
             Expanded(
               child: Text(
-                achievement.title,
+                loc.$1,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -41,7 +51,7 @@ class AchievementGrid extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              achievement.description ?? '',
+              loc.$2,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: isDark
                     ? AppColors.darkTextSecondary
@@ -74,8 +84,8 @@ class AchievementGrid extends StatelessWidget {
                   const SizedBox(width: 6),
                   Text(
                     isUnlocked
-                        ? 'Terbuka${achievement.dateUnlocked != null ? ' (${achievement.dateUnlocked})' : ''}'
-                        : 'Terkunci',
+                        ? '${l10n?.unlockedBadge ?? 'Terbuka'}${achievement.dateUnlocked != null ? ' (${achievement.dateUnlocked})' : ''}'
+                        : (l10n?.lockedBadge ?? 'Terkunci'),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -92,7 +102,7 @@ class AchievementGrid extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Tutup'),
+            child: Text(l10n?.close ?? 'Tutup'),
           ),
         ],
       ),
@@ -102,6 +112,8 @@ class AchievementGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final langCode = getAppLanguageCode(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -128,7 +140,7 @@ class AchievementGrid extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Pencapaian',
+                  l10n?.achievementsTitle ?? 'Pencapaian',
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: textPrimary,
@@ -169,7 +181,7 @@ class AchievementGrid extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
                     child: Text(
-                      'Belum ada data pencapaian',
+                      l10n?.noAchievementsYet ?? 'Belum ada data pencapaian',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: textSecondary,
                       ),
@@ -189,6 +201,12 @@ class AchievementGrid extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final a = achievements[index];
                     final isUnlocked = a.unlocked == 1;
+                    final loc = getLocalizedAchievement(
+                      a.badgeId,
+                      a.title,
+                      a.description ?? '',
+                      langCode,
+                    );
 
                     return InkWell(
                       borderRadius: BorderRadius.circular(16),
@@ -227,7 +245,7 @@ class AchievementGrid extends StatelessWidget {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            a.title,
+                            loc.$1,
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight: isUnlocked

@@ -417,4 +417,164 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get allFilter => 'Todos';
+
+  @override
+  String get workoutXpRewardSubtitle => '+35 XP por sesión completada';
+
+  @override
+  String exercisesCount(int count) {
+    return '$count Ejercicios';
+  }
+
+  @override
+  String get repsShort => 'Reps';
+
+  @override
+  String get secondsShort => 's';
+
+  @override
+  String get targetSet => 'Series objetivo';
+
+  @override
+  String setsCount(int count) {
+    return '$count Series';
+  }
+
+  @override
+  String get durationPerSet => 'Duración / Serie';
+
+  @override
+  String get targetPerSet => 'Objetivo / Serie';
+
+  @override
+  String get targetMusclesTitle => 'Músculos principales';
+
+  @override
+  String get instructionsTitle => 'Instrucciones';
+
+  @override
+  String get recoveryTipsTitle => 'Consejos de recuperación y postura';
+
+  @override
+  String get recoveryTipsContent =>
+      'Concéntrate en la respiración constante y el control de cada repetición. Los movimientos lentos y precisos reconectan las vías neuronales con mayor eficacia que la rapidez.';
+
+  @override
+  String get timeBadge => 'Tiempo';
+
+  @override
+  String get cleanStreakActive => 'Racha Activa';
+
+  @override
+  String get streakStartFresh => 'Nuevo Comienzo';
+
+  @override
+  String get cleanSubtitle => 'limpio sin distracciones';
+
+  @override
+  String get recoverySubtitle => 'paso de recuperación';
+
+  @override
+  String get alreadyCheckedInToday => 'Ya te has registrado hoy';
+
+  @override
+  String get alreadyCheckedInDesc =>
+      'El registro de hoy ha sido guardado. Puedes actualizar los datos en cualquier momento si la situación cambia por la noche.';
+
+  @override
+  String get selectOne => 'Selecciona uno';
+
+  @override
+  String get optionalLabel => 'Opcional';
+
+  @override
+  String get triggersRelapseTitle => '¿Qué provocó la recaída?';
+
+  @override
+  String get notesEvaluationTitle => 'Notas de evaluación (Opcional)';
+
+  @override
+  String get notesGratitudeTitle => 'Notas y gratitud de hoy (Opcional)';
+
+  @override
+  String get hintRelapseNotes =>
+      'Escribe qué provocó la recaída o qué lección aprendiste...';
+
+  @override
+  String get hintCleanNotes =>
+      'Escribe reflexiones positivas o agradecimientos que te ayudaron...';
+
+  @override
+  String get checkinSuccessSaved => '¡Registro guardado con éxito!';
+
+  @override
+  String get checkinSuccessUpdated => '¡Registro actualizado con éxito!';
+
+  @override
+  String get checkinEncourageTitle => 'Está bien.';
+
+  @override
+  String get checkinEncourageDesc =>
+      'Todo proceso toma tiempo. Lo más importante es tu honestidad y valor para volver a levantarte.';
+
+  @override
+  String get checkinEncourageStreakNotice =>
+      'Tu racha se reiniciará, pero tu XP total y nivel se mantendrán intactos.';
+
+  @override
+  String get startAgainAction => 'Empezar de nuevo 💪';
+
+  @override
+  String get checkinBottomMotto =>
+      'Un pequeño paso consciente para forjar nuevas vías neuronales.';
+
+  @override
+  String get unlockedBadge => 'Desbloqueado';
+
+  @override
+  String get lockedBadge => 'Bloqueado';
+
+  @override
+  String get noAchievementsYet => 'Aún no hay datos de logros';
+
+  @override
+  String get xpProgressTitle => 'Progreso de XP';
+
+  @override
+  String xpToNextLevel(int xp, int nextLevel) {
+    return '$xp XP más para el Nivel $nextLevel';
+  }
+
+  @override
+  String get maxLevelReached => '¡Nivel máximo alcanzado! 🌟';
+
+  @override
+  String get cleanDayLegend => 'Día limpio';
+
+  @override
+  String get relapseDayLegend => 'Día de recaída';
+
+  @override
+  String get brainRewiringProgress => 'Progreso de Reconexión Cerebral';
+
+  @override
+  String maxLevelWithXp(int xp) {
+    return 'Nivel Máximo ($xp XP)';
+  }
+
+  @override
+  String get brainEvolutionStagesTitle =>
+      'Etapas de Evolución Cerebral (Neuroplasticidad)';
+
+  @override
+  String get freeBreathingTitle => 'Libre';
+
+  @override
+  String get naturalBreathingSubtitle => 'Natural';
+
+  @override
+  String get chooseSoundscapeSubtitle => 'Elige 1 ambiente';
+
+  @override
+  String get focusAndBreatheNaturally => 'Enfoque y respiración natural';
 }

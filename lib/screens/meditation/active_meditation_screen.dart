@@ -8,8 +8,10 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/l10n_utils.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../data/meditation_definitions.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/meditation_provider.dart';
 import '../../services/audio_service.dart';
 import 'meditation_complete_screen.dart';
@@ -232,23 +234,57 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
   Future<void> _handleStopTap() async {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final langCode = getAppLanguageCode(context);
+
+    String titleText;
+    String contentText;
+    String continueText;
+    String endText;
+
+    switch (langCode) {
+      case 'ja':
+        titleText = '瞑想セッションを終了しますか？';
+        contentText = '時間が終了する前に終了したセッションでは、XPリワードを獲得できません。';
+        continueText = '瞑想を続ける';
+        endText = 'セッションを終了';
+        break;
+      case 'es':
+        titleText = '¿Finalizar sesión de meditación?';
+        contentText =
+            'Las sesiones que finalicen antes de tiempo no recibirán recompensas de XP.';
+        continueText = 'Continuar meditando';
+        endText = 'Finalizar sesión';
+        break;
+      case 'en':
+        titleText = 'End Meditation Session?';
+        contentText =
+            'Sessions ended before the timer completes will not earn XP rewards.';
+        continueText = 'Continue Session';
+        endText = 'End Session';
+        break;
+      default:
+        titleText = 'Akhiri Sesi Meditasi?';
+        contentText =
+            'Sesi yang diakhiri sebelum durasi selesai tidak akan mendapatkan XP reward.';
+        continueText = 'Lanjut Meditasi';
+        endText = 'Akhiri Sesi';
+        break;
+    }
 
     final shouldStop = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: isDark ? AppColors.darkSurface : AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text(
-          'Akhiri Sesi Meditasi?',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          titleText,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        content: const Text(
-          'Sesi yang diakhiri sebelum durasi selesai tidak akan mendapatkan XP reward.',
-        ),
+        content: Text(contentText),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Lanjut Meditasi'),
+            child: Text(continueText),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -256,7 +292,7 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
               foregroundColor: Colors.white,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Akhiri Sesi'),
+            child: Text(endText),
           ),
         ],
       ),
@@ -304,9 +340,20 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
   Widget build(BuildContext context) {
     final track = _currentTrack();
     final pattern = _breathingPattern;
+    final langCode = getAppLanguageCode(context);
+    final l10n = AppLocalizations.of(context);
 
     const bgDimmed = Color(0xFF141322); // Calm, eye-friendly darkened canvas
     final lavenderAccent = AppColors.secondary;
+
+    final trackTitle = track != null
+        ? getLocalizedAmbientTrack(
+            track.id,
+            track.title,
+            track.subtitle,
+            langCode,
+          ).$1
+        : (l10n?.soundscapeTitle ?? 'Suasana');
 
     return Scaffold(
       backgroundColor: bgDimmed,
@@ -341,7 +388,7 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          track?.title ?? 'Suasana',
+                          trackTitle,
                           style: const TextStyle(
                             color: Colors.white70,
                             fontWeight: FontWeight.w600,
@@ -418,7 +465,11 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
               // Breathing Phase Label (if pattern active)
               if (pattern != null && pattern.phases.isNotEmpty) ...[
                 Text(
-                  pattern.phases[_currentPhaseIndex].label,
+                  getLocalizedBreathingPhase(
+                    pattern.phases[_currentPhaseIndex].action,
+                    pattern.phases[_currentPhaseIndex].label,
+                    langCode,
+                  ),
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -428,7 +479,7 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '$_phaseSecondsRemaining detik',
+                  '$_phaseSecondsRemaining ${l10n?.secondsShort ?? 'detik'}',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.white.withValues(alpha: 0.6),
@@ -436,9 +487,9 @@ class _ActiveMeditationScreenState extends State<ActiveMeditationScreen>
                   ),
                 ),
               ] else ...[
-                const Text(
-                  'Fokus & Bernapas Alami',
-                  style: TextStyle(
+                Text(
+                  l10n?.focusAndBreatheNaturally ?? 'Fokus & Bernapas Alami',
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: Colors.white70,

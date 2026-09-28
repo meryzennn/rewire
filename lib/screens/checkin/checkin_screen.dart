@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/date_utils.dart';
-import '../../l10n/app_localizations.dart';
+import '../../core/utils/l10n_utils.dart';
 import '../../providers/checkin_provider.dart';
 
 /// Available predefined trigger chips (spec §3.4 & Stitch Daily Check-in screen).
@@ -121,6 +121,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
 
   Future<void> _showRelapseEncouragementDialog(BuildContext context) async {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     await showDialog<void>(
@@ -148,7 +149,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Tidak apa-apa.',
+              l10n?.checkinEncourageTitle ?? 'Tidak apa-apa.',
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: isDark
@@ -159,7 +160,8 @@ class _CheckinScreenState extends State<CheckinScreen> {
             ),
             const SizedBox(height: 12),
             Text(
-              'Setiap proses butuh waktu. Yang terpenting adalah keberanianmu untuk jujur dan bangkit kembali.',
+              l10n?.checkinEncourageDesc ??
+                  'Setiap proses butuh waktu. Yang terpenting adalah keberanianmu untuk jujur dan bangkit kembali.',
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: isDark
                     ? AppColors.darkTextSecondary
@@ -178,7 +180,8 @@ class _CheckinScreenState extends State<CheckinScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                'Streak kamu akan direset, tapi total XP dan level tetap tersimpan utuh.',
+                l10n?.checkinEncourageStreakNotice ??
+                    'Streak kamu akan direset, tapi total XP dan level tetap tersimpan utuh.',
                 style: theme.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: isDark
@@ -203,9 +206,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                child: const Text(
-                  'Mulai Lagi 💪',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                child: Text(
+                  l10n?.startAgainAction ?? 'Mulai Lagi 💪',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
               ),
             ),
@@ -250,6 +253,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
 
     if (!mounted) return;
 
+    final l10n = AppLocalizations.of(context);
     if (isRelapse) {
       await _showRelapseEncouragementDialog(context);
       if (mounted) {
@@ -264,8 +268,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
               const SizedBox(width: 8),
               Text(
                 wasAlreadyCheckedIn
-                    ? 'Check-in berhasil diperbarui!'
-                    : 'Check-in berhasil disimpan!',
+                    ? (l10n?.checkinSuccessUpdated ??
+                        'Check-in berhasil diperbarui!')
+                    : (l10n?.checkinSuccessSaved ??
+                        'Check-in berhasil disimpan!'),
               ),
             ],
           ),
@@ -302,7 +308,8 @@ class _CheckinScreenState extends State<CheckinScreen> {
         : AppColors.primaryContainer;
 
     final now = DateTime.now();
-    final todayFormatted = formatIndonesianDate(now);
+    final langCode = getAppLanguageCode(context);
+    final todayFormatted = formatLocalizedDate(now, langCode);
 
     final currentStreak = checkinProvider.currentStreak;
     final hasCheckedIn = checkinProvider.todayCheckin != null;
@@ -376,8 +383,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                               const SizedBox(width: 4),
                               Text(
                                 currentStreak > 0
-                                    ? 'Streak Berjalan'
-                                    : 'Mulai Baru',
+                                    ? (l10n?.cleanStreakActive ??
+                                        'Streak Berjalan')
+                                    : (l10n?.streakStartFresh ?? 'Mulai Baru'),
                                 style: theme.textTheme.labelMedium?.copyWith(
                                   color: primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -394,7 +402,8 @@ class _CheckinScreenState extends State<CheckinScreen> {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         Text(
-                          'Hari ke-$displayStreak',
+                          l10n?.dayCount(displayStreak) ??
+                              'Hari ke-$displayStreak',
                           style: theme.textTheme.headlineMedium?.copyWith(
                             fontWeight: FontWeight.w800,
                             color: primaryColor,
@@ -403,8 +412,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                         const SizedBox(width: 8),
                         Text(
                           currentStreak > 0
-                              ? 'bersih tanpa distraksi'
-                              : 'langkah pemulihan',
+                              ? (l10n?.cleanSubtitle ??
+                                  'bersih tanpa distraksi')
+                              : (l10n?.recoverySubtitle ?? 'langkah pemulihan'),
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: textSecondary,
                           ),
@@ -441,7 +451,8 @@ class _CheckinScreenState extends State<CheckinScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Kamu sudah check-in hari ini',
+                                    l10n?.alreadyCheckedInToday ??
+                                        'Kamu sudah check-in hari ini',
                                     style: theme.textTheme.titleSmall?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: primaryColor,
@@ -449,9 +460,12 @@ class _CheckinScreenState extends State<CheckinScreen> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'Data check-in hari ini sudah tersimpan. Kamu bisa memperbarui data jika kondisi berubah di malam hari (seperti mood atau jika terjadi relapse).',
+                                    l10n?.alreadyCheckedInDesc ??
+                                        'Data check-in hari ini sudah tersimpan. Kamu bisa memperbarui data jika kondisi berubah di malam hari (seperti mood atau jika terjadi relapse).',
                                     style: theme.textTheme.bodySmall?.copyWith(
-                                      color: textPrimary.withValues(alpha: 0.85),
+                                      color: textPrimary.withValues(
+                                        alpha: 0.85,
+                                      ),
                                       height: 1.4,
                                     ),
                                   ),
@@ -522,7 +536,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
                           ),
                         ),
                         Text(
-                          'Pilih salah satu',
+                          l10n?.selectOne ?? 'Pilih salah satu',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: textSecondary,
                           ),
@@ -605,7 +619,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                       Row(
                         children: [
                           Text(
-                            l10n?.triggersTitle ?? 'Pemicu (trigger) relapse?',
+                            l10n?.triggersRelapseTitle ??
+                                (l10n?.triggersTitle ??
+                                    'Pemicu (trigger) relapse?'),
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: textPrimary,
@@ -622,7 +638,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              'Opsional',
+                              l10n?.optionalLabel ?? 'Opsional',
                               style: theme.textTheme.labelSmall?.copyWith(
                                 color: textSecondary,
                               ),
@@ -636,10 +652,14 @@ class _CheckinScreenState extends State<CheckinScreen> {
                         runSpacing: 8,
                         children: kAvailableTriggers.map((trigger) {
                           final isSelected = _selectedTriggers.contains(trigger);
+                          final triggerLabel = getLocalizedTrigger(
+                            trigger,
+                            langCode,
+                          );
                           return FilterChip(
                             selected: isSelected,
                             showCheckmark: true,
-                            label: Text(trigger),
+                            label: Text(triggerLabel),
                             labelStyle: TextStyle(
                               fontSize: 13,
                               fontWeight: isSelected
@@ -674,8 +694,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
                     ],
                     Text(
                       _selectedStatus == 'relapse'
-                          ? 'Catatan Evaluasi (Opsional)'
-                          : 'Catatan & Rasa Syukur Hari Ini (Opsional)',
+                          ? (l10n?.notesEvaluationTitle ??
+                              'Catatan Evaluasi (Opsional)')
+                          : (l10n?.notesGratitudeTitle ??
+                              'Catatan & Rasa Syukur Hari Ini (Opsional)'),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textPrimary,
@@ -689,8 +711,10 @@ class _CheckinScreenState extends State<CheckinScreen> {
                       style: TextStyle(color: textPrimary, fontSize: 14),
                       decoration: InputDecoration(
                         hintText: _selectedStatus == 'relapse'
-                            ? 'Tulis apa yang memicu relapse atau hal yang bisa dipelajari...'
-                            : 'Tulis hal positif atau rasa syukur yang membantumu tetap bersih...',
+                            ? (l10n?.hintRelapseNotes ??
+                                'Tulis apa yang memicu relapse atau hal yang bisa dipelajari...')
+                            : (l10n?.hintCleanNotes ??
+                                'Tulis hal positif atau rasa syukur yang membantumu tetap bersih...'),
                         hintStyle: TextStyle(
                           color: textSecondary,
                           fontSize: 14,
@@ -772,7 +796,8 @@ class _CheckinScreenState extends State<CheckinScreen> {
                       const SizedBox(width: 6),
                       Flexible(
                         child: Text(
-                          'Satu langkah kecil sadar untuk membentuk jalur otak yang baru.',
+                          l10n?.checkinBottomMotto ??
+                              'Satu langkah kecil sadar untuk membentuk jalur otak yang baru.',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: textSecondary,
                             fontSize: 12,
