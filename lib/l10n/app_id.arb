@@ -94,5 +94,6 @@
   "resetDataConfirmTitle": "Reset Semua Data?",
   "resetDataConfirmContent": "Tindakan ini akan menghapus semua progres, streak, dan riwayat latihan. Kamu akan dikembalikan ke onboarding. Tindakan ini tidak bisa dibatalkan.",
   "aboutSection": "Tentang",
-  "appVersion": "Versi Aplikasi"
+  "appVersion": "Versi Aplikasi",
+  "settingsTitle": "Pengaturan"
 }

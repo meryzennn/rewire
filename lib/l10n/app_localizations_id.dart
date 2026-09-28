@@ -307,4 +307,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get appVersion => 'Versi Aplikasi';
+
+  @override
+  String get settingsTitle => 'Pengaturan';
 }

@@ -94,5 +94,6 @@
   "resetDataConfirmTitle": "すべてのデータをリセットしますか？",
   "resetDataConfirmContent": "この操作を行うと、すべての進捗、ストリーク、運動履歴が削除され、オンボーディング画面に戻ります。",
   "aboutSection": "アプリについて",
-  "appVersion": "アプリバージョン"
+  "appVersion": "アプリバージョン",
+  "settingsTitle": "設定"
 }

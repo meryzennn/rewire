@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/provider_utils.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/quest.dart';
 import '../../../providers/quest_provider.dart';
 import '../../../widgets/xp_chip.dart';
@@ -16,6 +17,7 @@ class DailyQuestsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final questList =
@@ -65,7 +67,7 @@ class DailyQuestsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Daily Quests',
+                l10n?.dailyQuestsTitle ?? 'Daily Quests',
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: textPrimary,

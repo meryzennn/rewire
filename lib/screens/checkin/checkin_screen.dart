@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/date_utils.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/checkin_provider.dart';
 
 /// Available predefined trigger chips (spec §3.4 & Stitch Daily Check-in screen).
@@ -42,6 +43,23 @@ class _CheckinScreenState extends State<CheckinScreen> {
     {'value': 4, 'emoji': '🙂', 'label': 'Tenang'},
     {'value': 5, 'emoji': '😄', 'label': 'Penuh Daya'},
   ];
+
+  String _getMoodLabel(int value, AppLocalizations? l10n, String fallback) {
+    switch (value) {
+      case 1:
+        return l10n?.moodVeryBad ?? fallback;
+      case 2:
+        return l10n?.moodBad ?? fallback;
+      case 3:
+        return l10n?.moodNeutral ?? fallback;
+      case 4:
+        return l10n?.moodGood ?? fallback;
+      case 5:
+        return l10n?.moodVeryGood ?? fallback;
+      default:
+        return fallback;
+    }
+  }
 
   @override
   void initState() {
@@ -263,6 +281,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final checkinProvider = widget.provider ?? context.watch<CheckinProvider>();
 
@@ -296,7 +315,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
-          'Check-in Harian',
+          l10n?.checkinTitle ?? 'Check-in Harian',
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
             color: textPrimary,
@@ -446,7 +465,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
 
                     // 2. STATUS QUESTION & SELECTION CARDS
                     Text(
-                      'Bagaimana hari ini?',
+                      l10n?.checkinSubtitle ?? 'Bagaimana hari ini?',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textPrimary,
@@ -455,8 +474,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                     const SizedBox(height: 12),
                     // Card 1: Hari yang Bersih
                     _StatusCard(
-                      title: 'Hari yang Bersih',
-                      subtitle: 'Berhasil menjaga komitmen & melewati godaan dengan tenang.',
+                      title: l10n?.checkinClean ?? 'Hari yang Bersih',
+                      subtitle: l10n?.checkinCleanDesc ??
+                          'Berhasil menjaga komitmen & melewati godaan dengan tenang.',
                       isSelected: _selectedStatus == 'clean',
                       icon: Icons.check_circle,
                       iconColor: primaryColor,
@@ -474,8 +494,9 @@ class _CheckinScreenState extends State<CheckinScreen> {
                     const SizedBox(height: 12),
                     // Card 2: Relapse Hari ini
                     _StatusCard(
-                      title: 'Relapse Hari ini',
-                      subtitle: 'Setiap proses butuh waktu, kamu tetap berharga dan berhak bangkit lagi.',
+                      title: l10n?.checkinRelapse ?? 'Relapse Hari ini',
+                      subtitle: l10n?.checkinRelapseDesc ??
+                          'Setiap proses butuh waktu, kamu tetap berharga dan berhak bangkit lagi.',
                       isSelected: _selectedStatus == 'relapse',
                       icon: Icons.autorenew,
                       iconColor: AppColors.danger,
@@ -494,7 +515,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Mood kamu hari ini?',
+                          l10n?.howAreYouFeeling ?? 'Mood kamu hari ini?',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: textPrimary,
@@ -524,7 +545,11 @@ class _CheckinScreenState extends State<CheckinScreen> {
                         children: _moods.map((m) {
                           final int value = m['value'] as int;
                           final String emoji = m['emoji'] as String;
-                          final String label = m['label'] as String;
+                          final String label = _getMoodLabel(
+                            value,
+                            l10n,
+                            m['label'] as String,
+                          );
                           final isSelected = _selectedMood == value;
 
                           return InkWell(
@@ -580,7 +605,7 @@ class _CheckinScreenState extends State<CheckinScreen> {
                       Row(
                         children: [
                           Text(
-                            'Pemicu (trigger) relapse?',
+                            l10n?.triggersTitle ?? 'Pemicu (trigger) relapse?',
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: textPrimary,
@@ -730,8 +755,8 @@ class _CheckinScreenState extends State<CheckinScreen> {
                         _isSaving
                             ? 'Menyimpan...'
                             : (hasCheckedIn
-                                ? 'Perbarui Check-in'
-                                : 'Simpan Check-in'),
+                                ? (l10n?.updateCheckin ?? 'Perbarui Check-in')
+                                : (l10n?.submitCheckin ?? 'Simpan Check-in')),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

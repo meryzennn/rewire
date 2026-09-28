@@ -307,4 +307,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appVersion => 'App Version';
+
+  @override
+  String get settingsTitle => 'Settings';
 }

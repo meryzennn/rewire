@@ -125,5 +125,6 @@
   "resetDataConfirmTitle": "Reset All Data?",
   "resetDataConfirmContent": "This action will permanently delete all your progress, streaks, and workout history. You will be returned to onboarding.",
   "aboutSection": "About",
-  "appVersion": "App Version"
+  "appVersion": "App Version",
+  "settingsTitle": "Settings"
 }

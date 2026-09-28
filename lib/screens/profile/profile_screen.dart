@@ -276,8 +276,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return 'Español';
       case 'ja':
         return '日本語';
-      case 'ar':
-        return 'العربية';
       case 'id':
       default:
         return 'Bahasa Indonesia';
@@ -299,7 +297,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ('en', 'English', '🇺🇸'),
           ('es', 'Español', '🇪🇸'),
           ('ja', '日本語', '🇯🇵'),
-          ('ar', 'العربية', '🇸🇦'),
         ];
 
         return SafeArea(
@@ -461,7 +458,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  'Level $level',
+                  AppLocalizations.of(context)?.level(level) ?? 'Level $level',
                   style: theme.textTheme.labelMedium?.copyWith(
                     color: theme.colorScheme.primary,
                     fontWeight: FontWeight.bold,
@@ -485,7 +482,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      '$streak Hari',
+                      AppLocalizations.of(context)?.days(streak) ?? '$streak Hari',
                       style: theme.textTheme.labelMedium?.copyWith(
                         color: theme.colorScheme.secondary,
                         fontWeight: FontWeight.bold,
@@ -527,7 +524,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'DATA FISIK',
+                AppLocalizations.of(context)?.physicalData ?? 'DATA FISIK',
                 style: theme.textTheme.labelSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.1,
@@ -605,10 +602,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       key: const Key('screen-settings'),
       appBar: AppBar(
-        title: const Text('Profil'),
+        title: Text(l10n?.navProfile ?? 'Profil'),
       ),
       body: AnimatedBuilder(
         animation: _prefs,
@@ -619,11 +617,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               _buildAvatarHeader(context),
               _buildPhysicalStatsCard(context),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 4),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Text(
-                  'Pengaturan',
-                  style: TextStyle(
+                  l10n?.settingsTitle ?? 'Pengaturan',
+                  style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 0.8,
@@ -633,14 +631,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: 6),
               _Section(
-                title: 'Tampilan',
+                title: l10n?.appearanceSection ?? 'Tampilan',
                 children: [
                   _SwitchRow(
                     switchKey: const Key('toggle-dark-mode'),
                     icon: Icons.dark_mode_rounded,
                     tint: _Tint.secondary,
-                    title: 'Mode Gelap',
-                    subtitle: 'Ubah ke tema gelap',
+                    title: l10n?.darkModeTitle ?? 'Mode Gelap',
+                    subtitle: l10n?.darkModeSubtitle ?? 'Ubah ke tema gelap',
                     value: Theme.of(context).brightness == Brightness.dark,
                     onChanged: _prefs.setDarkMode,
                   ),
@@ -648,20 +646,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     rowKey: const Key('row-select-language'),
                     icon: Icons.language_rounded,
                     tint: _Tint.primary,
-                    title: 'Bahasa',
+                    title: l10n?.languageTitle ?? 'Bahasa',
                     trailing: _currentLanguageLabel(_prefs.language),
                     onTap: _showLanguageSelector,
                   ),
                 ],
               ),
               _Section(
-                title: 'Notifikasi',
+                title: l10n?.notificationsSection ?? 'Notifikasi',
                 children: [
                   _SwitchRow(
                     switchKey: const Key('toggle-daily-reminder'),
                     icon: Icons.notifications_rounded,
                     tint: _Tint.primary,
-                    title: 'Pengingat Harian',
+                    title: l10n?.dailyReminderTitle ?? 'Pengingat Harian',
                     value: _prefs.dailyReminderEnabled,
                     onChanged: (val) async {
                       await _prefs.setDailyReminderEnabled(val);
@@ -689,7 +687,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     switchKey: const Key('toggle-meditation-reminder'),
                     icon: Icons.self_improvement_rounded,
                     tint: _Tint.primary,
-                    title: 'Pengingat Meditasi',
+                    title: l10n?.meditationReminderTitle ?? 'Pengingat Meditasi',
                     value: _prefs.meditationReminderEnabled,
                     onChanged: (val) async {
                       await _prefs.setMeditationReminderEnabled(val);
@@ -707,7 +705,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     switchKey: const Key('toggle-workout-reminder'),
                     icon: Icons.fitness_center_rounded,
                     tint: _Tint.secondary,
-                    title: 'Pengingat Olahraga',
+                    title: l10n?.workoutReminderTitle ?? 'Pengingat Olahraga',
                     value: _prefs.workoutReminderEnabled,
                     onChanged: (val) async {
                       await _prefs.setWorkoutReminderEnabled(val);
@@ -724,25 +722,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               _Section(
-                title: 'Data',
+                title: l10n?.dataSection ?? 'Data',
                 children: [
                   _NavRow(
                     rowKey: const Key('reset-data'),
                     icon: Icons.delete_forever_rounded,
                     tint: _Tint.danger,
-                    title: 'Reset Semua Data',
+                    title: l10n?.resetDataTitle ?? 'Reset Semua Data',
                     danger: true,
                     onTap: _confirmReset,
                   ),
                 ],
               ),
-              const _Section(
-                title: 'Tentang',
+              _Section(
+                title: l10n?.aboutSection ?? 'Tentang',
                 children: [
                   _InfoRow(
                     icon: Icons.info_rounded,
                     tint: _Tint.neutral,
-                    title: 'Versi Aplikasi',
+                    title: l10n?.appVersion ?? 'Versi Aplikasi',
                     trailing: '1.0.0',
                   ),
                 ],
@@ -776,27 +774,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _confirmReset() async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Reset Semua Data?'),
-        content: const Text(
-          'Tindakan ini akan menghapus semua streak, XP, check-in, dan '
-          'riwayat sesi secara permanen. Anda akan kembali ke onboarding.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Batal'),
+      builder: (dialogContext) {
+        final l10n = AppLocalizations.of(dialogContext);
+        return AlertDialog(
+          title: Text(l10n?.resetDataConfirmTitle ?? 'Reset Semua Data?'),
+          content: Text(
+            l10n?.resetDataConfirmContent ??
+                'Tindakan ini akan menghapus semua streak, XP, check-in, dan '
+                'riwayat sesi secara permanen. Anda akan kembali ke onboarding.',
           ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.danger,
-              foregroundColor: Colors.white,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: Text(l10n?.cancel ?? 'Batal'),
             ),
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Reset'),
-          ),
-        ],
-      ),
+            FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.danger,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+              child: Text(l10n?.reset ?? 'Reset'),
+            ),
+          ],
+        );
+      },
     );
     if (confirmed != true) return;
 

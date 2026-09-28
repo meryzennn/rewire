@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/app_localizations.dart';
 
 /// Quick recovery actions matching Stitch Home Screen section 5.
 class QuickActions extends StatelessWidget {
@@ -20,6 +21,7 @@ class QuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -60,7 +62,7 @@ class QuickActions extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Aksi Pemulihan',
+            l10n?.quickActionsTitle ?? 'Aksi Pemulihan',
             style: theme.textTheme.labelLarge?.copyWith(
               color: textSecondary,
               fontWeight: FontWeight.w600,
@@ -75,7 +77,7 @@ class QuickActions extends StatelessWidget {
                   icon: Icons.self_improvement,
                   iconColor: primaryColor,
                   bgColor: primaryContainer,
-                  label: 'Meditasi',
+                  label: l10n?.navMeditation ?? 'Meditasi',
                   textColor: textPrimary,
                   onTap: onMeditationTap ?? () => context.go(Routes.meditation),
                 ),
@@ -88,7 +90,7 @@ class QuickActions extends StatelessWidget {
                   icon: Icons.fitness_center,
                   iconColor: secondaryColor,
                   bgColor: secondaryContainer,
-                  label: 'Workout',
+                  label: l10n?.navWorkout ?? 'Workout',
                   textColor: textPrimary,
                   onTap: onWorkoutTap ?? () => context.go(Routes.workout),
                 ),
@@ -103,7 +105,7 @@ class QuickActions extends StatelessWidget {
                   bgColor: isDark
                       ? AppColors.darkSurfaceVariant
                       : const Color(0xFFD4EAE6),
-                  label: 'Stats',
+                  label: l10n?.navProgress ?? 'Stats',
                   textColor: textPrimary,
                   onTap: onStatsTap ?? () => context.go(Routes.progress),
                 ),

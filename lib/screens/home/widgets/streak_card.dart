@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/provider_utils.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../providers/checkin_provider.dart';
 
 /// Stitch home screen streak card widget: displays current and longest streaks,
@@ -19,6 +20,7 @@ class StreakCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final checkinProvider = provider ?? context.watchOrNull<CheckinProvider>();
 
@@ -82,7 +84,7 @@ class StreakCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '$currentStreak Hari',
+                  l10n?.days(currentStreak) ?? '$currentStreak Hari',
                   style: theme.textTheme.titleLarge?.copyWith(
                     color: primaryColor,
                     fontWeight: FontWeight.w800,
@@ -91,7 +93,8 @@ class StreakCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Terpanjang: $longestStreak hari',
+                  l10n?.longestStreakSubtitle(longestStreak) ??
+                      'Terpanjang: $longestStreak hari',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: textSecondary,
                   ),
@@ -117,9 +120,9 @@ class StreakCard extends StatelessWidget {
                 elevation: 0,
               ),
               icon: const Icon(Icons.check, size: 18),
-              label: const Text(
-                'Check-in',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+              label: Text(
+                l10n?.checkinCta ?? 'Check-in',
+                style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
               ),
             )
           else

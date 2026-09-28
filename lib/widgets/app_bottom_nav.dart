@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/theme/app_colors.dart';
+import '../l10n/app_localizations.dart';
 
 /// One tab in the bottom navigation. Icons are concrete (home, meditation,
 /// workout, stats, settings), not generic glyphs, so each reads as its screen.
@@ -38,33 +39,36 @@ class AppBottomNav extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
   final PageController? pageController;
 
-  static const _items = <_NavItem>[
-    _NavItem(
-      icon: Icons.home_outlined,
-      activeIcon: Icons.home_rounded,
-      label: 'Home',
-    ),
-    _NavItem(
-      icon: Icons.self_improvement_outlined,
-      activeIcon: Icons.self_improvement_rounded,
-      label: 'Meditasi',
-    ),
-    _NavItem(
-      icon: Icons.fitness_center_outlined,
-      activeIcon: Icons.fitness_center_rounded,
-      label: 'Olahraga',
-    ),
-    _NavItem(
-      icon: Icons.insights_outlined,
-      activeIcon: Icons.insights_rounded,
-      label: 'Progress',
-    ),
-    _NavItem(
-      icon: Icons.person_outline_rounded,
-      activeIcon: Icons.person_rounded,
-      label: 'Profil',
-    ),
-  ];
+  static List<_NavItem> _items(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return [
+      _NavItem(
+        icon: Icons.home_outlined,
+        activeIcon: Icons.home_rounded,
+        label: l10n?.navHome ?? 'Home',
+      ),
+      _NavItem(
+        icon: Icons.self_improvement_outlined,
+        activeIcon: Icons.self_improvement_rounded,
+        label: l10n?.navMeditation ?? 'Meditasi',
+      ),
+      _NavItem(
+        icon: Icons.fitness_center_outlined,
+        activeIcon: Icons.fitness_center_rounded,
+        label: l10n?.navWorkout ?? 'Olahraga',
+      ),
+      _NavItem(
+        icon: Icons.insights_outlined,
+        activeIcon: Icons.insights_rounded,
+        label: l10n?.navProgress ?? 'Progress',
+      ),
+      _NavItem(
+        icon: Icons.person_outline_rounded,
+        activeIcon: Icons.person_rounded,
+        label: l10n?.navProfile ?? 'Profil',
+      ),
+    ];
+  }
 
   void _onTap(int index) {
     final controller = pageController;
@@ -103,7 +107,8 @@ class AppBottomNav extends StatelessWidget {
           height: 64,
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final tabCount = _items.length;
+              final items = _items(context);
+              final tabCount = items.length;
               final tabWidth = constraints.maxWidth / tabCount;
               const pillWidth = 56.0;
               const pillHeight = 30.0;
@@ -135,7 +140,7 @@ class AppBottomNav extends StatelessWidget {
                       for (var i = 0; i < tabCount; i++)
                         Expanded(
                           child: _NavButton(
-                            item: _items[i],
+                            item: items[i],
                             progress: (1.0 - (clampedPage - i).abs()).clamp(
                               0.0,
                               1.0,
