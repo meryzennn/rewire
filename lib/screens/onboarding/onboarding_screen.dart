@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app.dart';
 import '../../core/theme/app_colors.dart';
 import '../../services/preference_service.dart';
 
@@ -75,12 +76,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _dragDistance = 0;
   }
 
-  /// Marks onboarding done in the shared prefs, then navigates home. The router
-  /// redirect re-reads the now-true flag on `.go` and admits the shell.
-  Future<void> _complete() async {
-    await widget.preferences.setOnboardingCompleted(true);
-    if (!mounted) return;
-    context.go('/');
+  /// Completing the carousel (or tapping skip) transitions to the profile setup screen.
+  void _complete() {
+    context.go(Routes.profileSetup);
   }
 
   @override

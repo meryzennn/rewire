@@ -10,6 +10,7 @@ import 'screens/home/home_screen.dart';
 import 'screens/meditation/active_meditation_screen.dart';
 import 'screens/meditation/meditation_complete_screen.dart';
 import 'screens/meditation/meditation_home_screen.dart';
+import 'screens/onboarding/initial_setup_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/progress/progress_screen.dart';
 import 'screens/settings/settings_screen.dart';
@@ -45,6 +46,7 @@ class Routes {
   static const String profile = '/profile';
   static const String settings = '/settings';
   static const String onboarding = '/onboarding';
+  static const String profileSetup = '/profile-setup';
   static const String checkin = '/checkin';
 }
 
@@ -113,15 +115,21 @@ GoRouter buildRouter(
     initialLocation: Routes.home,
     redirect: (context, state) {
       final completed = prefs.getBool(kOnboardingCompletedKey) ?? false;
-      final atOnboarding = state.matchedLocation == Routes.onboarding;
-      if (!completed) return atOnboarding ? null : Routes.onboarding;
-      if (atOnboarding) return Routes.home;
+      final isAdmitted = state.matchedLocation == Routes.onboarding ||
+          state.matchedLocation == Routes.profileSetup;
+      if (!completed) return isAdmitted ? null : Routes.onboarding;
+      if (isAdmitted) return Routes.home;
       return null;
     },
     routes: [
       GoRoute(
         path: Routes.onboarding,
         builder: (context, state) => OnboardingScreen(preferences: prefService),
+      ),
+      GoRoute(
+        path: Routes.profileSetup,
+        builder: (context, state) =>
+            InitialSetupScreen(preferences: prefService),
       ),
       GoRoute(
         path: Routes.checkin,

@@ -41,16 +41,26 @@ void main() {
     await tester.tap(find.text('Mulai Perjalanan'));
     await tester.pumpAndSettle();
 
+    // Transitions to /profile-setup; tapping Skip enters the home shell
+    expect(find.byKey(const Key('setup-skip-button')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('setup-skip-button')));
+    await tester.pumpAndSettle();
+
     expect(preferences.onboardingCompleted, isTrue);
     expect(find.byKey(const Key('screen-home')), findsOneWidget);
     expect(find.text('Welcome to Rewire'), findsNothing);
   });
 
-  testWidgets('Lewati skips onboarding: flag set, shell shown', (tester) async {
+  testWidgets('Lewati skips onboarding: transitions to setup, skip enters shell', (tester) async {
     final preferences = await _pumpFreshApp(tester);
 
     expect(find.text('Welcome to Rewire'), findsOneWidget);
     await tester.tap(find.text('Lewati'));
+    await tester.pumpAndSettle();
+
+    // Transitions to /profile-setup; tapping Skip enters the home shell
+    expect(find.byKey(const Key('setup-skip-button')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('setup-skip-button')));
     await tester.pumpAndSettle();
 
     expect(preferences.onboardingCompleted, isTrue);
