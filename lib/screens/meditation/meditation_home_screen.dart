@@ -196,13 +196,6 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
             letterSpacing: -0.5,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings, color: textSecondary, size: 22),
-            onPressed: () => context.go(Routes.settings),
-          ),
-          const SizedBox(width: 8),
-        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../app.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../providers/checkin_provider.dart';
@@ -72,9 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     final primaryColor = isDark ? AppColors.darkPrimary : AppColors.primary;
-    final onSurfaceVariant = isDark
-        ? AppColors.darkTextSecondary
-        : const Color(0xFF434841);
 
     final userProvider = context.watchOrNull<UserProvider>();
     if (userProvider != null) {
@@ -100,13 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings, color: onSurfaceVariant, size: 22),
-            onPressed: () => context.go(Routes.settings),
-          ),
-          const SizedBox(width: 8),
-        ],
       ),
       body: SafeArea(
         child: RefreshIndicator(

@@ -91,30 +91,15 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                   vertical: 12,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Icon(Icons.psychology, color: accent, size: 28),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Latihan',
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: textPrimary,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: surfaceColor,
-                        border: Border.all(color: dividerColor),
+                    Icon(Icons.psychology, color: accent, size: 28),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Latihan',
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: textPrimary,
                       ),
-                      child: Icon(Icons.tune, color: textSecondary, size: 20),
                     ),
                   ],
                 ),

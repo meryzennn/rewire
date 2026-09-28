@@ -163,7 +163,7 @@ void main() {
 
     // Brand and top bar
     expect(find.text('Rewire'), findsOneWidget);
-    expect(find.byIcon(Icons.settings), findsOneWidget);
+    expect(find.byIcon(Icons.settings), findsNothing);
 
     // Section 1: Brain Visual
     expect(find.byType(BrainVisual), findsOneWidget);
