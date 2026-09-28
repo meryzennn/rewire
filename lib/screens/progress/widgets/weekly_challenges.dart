@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/quest.dart';
 
 /// Weekly challenges card list widget (spec §3.4, §9).
@@ -12,6 +13,7 @@ class WeeklyChallenges extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -36,7 +38,7 @@ class WeeklyChallenges extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Tantangan Mingguan',
+              l10n?.weeklyChallengesTitle ?? 'Tantangan Mingguan',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: textPrimary,

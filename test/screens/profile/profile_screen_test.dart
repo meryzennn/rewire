@@ -66,7 +66,7 @@ void main() {
     );
 
     // Initially default name and '-' for physical stats
-    expect(find.text('Pejuang Rewire'), findsOneWidget);
+    expect(find.text('Anon'), findsOneWidget);
     expect(find.text('-'), findsNWidgets(3));
 
     // Tap "Ubah" button

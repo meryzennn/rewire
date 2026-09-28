@@ -677,6 +677,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settingsTitle;
+
+  /// No description provided for @reminderTimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder Time'**
+  String get reminderTimeTitle;
+
+  /// No description provided for @editAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editAction;
+
+  /// No description provided for @yearsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'yrs'**
+  String get yearsShort;
+
+  /// No description provided for @editPhysicalDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile & Physical Stats'**
+  String get editPhysicalDataTitle;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @streakHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak History'**
+  String get streakHistoryTitle;
+
+  /// No description provided for @last7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 Days'**
+  String get last7Days;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get noData;
+
+  /// No description provided for @cleanTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean'**
+  String get cleanTag;
+
+  /// No description provided for @relapseTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Relapse'**
+  String get relapseTag;
+
+  /// No description provided for @moodTrendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood Trend'**
+  String get moodTrendTitle;
+
+  /// No description provided for @scale1To5.
+  ///
+  /// In en, this message translates to:
+  /// **'Scale 1 - 5'**
+  String get scale1To5;
+
+  /// No description provided for @noMoodHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'No mood records in the past 7 days'**
+  String get noMoodHistory;
+
+  /// No description provided for @mindStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mind Stats'**
+  String get mindStatsTitle;
+
+  /// No description provided for @autoUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-updated'**
+  String get autoUpdated;
+
+  /// No description provided for @currentStreakTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Streak'**
+  String get currentStreakTitle;
+
+  /// No description provided for @longestStreakTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest Streak'**
+  String get longestStreakTitle;
+
+  /// No description provided for @totalCleanDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Clean Days'**
+  String get totalCleanDays;
+
+  /// No description provided for @totalMeditation.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Meditation'**
+  String get totalMeditation;
+
+  /// No description provided for @totalWorkoutSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Workout'**
+  String get totalWorkoutSessions;
+
+  /// No description provided for @totalXpAccumulated.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Accumulated'**
+  String get totalXpAccumulated;
+
+  /// No description provided for @sessionsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Sessions'**
+  String sessionsCount(int count);
+
+  /// No description provided for @weeklyChallengesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Challenges'**
+  String get weeklyChallengesTitle;
+
+  /// No description provided for @calmMindTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calm Your Mind'**
+  String get calmMindTitle;
+
+  /// No description provided for @calmMindSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your ambient atmosphere and duration to restore focus today.'**
+  String get calmMindSubtitle;
+
+  /// No description provided for @durationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get durationTitle;
+
+  /// No description provided for @focusTimeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus time'**
+  String get focusTimeSubtitle;
+
+  /// No description provided for @customDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom ⏱️'**
+  String get customDuration;
+
+  /// No description provided for @routinesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Routines'**
+  String get routinesTitle;
+
+  /// No description provided for @exercisesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercises'**
+  String get exercisesTitle;
+
+  /// No description provided for @totalSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Sessions'**
+  String get totalSessions;
+
+  /// No description provided for @totalMinutesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Minutes'**
+  String get totalMinutesLabel;
+
+  /// No description provided for @seeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get seeAll;
+
+  /// No description provided for @allFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allFilter;
 }
 
 class _AppLocalizationsDelegate

@@ -310,4 +310,109 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get settingsTitle => 'Pengaturan';
+
+  @override
+  String get reminderTimeTitle => 'Waktu Pengingat';
+
+  @override
+  String get editAction => 'Ubah';
+
+  @override
+  String get yearsShort => 'Thn';
+
+  @override
+  String get editPhysicalDataTitle => 'Edit Profil & Data Fisik';
+
+  @override
+  String get saveChanges => 'Simpan Perubahan';
+
+  @override
+  String get streakHistoryTitle => 'Streak History';
+
+  @override
+  String get last7Days => '7 Hari Terakhir';
+
+  @override
+  String get noData => 'Tidak ada data';
+
+  @override
+  String get cleanTag => 'Bersih (Clean)';
+
+  @override
+  String get relapseTag => 'Relapse';
+
+  @override
+  String get moodTrendTitle => 'Tren Suasana Hati';
+
+  @override
+  String get scale1To5 => 'Skala 1 - 5';
+
+  @override
+  String get noMoodHistory => 'Belum ada catatan suasana hati 7 hari terakhir';
+
+  @override
+  String get mindStatsTitle => 'Statistik Pikiran';
+
+  @override
+  String get autoUpdated => 'Pembaruan otomatis';
+
+  @override
+  String get currentStreakTitle => 'Streak Saat Ini';
+
+  @override
+  String get longestStreakTitle => 'Streak Terpanjang';
+
+  @override
+  String get totalCleanDays => 'Total Hari Clean';
+
+  @override
+  String get totalMeditation => 'Total Meditasi';
+
+  @override
+  String get totalWorkoutSessions => 'Total Workout';
+
+  @override
+  String get totalXpAccumulated => 'Total Akumulasi';
+
+  @override
+  String sessionsCount(int count) {
+    return '$count Sesi';
+  }
+
+  @override
+  String get weeklyChallengesTitle => 'Tantangan Mingguan';
+
+  @override
+  String get calmMindTitle => 'Tenangkan Pikiran';
+
+  @override
+  String get calmMindSubtitle =>
+      'Pilih suasana dan durasi meditasimu untuk merestorasi fokus hari ini.';
+
+  @override
+  String get durationTitle => 'Durasi';
+
+  @override
+  String get focusTimeSubtitle => 'Waktu fokus';
+
+  @override
+  String get customDuration => 'Kustom ⏱️';
+
+  @override
+  String get routinesTitle => 'Rutinitas';
+
+  @override
+  String get exercisesTitle => 'Gerakan';
+
+  @override
+  String get totalSessions => 'Total Sesi';
+
+  @override
+  String get totalMinutesLabel => 'Total Menit';
+
+  @override
+  String get seeAll => 'Lihat Semua';
+
+  @override
+  String get allFilter => 'Semua';
 }

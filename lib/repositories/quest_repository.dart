@@ -10,8 +10,15 @@ class QuestRepository {
 
   /// Inserts the quests assigned for a refresh (daily set or weekly set).
   Future<void> insertQuests(List<Quest> quests) async {
+    if (quests.isEmpty) return;
+    final dateAssigned = quests.first.dateAssigned;
+    final type = quests.first.type;
+    final existing = await getQuestsForDate(dateAssigned, type: type);
+    final existingIds = existing.map((q) => q.questId).toSet();
+
     final batch = _db.batch();
     for (final q in quests) {
+      if (existingIds.contains(q.questId)) continue;
       batch.insert('quests', {
         'quest_id': q.questId,
         'type': q.type,
@@ -40,7 +47,20 @@ class QuestRepository {
       whereArgs: type == null ? [dateAssigned] : [dateAssigned, type],
       orderBy: 'id ASC',
     );
-    return rows.map(Quest.fromMap).toList();
+    final list = rows.map(Quest.fromMap).toList();
+    final Map<String, Quest> uniqueMap = {};
+    for (final q in list) {
+      if (!uniqueMap.containsKey(q.questId)) {
+        uniqueMap[q.questId] = q;
+      } else {
+        final existing = uniqueMap[q.questId]!;
+        if ((q.completed == 1 && existing.completed != 1) ||
+            q.currentValue > existing.currentValue) {
+          uniqueMap[q.questId] = q;
+        }
+      }
+    }
+    return uniqueMap.values.toList();
   }
 
   /// Updates progress/completion for one quest row (requires [Quest.id]).

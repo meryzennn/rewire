@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/app_localizations.dart';
 
 /// 6-item Bento Stat Grid displaying core recovery aggregates (spec §9, Screen 6).
 class StatCardsGrid extends StatelessWidget {
@@ -24,6 +25,7 @@ class StatCardsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
@@ -42,37 +44,37 @@ class StatCardsGrid extends StatelessWidget {
 
     final cards = [
       {
-        'title': 'Streak Saat Ini',
-        'value': '$currentStreak Hari',
+        'title': l10n?.currentStreakTitle ?? 'Streak Saat Ini',
+        'value': l10n?.days(currentStreak) ?? '$currentStreak Hari',
         'emoji': '🔥',
         'color': primaryColor,
       },
       {
-        'title': 'Streak Terpanjang',
-        'value': '$longestStreak Hari',
+        'title': l10n?.longestStreakTitle ?? 'Streak Terpanjang',
+        'value': l10n?.days(longestStreak) ?? '$longestStreak Hari',
         'emoji': '⚡',
         'color': textPrimary,
       },
       {
-        'title': 'Total Hari Clean',
-        'value': '$cleanDays Hari',
+        'title': l10n?.totalCleanDays ?? 'Total Hari Clean',
+        'value': l10n?.days(cleanDays) ?? '$cleanDays Hari',
         'emoji': '✨',
         'color': primaryColor,
       },
       {
-        'title': 'Total Meditasi',
-        'value': '$meditationMinutes Menit',
+        'title': l10n?.totalMeditation ?? 'Total Meditasi',
+        'value': l10n?.minutes(meditationMinutes) ?? '$meditationMinutes Menit',
         'emoji': '🧘',
         'color': secondaryColor,
       },
       {
-        'title': 'Total Workout',
-        'value': '$workoutSessions Sesi',
+        'title': l10n?.totalWorkoutSessions ?? 'Total Workout',
+        'value': l10n?.sessionsCount(workoutSessions) ?? '$workoutSessions Sesi',
         'emoji': '💪',
         'color': accentColor,
       },
       {
-        'title': 'Total Akumulasi',
+        'title': l10n?.totalXpAccumulated ?? 'Total Akumulasi',
         'value': '$totalXp XP',
         'emoji': '⭐',
         'color': AppColors.warning,
@@ -86,14 +88,14 @@ class StatCardsGrid extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Statistik Pikiran',
+              l10n?.mindStatsTitle ?? 'Statistik Pikiran',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: textPrimary,
               ),
             ),
             Text(
-              'Pembaruan otomatis',
+              l10n?.autoUpdated ?? 'Pembaruan otomatis',
               style: theme.textTheme.bodySmall?.copyWith(color: textSecondary),
             ),
           ],

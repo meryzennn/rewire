@@ -312,4 +312,109 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsTitle => 'Ajustes';
+
+  @override
+  String get reminderTimeTitle => 'Hora del Recordatorio';
+
+  @override
+  String get editAction => 'Editar';
+
+  @override
+  String get yearsShort => 'años';
+
+  @override
+  String get editPhysicalDataTitle => 'Editar Perfil y Datos Físicos';
+
+  @override
+  String get saveChanges => 'Guardar Cambios';
+
+  @override
+  String get streakHistoryTitle => 'Historial de Rachas';
+
+  @override
+  String get last7Days => 'Últimos 7 Días';
+
+  @override
+  String get noData => 'Sin datos';
+
+  @override
+  String get cleanTag => 'Limpio';
+
+  @override
+  String get relapseTag => 'Recaída';
+
+  @override
+  String get moodTrendTitle => 'Tendencia del Estado de Ánimo';
+
+  @override
+  String get scale1To5 => 'Escala 1 - 5';
+
+  @override
+  String get noMoodHistory => 'Sin registros de ánimo en los últimos 7 días';
+
+  @override
+  String get mindStatsTitle => 'Estadísticas Mentales';
+
+  @override
+  String get autoUpdated => 'Actualización automática';
+
+  @override
+  String get currentStreakTitle => 'Racha Actual';
+
+  @override
+  String get longestStreakTitle => 'Racha Más Larga';
+
+  @override
+  String get totalCleanDays => 'Total de Días Limpios';
+
+  @override
+  String get totalMeditation => 'Total Meditación';
+
+  @override
+  String get totalWorkoutSessions => 'Total Entrenamiento';
+
+  @override
+  String get totalXpAccumulated => 'Total Acumulado';
+
+  @override
+  String sessionsCount(int count) {
+    return '$count Sesiones';
+  }
+
+  @override
+  String get weeklyChallengesTitle => 'Desafíos Semanales';
+
+  @override
+  String get calmMindTitle => 'Calma Tu Mente';
+
+  @override
+  String get calmMindSubtitle =>
+      'Elige tu ambiente y duración para recuperar el enfoque hoy.';
+
+  @override
+  String get durationTitle => 'Duración';
+
+  @override
+  String get focusTimeSubtitle => 'Tiempo de enfoque';
+
+  @override
+  String get customDuration => 'Personalizado ⏱️';
+
+  @override
+  String get routinesTitle => 'Rutinas';
+
+  @override
+  String get exercisesTitle => 'Ejercicios';
+
+  @override
+  String get totalSessions => 'Total Sesiones';
+
+  @override
+  String get totalMinutesLabel => 'Total Minutos';
+
+  @override
+  String get seeAll => 'Ver Todo';
+
+  @override
+  String get allFilter => 'Todos';
 }

@@ -6,6 +6,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../data/exercises.dart';
 import '../../data/routines.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/workout_provider.dart';
 
@@ -49,6 +50,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final bg = theme.scaffoldBackgroundColor;
@@ -95,7 +97,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                     Icon(Icons.psychology, color: accent, size: 28),
                     const SizedBox(width: 8),
                     Text(
-                      'Latihan',
+                      l10n?.navWorkout ?? 'Latihan',
                       style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textPrimary,
@@ -219,7 +221,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Total Sesi',
+                                      l10n?.totalSessions ?? 'Total Sesi',
                                       style: theme.textTheme.bodySmall
                                           ?.copyWith(color: textSecondary),
                                     ),
@@ -266,7 +268,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Total Menit',
+                                      l10n?.totalMinutesLabel ?? 'Total Menit',
                                       style: theme.textTheme.bodySmall
                                           ?.copyWith(color: textSecondary),
                                     ),
@@ -304,14 +306,14 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Rutinitas',
+                      l10n?.routinesTitle ?? 'Rutinitas',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textPrimary,
                       ),
                     ),
                     Text(
-                      'Lihat Semua',
+                      l10n?.seeAll ?? 'Lihat Semua',
                       style: theme.textTheme.labelMedium?.copyWith(
                         color: accent,
                         fontWeight: FontWeight.bold,
@@ -365,7 +367,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Gerakan',
+                      l10n?.exercisesTitle ?? 'Gerakan',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textPrimary,
@@ -378,6 +380,9 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                         children: ['Semua', 'Upper', 'Lower', 'Core', 'Cardio']
                             .map((cat) {
                               final isSelected = selectedCategory == cat;
+                              final label = cat == 'Semua'
+                                  ? (l10n?.allFilter ?? 'Semua')
+                                  : cat;
                               return Padding(
                                 padding: const EdgeInsets.only(right: 8),
                                 child: InkWell(
@@ -398,7 +403,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Text(
-                                      cat,
+                                      label,
                                       style: TextStyle(
                                         color: isSelected
                                             ? Colors.white

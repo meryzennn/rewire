@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/date_utils.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/daily_checkin.dart';
 
 /// Line chart visualizing mood trends (1-5) over the past 7 days (spec §9, Screen 6).
@@ -12,21 +13,29 @@ class MoodTrendChart extends StatelessWidget {
   final List<DailyCheckin> checkins;
   final DateTime? now;
 
-  static const List<String> _dayLabels = [
-    'Sen',
-    'Sel',
-    'Rab',
-    'Kam',
-    'Jum',
-    'Sab',
-    'Min',
-  ];
+  static List<String> _dayLabelsFor(String? localeCode) {
+    switch (localeCode) {
+      case 'en':
+        return const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      case 'es':
+        return const ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+      case 'ja':
+        return const ['月', '火', '水', '木', '金', '土', '日'];
+      case 'id':
+      default:
+        return const ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+    }
+  }
+
   static const List<String> _moodEmojis = ['', '😢', '😕', '😐', '🙂', '😄'];
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final localeCode = Localizations.maybeLocaleOf(context)?.languageCode;
+    final dayLabels = _dayLabelsFor(localeCode);
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
@@ -69,14 +78,14 @@ class MoodTrendChart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Tren Suasana Hati',
+              l10n?.moodTrendTitle ?? 'Tren Suasana Hati',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: textPrimary,
               ),
             ),
             Text(
-              'Skala 1 - 5',
+              l10n?.scale1To5 ?? 'Skala 1 - 5',
               style: theme.textTheme.bodySmall?.copyWith(color: textSecondary),
             ),
           ],
@@ -96,7 +105,8 @@ class MoodTrendChart extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 36),
                   child: Center(
                     child: Text(
-                      'Belum ada catatan suasana hati 7 hari terakhir',
+                      l10n?.noMoodHistory ??
+                          'Belum ada catatan suasana hati 7 hari terakhir',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: textSecondary,
                       ),
@@ -174,7 +184,7 @@ class MoodTrendChart extends StatelessWidget {
                                 return const SizedBox.shrink();
                               }
                               final day = days[idx];
-                              final label = _dayLabels[day.weekday - 1];
+                              final label = dayLabels[day.weekday - 1];
                               final isToday = idx == 6;
 
                               return Padding(

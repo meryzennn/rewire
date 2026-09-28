@@ -310,4 +310,109 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsTitle => 'Settings';
+
+  @override
+  String get reminderTimeTitle => 'Reminder Time';
+
+  @override
+  String get editAction => 'Edit';
+
+  @override
+  String get yearsShort => 'yrs';
+
+  @override
+  String get editPhysicalDataTitle => 'Edit Profile & Physical Stats';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get streakHistoryTitle => 'Streak History';
+
+  @override
+  String get last7Days => 'Last 7 Days';
+
+  @override
+  String get noData => 'No data';
+
+  @override
+  String get cleanTag => 'Clean';
+
+  @override
+  String get relapseTag => 'Relapse';
+
+  @override
+  String get moodTrendTitle => 'Mood Trend';
+
+  @override
+  String get scale1To5 => 'Scale 1 - 5';
+
+  @override
+  String get noMoodHistory => 'No mood records in the past 7 days';
+
+  @override
+  String get mindStatsTitle => 'Mind Stats';
+
+  @override
+  String get autoUpdated => 'Auto-updated';
+
+  @override
+  String get currentStreakTitle => 'Current Streak';
+
+  @override
+  String get longestStreakTitle => 'Longest Streak';
+
+  @override
+  String get totalCleanDays => 'Total Clean Days';
+
+  @override
+  String get totalMeditation => 'Total Meditation';
+
+  @override
+  String get totalWorkoutSessions => 'Total Workout';
+
+  @override
+  String get totalXpAccumulated => 'Total Accumulated';
+
+  @override
+  String sessionsCount(int count) {
+    return '$count Sessions';
+  }
+
+  @override
+  String get weeklyChallengesTitle => 'Weekly Challenges';
+
+  @override
+  String get calmMindTitle => 'Calm Your Mind';
+
+  @override
+  String get calmMindSubtitle =>
+      'Choose your ambient atmosphere and duration to restore focus today.';
+
+  @override
+  String get durationTitle => 'Duration';
+
+  @override
+  String get focusTimeSubtitle => 'Focus time';
+
+  @override
+  String get customDuration => 'Custom ⏱️';
+
+  @override
+  String get routinesTitle => 'Routines';
+
+  @override
+  String get exercisesTitle => 'Exercises';
+
+  @override
+  String get totalSessions => 'Total Sessions';
+
+  @override
+  String get totalMinutesLabel => 'Total Minutes';
+
+  @override
+  String get seeAll => 'See All';
+
+  @override
+  String get allFilter => 'All';
 }

@@ -127,7 +127,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Edit Profil & Data Fisik',
+                AppLocalizations.of(ctx)?.editPhysicalDataTitle ??
+                    'Edit Profil & Data Fisik',
                 style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -219,7 +220,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text('Simpan Perubahan'),
+                child: Text(
+                  AppLocalizations.of(ctx)?.saveChanges ?? 'Simpan Perubahan',
+                ),
               ),
             ],
           ),
@@ -363,7 +366,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final streak = userProvider?.currentStreak ?? 0;
     final displayName = _prefs.userName.isNotEmpty
         ? _prefs.userName
-        : 'Pejuang Rewire';
+        : 'Anon';
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -500,8 +503,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildPhysicalStatsCard(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final ageText =
-        _prefs.userAge != null ? '${_prefs.userAge} Thn' : '-';
+        _prefs.userAge != null ? '${_prefs.userAge} ${l10n?.yearsShort ?? 'Thn'}' : '-';
     final heightText =
         _prefs.userHeight != null ? '${_prefs.userHeight!.toStringAsFixed(0)} cm' : '-';
     final weightText =
@@ -524,7 +528,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AppLocalizations.of(context)?.physicalData ?? 'DATA FISIK',
+                l10n?.physicalData ?? 'DATA FISIK',
                 style: theme.textTheme.labelSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.1,
@@ -547,7 +551,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'Ubah',
+                        l10n?.editAction ?? 'Ubah',
                         style: theme.textTheme.labelSmall?.copyWith(
                           color: theme.colorScheme.primary,
                           fontWeight: FontWeight.w600,
@@ -566,7 +570,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: _StatMetric(
                   icon: Icons.cake_outlined,
                   value: ageText,
-                  label: 'Umur',
+                  label: l10n?.ageLabel ?? 'Umur',
                 ),
               ),
               Container(
@@ -578,7 +582,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: _StatMetric(
                   icon: Icons.height_rounded,
                   value: heightText,
-                  label: 'Tinggi',
+                  label: l10n?.heightLabel ?? 'Tinggi',
                 ),
               ),
               Container(
@@ -590,7 +594,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: _StatMetric(
                   icon: Icons.monitor_weight_outlined,
                   value: weightText,
-                  label: 'Berat',
+                  label: l10n?.weightLabel ?? 'Berat',
                 ),
               ),
             ],
@@ -679,7 +683,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     rowKey: const Key('reminder-time'),
                     icon: Icons.schedule_rounded,
                     tint: _Tint.secondary,
-                    title: 'Waktu Pengingat',
+                    title: l10n?.reminderTimeTitle ?? 'Waktu Pengingat',
                     trailing: _prefs.dailyReminderTime,
                     onTap: _pickTime,
                   ),

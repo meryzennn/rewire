@@ -16,11 +16,24 @@ class QuestService extends ChangeNotifier {
   final QuestRepository _quests;
   final XpService _xp;
 
+  Future<void>? _activeRefresh;
+
   /// Ensures today has a daily set and, on Mondays, this week has a weekly set.
   ///
   /// Deterministic per date and idempotent per period: it never duplicates a
   /// set already assigned for today / this week.
   Future<void> refreshIfNeeded(DateTime now) async {
+    if (_activeRefresh != null) return _activeRefresh!;
+    final future = _doRefreshIfNeeded(now);
+    _activeRefresh = future;
+    try {
+      await future;
+    } finally {
+      _activeRefresh = null;
+    }
+  }
+
+  Future<void> _doRefreshIfNeeded(DateTime now) async {
     final today = formatLocalDate(now);
 
     final existingDaily = await _quests.getQuestsForDate(today, type: 'daily');

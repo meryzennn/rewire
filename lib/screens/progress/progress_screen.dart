@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/database/database_helper.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/provider_utils.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/daily_checkin.dart';
 import '../../providers/achievement_provider.dart';
 import '../../providers/quest_provider.dart';
@@ -173,7 +174,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                           Icon(Icons.insights, color: accent, size: 28),
                           const SizedBox(width: 10),
                           Text(
-                            'Progress',
+                            AppLocalizations.of(context)?.navProgress ??
+                                'Progress',
                             style: theme.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: textPrimary,

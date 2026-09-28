@@ -9,6 +9,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../core/utils/xp_utils.dart';
 import '../../data/meditation_definitions.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/meditation_provider.dart';
 
 bool get _isTestEnvironment {
@@ -152,6 +153,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final provider =
@@ -190,7 +192,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
         elevation: 0,
         backgroundColor: bg,
         title: Text(
-          'Meditasi',
+          l10n?.navMeditation ?? 'Meditasi',
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
             letterSpacing: -0.5,
@@ -257,7 +259,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                       ),
                     ),
                     Text(
-                      'Tenangkan Pikiran',
+                      l10n?.calmMindTitle ?? 'Tenangkan Pikiran',
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textPrimary,
@@ -267,7 +269,8 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Pilih suasana dan durasi meditasimu untuk merestorasi fokus hari ini.',
+                      l10n?.calmMindSubtitle ??
+                          'Pilih suasana dan durasi meditasimu untuk merestorasi fokus hari ini.',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: textSecondary,
                         height: 1.35,
@@ -304,13 +307,13 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Durasi',
+                    l10n?.durationTitle ?? 'Durasi',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    'Waktu fokus',
+                    l10n?.focusTimeSubtitle ?? 'Waktu fokus',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: textSecondary,
                     ),
@@ -415,7 +418,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                             Text(
                               !kMeditationDurations.contains(selectedDuration)
                                   ? '$selectedDuration min'
-                                  : 'Kustom ⏱️',
+                                  : (l10n?.customDuration ?? 'Kustom ⏱️'),
                               style: TextStyle(
                                 color:
                                     !kMeditationDurations.contains(
@@ -446,7 +449,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Suasana',
+                    l10n?.soundscapeTitle ?? 'Suasana',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -577,7 +580,7 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Latihan Pernapasan',
+                    l10n?.breathingTechnique ?? 'Latihan Pernapasan',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -775,9 +778,9 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                   shadowColor: lavenderAccent.withValues(alpha: 0.4),
                 ),
                 icon: const Icon(Icons.play_arrow, size: 22),
-                label: const Text(
-                  'Mulai Meditasi',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                label: Text(
+                  l10n?.startMeditation ?? 'Mulai Meditasi',
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 onPressed: () {
                   context.push(

@@ -309,4 +309,108 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get settingsTitle => '設定';
+
+  @override
+  String get reminderTimeTitle => 'リマインダー時間';
+
+  @override
+  String get editAction => '編集';
+
+  @override
+  String get yearsShort => '歳';
+
+  @override
+  String get editPhysicalDataTitle => 'プロフィールと身体データの編集';
+
+  @override
+  String get saveChanges => '変更を保存';
+
+  @override
+  String get streakHistoryTitle => 'ストリーク履歴';
+
+  @override
+  String get last7Days => '過去7日間';
+
+  @override
+  String get noData => 'データなし';
+
+  @override
+  String get cleanTag => 'クリーン';
+
+  @override
+  String get relapseTag => 'リラップス';
+
+  @override
+  String get moodTrendTitle => '気分のトレンド';
+
+  @override
+  String get scale1To5 => '1〜5段階';
+
+  @override
+  String get noMoodHistory => '過去7日間の気分の記録はありません';
+
+  @override
+  String get mindStatsTitle => 'マインド統計';
+
+  @override
+  String get autoUpdated => '自動更新';
+
+  @override
+  String get currentStreakTitle => '現在のストリーク';
+
+  @override
+  String get longestStreakTitle => '最長ストリーク';
+
+  @override
+  String get totalCleanDays => 'クリーンな合計日数';
+
+  @override
+  String get totalMeditation => '合計瞑想時間';
+
+  @override
+  String get totalWorkoutSessions => '合計ワークアウト';
+
+  @override
+  String get totalXpAccumulated => '累計獲得';
+
+  @override
+  String sessionsCount(int count) {
+    return '$count セッション';
+  }
+
+  @override
+  String get weeklyChallengesTitle => '週間チャレンジ';
+
+  @override
+  String get calmMindTitle => '心を落ち着かせる';
+
+  @override
+  String get calmMindSubtitle => '今日の集中力を取り戻すために、雰囲気と瞑想時間を選びましょう。';
+
+  @override
+  String get durationTitle => '時間';
+
+  @override
+  String get focusTimeSubtitle => '集中時間';
+
+  @override
+  String get customDuration => 'カスタム ⏱️';
+
+  @override
+  String get routinesTitle => 'ルーティン';
+
+  @override
+  String get exercisesTitle => '種目';
+
+  @override
+  String get totalSessions => '合計セッション';
+
+  @override
+  String get totalMinutesLabel => '合計分';
+
+  @override
+  String get seeAll => 'すべて見る';
+
+  @override
+  String get allFilter => 'すべて';
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/date_utils.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../models/daily_checkin.dart';
 
 /// Bar chart visualizing check-in streak history over the past 7 days (spec §9, Screen 6).
@@ -12,20 +13,27 @@ class StreakChart extends StatelessWidget {
   final List<DailyCheckin> checkins;
   final DateTime? now;
 
-  static const List<String> _dayLabels = [
-    'Sen',
-    'Sel',
-    'Rab',
-    'Kam',
-    'Jum',
-    'Sab',
-    'Min',
-  ];
+  static List<String> _dayLabelsFor(String? localeCode) {
+    switch (localeCode) {
+      case 'en':
+        return const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      case 'es':
+        return const ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+      case 'ja':
+        return const ['月', '火', '水', '木', '金', '土', '日'];
+      case 'id':
+      default:
+        return const ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final localeCode = Localizations.maybeLocaleOf(context)?.languageCode;
+    final dayLabels = _dayLabelsFor(localeCode);
 
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
     final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
@@ -90,14 +98,14 @@ class StreakChart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Streak History',
+              l10n?.streakHistoryTitle ?? 'Streak History',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: textPrimary,
               ),
             ),
             Text(
-              '7 Hari Terakhir',
+              l10n?.last7Days ?? '7 Hari Terakhir',
               style: theme.textTheme.labelMedium?.copyWith(
                 color: primaryColor,
                 fontWeight: FontWeight.bold,
@@ -129,10 +137,10 @@ class StreakChart extends StatelessWidget {
                           final dateStr = formatLocalDate(days[group.x]);
                           final checkin = checkinMap[dateStr];
                           final statusText = checkin == null
-                              ? 'Tidak ada data'
+                              ? (l10n?.noData ?? 'Tidak ada data')
                               : (checkin.status == 'clean'
-                                    ? 'Bersih (Clean)'
-                                    : 'Relapse');
+                                    ? (l10n?.cleanTag ?? 'Bersih (Clean)')
+                                    : (l10n?.relapseTag ?? 'Relapse'));
                           return BarTooltipItem(
                             '$dateStr\n$statusText',
                             TextStyle(
@@ -166,7 +174,7 @@ class StreakChart extends StatelessWidget {
                               return const SizedBox.shrink();
                             }
                             final day = days[idx];
-                            final label = _dayLabels[day.weekday - 1];
+                            final label = dayLabels[day.weekday - 1];
                             final isToday = idx == 6;
 
                             return Padding(
