@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/health_utils.dart';
 import '../../core/utils/provider_utils.dart';
 import '../../l10n/app_localizations.dart';
 import '../../providers/achievement_provider.dart';
@@ -43,6 +44,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   PreferenceService get _prefs => widget.preferences;
 
   static const _allowedExtensions = ['png', 'jpg', 'jpeg', 'webp'];
+  static const _months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  ];
 
   Future<void> _pickProfilePicture() async {
     try {
@@ -106,6 +111,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ? _prefs.userWeight!.toStringAsFixed(0)
           : '',
     );
+    DateTime? selectedBirthDate = _prefs.userBirthDate;
+    String selectedFitnessLevel = _prefs.userFitnessLevel;
 
     showModalBottomSheet(
       context: context,
@@ -114,119 +121,220 @@ class _ProfileScreenState extends State<ProfileScreen> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (ctx) => Padding(
-        padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 24,
-          bottom: MediaQuery.of(ctx).viewInsets.bottom + 24,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                AppLocalizations.of(ctx)?.editPhysicalDataTitle ??
-                    'Edit Profil & Data Fisik',
-                style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                key: const Key('input-profile-name'),
-                controller: nameCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Nama Lengkap',
-                  hintText: 'Masukkan nama kamu',
-                  prefixIcon: Icon(Icons.person_outline_rounded),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                key: const Key('input-profile-age'),
-                controller: ageCtrl,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Umur (tahun)',
-                  hintText: 'Contoh: 24',
-                  prefixIcon: Icon(Icons.cake_outlined),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setModalState) {
+          final l10n = AppLocalizations.of(ctx);
+          return Padding(
+            padding: EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 24,
+              bottom: MediaQuery.of(ctx).viewInsets.bottom + 24,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: TextField(
-                      key: const Key('input-profile-height'),
-                      controller: heightCtrl,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
+                  Text(
+                    l10n?.editPhysicalDataTitle ?? 'Edit Profil & Data Fisik',
+                    style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextField(
+                    key: const Key('input-profile-name'),
+                    controller: nameCtrl,
+                    decoration: InputDecoration(
+                      labelText: l10n?.fullName ?? 'Nama Lengkap',
+                      hintText: 'Masukkan nama kamu',
+                      prefixIcon: const Icon(Icons.person_outline_rounded),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
-                      decoration: const InputDecoration(
-                        labelText: 'Tinggi Badan (cm)',
-                        hintText: '170',
-                        prefixIcon: Icon(Icons.height_rounded),
-                        border: OutlineInputBorder(
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  InkWell(
+                    key: const Key('input-profile-birthday'),
+                    onTap: () async {
+                      final picked = await showDatePicker(
+                        context: ctx,
+                        initialDate: selectedBirthDate ?? DateTime(2000, 1, 1),
+                        firstDate: DateTime(1920),
+                        lastDate: DateTime.now(),
+                      );
+                      if (picked != null) {
+                        setModalState(() {
+                          selectedBirthDate = picked;
+                          final now = DateTime.now();
+                          var age = now.year - picked.year;
+                          if (now.month < picked.month ||
+                              (now.month == picked.month && now.day < picked.day)) {
+                            age--;
+                          }
+                          ageCtrl.text = age.toString();
+                        });
+                      }
+                    },
+                    borderRadius: BorderRadius.circular(12),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: l10n?.birthdayLabel ?? 'Tanggal Lahir',
+                        prefixIcon: const Icon(Icons.cake_outlined),
+                        suffixIcon: const Icon(Icons.calendar_today_rounded, size: 18),
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
+                      ),
+                      child: Text(
+                        selectedBirthDate != null
+                            ? '${selectedBirthDate!.day} ${_months[selectedBirthDate!.month - 1]} ${selectedBirthDate!.year}'
+                            : (l10n?.birthdayLabel ?? 'Pilih Tanggal Lahir'),
+                        style: TextStyle(
+                          color: selectedBirthDate != null
+                              ? Theme.of(ctx).colorScheme.onSurface
+                              : Theme.of(ctx).hintColor,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: TextField(
-                      key: const Key('input-profile-weight'),
-                      controller: weightCtrl,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
+                  const SizedBox(height: 16),
+                  TextField(
+                    key: const Key('input-profile-age'),
+                    controller: ageCtrl,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: '${l10n?.ageLabel ?? 'Umur'} (${l10n?.yearsShort ?? 'tahun'})',
+                      hintText: 'Contoh: 24',
+                      prefixIcon: const Icon(Icons.cake_outlined),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
-                      decoration: const InputDecoration(
-                        labelText: 'Berat Badan (kg)',
-                        hintText: '65',
-                        prefixIcon: Icon(Icons.monitor_weight_outlined),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          key: const Key('input-profile-height'),
+                          controller: heightCtrl,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: '${l10n?.heightLabel ?? 'Tinggi Badan'} (cm)',
+                            hintText: '170',
+                            prefixIcon: const Icon(Icons.height_rounded),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                            ),
+                          ),
                         ),
                       ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: TextField(
+                          key: const Key('input-profile-weight'),
+                          controller: weightCtrl,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: '${l10n?.weightLabel ?? 'Berat Badan'} (kg)',
+                            hintText: '65',
+                            prefixIcon: const Icon(Icons.monitor_weight_outlined),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      l10n?.fitnessLevelLabel ?? 'Tingkat Kebugaran',
+                      style: Theme.of(ctx).textTheme.labelMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(ctx).colorScheme.onSurfaceVariant,
+                          ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    key: const Key('selector-fitness-level'),
+                    spacing: 8,
+                    children: [
+                      ChoiceChip(
+                        key: const Key('select-fitness-beginner'),
+                        label: Text(l10n?.beginner ?? 'Beginner'),
+                        selected: selectedFitnessLevel == 'beginner',
+                        onSelected: (selected) {
+                          if (selected) {
+                            setModalState(() => selectedFitnessLevel = 'beginner');
+                          }
+                        },
+                      ),
+                      ChoiceChip(
+                        key: const Key('select-fitness-intermediate'),
+                        label: Text(l10n?.intermediate ?? 'Intermediate'),
+                        selected: selectedFitnessLevel == 'intermediate',
+                        onSelected: (selected) {
+                          if (selected) {
+                            setModalState(() => selectedFitnessLevel = 'intermediate');
+                          }
+                        },
+                      ),
+                      ChoiceChip(
+                        key: const Key('select-fitness-expert'),
+                        label: Text(l10n?.expert ?? 'Expert'),
+                        selected: selectedFitnessLevel == 'expert',
+                        onSelected: (selected) {
+                          if (selected) {
+                            setModalState(() => selectedFitnessLevel = 'expert');
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  FilledButton(
+                    key: const Key('btn-save-profile'),
+                    onPressed: () async {
+                      await _prefs.setUserName(nameCtrl.text.trim());
+                      if (selectedBirthDate != null) {
+                        await _prefs.setUserBirthDate(selectedBirthDate);
+                      }
+                      final age = int.tryParse(ageCtrl.text.trim());
+                      await _prefs.setUserAge(age);
+                      final height = double.tryParse(heightCtrl.text.trim());
+                      await _prefs.setUserHeight(height);
+                      final weight = double.tryParse(weightCtrl.text.trim());
+                      await _prefs.setUserWeight(weight);
+                      await _prefs.setUserFitnessLevel(selectedFitnessLevel);
+                      if (mounted) setState(() {});
+                      if (ctx.mounted) Navigator.pop(ctx);
+                    },
+                    style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      l10n?.saveChanges ?? 'Simpan Perubahan',
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
-              FilledButton(
-                key: const Key('btn-save-profile'),
-                onPressed: () async {
-                  await _prefs.setUserName(nameCtrl.text.trim());
-                  final age = int.tryParse(ageCtrl.text.trim());
-                  await _prefs.setUserAge(age);
-                  final height = double.tryParse(heightCtrl.text.trim());
-                  await _prefs.setUserHeight(height);
-                  final weight = double.tryParse(weightCtrl.text.trim());
-                  await _prefs.setUserWeight(weight);
-                  if (mounted) setState(() {});
-                  if (ctx.mounted) Navigator.pop(ctx);
-                },
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Text(
-                  AppLocalizations.of(ctx)?.saveChanges ?? 'Simpan Perubahan',
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -368,6 +476,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ? _prefs.userName
         : 'Anon';
 
+    final fitnessLevel = _prefs.userFitnessLevel;
+    final fitnessLabel = switch (fitnessLevel) {
+      'intermediate' =>
+        AppLocalizations.of(context)?.intermediate ?? 'Intermediate',
+      'expert' => AppLocalizations.of(context)?.expert ?? 'Expert',
+      _ => AppLocalizations.of(context)?.beginner ?? 'Beginner',
+    };
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
@@ -451,8 +567,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 6),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            spacing: 8,
+            runSpacing: 6,
+            alignment: WrapAlignment.center,
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -468,7 +586,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
@@ -494,6 +611,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
+              Container(
+                key: const Key('chip-fitness-level'),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.tertiaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.fitness_center_rounded,
+                      size: 14,
+                      color: theme.colorScheme.tertiary,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      fitnessLabel,
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: theme.colorScheme.tertiary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ],
@@ -510,6 +653,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _prefs.userHeight != null ? '${_prefs.userHeight!.toStringAsFixed(0)} cm' : '-';
     final weightText =
         _prefs.userWeight != null ? '${_prefs.userWeight!.toStringAsFixed(0)} kg' : '-';
+    final birthDate = _prefs.userBirthDate;
+    final bmi = calculateBmi(_prefs.userHeight, _prefs.userWeight);
+    final bmiCat = getBmiCategory(bmi);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
@@ -598,6 +744,126 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ],
+          ),
+          if (birthDate != null) ...[
+            const SizedBox(height: 12),
+            Container(
+              key: const Key('tile-profile-birthday'),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.cake_outlined,
+                    size: 16,
+                    color: theme.colorScheme.primary,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    l10n?.birthdayLabel ?? 'Tanggal Lahir',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '${birthDate.day} ${_months[birthDate.month - 1]} ${birthDate.year}',
+                    key: const Key('text-profile-birthday'),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          const SizedBox(height: 12),
+          _buildBmiBadge(context, bmi, bmiCat),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBmiBadge(
+    BuildContext context,
+    double? bmi,
+    BmiCategory category,
+  ) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+
+    if (bmi == null) {
+      return Container(
+        key: const Key('badge-bmi'),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.health_and_safety_outlined,
+              size: 16,
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              '${l10n?.bmiLabel ?? 'BMI'}: --',
+              style: theme.textTheme.bodySmall?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    final catLabel = switch (category) {
+      BmiCategory.underweight => l10n?.bmiUnderweight ?? 'Underweight',
+      BmiCategory.normal => l10n?.bmiNormal ?? 'Normal',
+      BmiCategory.overweight => l10n?.bmiOverweight ?? 'Overweight',
+      BmiCategory.obese => l10n?.bmiObese ?? 'Obese',
+    };
+
+    final badgeColor = switch (category) {
+      BmiCategory.normal => AppColors.success,
+      BmiCategory.underweight => AppColors.secondary,
+      BmiCategory.overweight => AppColors.warning,
+      BmiCategory.obese => AppColors.danger,
+    };
+
+    return Container(
+      key: const Key('badge-bmi'),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: badgeColor.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: badgeColor.withValues(alpha: 0.4)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            category == BmiCategory.obese
+                ? Icons.warning_amber_rounded
+                : Icons.health_and_safety,
+            size: 16,
+            color: badgeColor,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            '${l10n?.bmiLabel ?? 'BMI'} ${bmi.toStringAsFixed(1)} • $catLabel',
+            style: theme.textTheme.bodySmall?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: badgeColor,
+            ),
           ),
         ],
       ),
@@ -805,6 +1071,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
     if (confirmed != true) return;
+    if (!mounted) return;
 
     final userProvider = context.readOrNull<UserProvider>();
     final checkinProvider = context.readOrNull<CheckinProvider>();

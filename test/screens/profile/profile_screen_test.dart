@@ -234,6 +234,8 @@ void main() {
     expect(find.text('Bahasa Indonesia'), findsOneWidget);
 
     // Tap language row
+    await tester.ensureVisible(find.byKey(const Key('row-select-language')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('row-select-language')));
     await tester.pumpAndSettle();
 
@@ -250,6 +252,105 @@ void main() {
     expect(find.text('Pilih Bahasa / Select Language'), findsNothing);
     expect(prefService.language, 'en');
     expect(find.text('English'), findsOneWidget);
+  });
+
+  testWidgets('renders birthday, dynamic age, fitness level chip, and BMI badge', (
+    tester,
+  ) async {
+    final now = DateTime.now();
+    final birthYear = now.year - 26;
+    SharedPreferences.setMockInitialValues({
+      'user_name': 'Budi',
+      'user_birth_date': '$birthYear-05-15',
+      'user_fitness_level': 'intermediate',
+      'user_height': 175.0,
+      'user_weight': 70.0,
+    });
+    final prefs = await SharedPreferences.getInstance();
+    final prefService = PreferenceService(prefs);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildLightTheme(),
+        home: Scaffold(
+          body: ProfileScreen(
+            preferences: prefService,
+            onResetData: () async {},
+          ),
+        ),
+      ),
+    );
+
+    // Fitness level chip in avatar header
+    expect(find.byKey(const Key('chip-fitness-level')), findsOneWidget);
+    expect(find.text('Intermediate'), findsOneWidget);
+
+    // Physical stats: Dynamic age, Birthday tile, BMI badge
+    expect(find.textContaining('15 May $birthYear'), findsOneWidget);
+    // Calculated age should be 25 or 26 depending on month
+    expect(find.textContaining('${prefService.userAge} Thn'), findsOneWidget);
+
+    // BMI badge (70 / (1.75^2) = 22.86 -> 22.9 Normal)
+    expect(find.byKey(const Key('badge-bmi')), findsOneWidget);
+    expect(find.textContaining('22.9'), findsOneWidget);
+    expect(find.textContaining('Normal'), findsOneWidget);
+  });
+
+  testWidgets('editing profile allows updating birthday and fitness level', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'user_name': 'Charlie',
+      'user_fitness_level': 'beginner',
+    });
+    final prefs = await SharedPreferences.getInstance();
+    final prefService = PreferenceService(prefs);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildLightTheme(),
+        home: Scaffold(
+          body: ProfileScreen(
+            preferences: prefService,
+            onResetData: () async {},
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('Beginner'), findsOneWidget);
+
+    // Tap Ubah button to open bottom sheet
+    await tester.tap(find.byKey(const Key('btn-edit-profile')));
+    await tester.pumpAndSettle();
+
+    // Verify Birthday picker tile and Fitness Level selector exist
+    expect(find.byKey(const Key('input-profile-birthday')), findsOneWidget);
+    expect(find.byKey(const Key('select-fitness-beginner')), findsOneWidget);
+    expect(find.byKey(const Key('select-fitness-intermediate')), findsOneWidget);
+    expect(find.byKey(const Key('select-fitness-expert')), findsOneWidget);
+
+    // Tap Expert chip
+    await tester.tap(find.byKey(const Key('select-fitness-expert')));
+    await tester.pumpAndSettle();
+
+    // Tap Birthday picker to open DatePicker
+    await tester.tap(find.byKey(const Key('input-profile-birthday')));
+    await tester.pumpAndSettle();
+
+    // Confirm date picker dialog is open and tap OK
+    expect(find.byType(DatePickerDialog), findsOneWidget);
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    // Save changes
+    await tester.tap(find.byKey(const Key('btn-save-profile')));
+    await tester.pumpAndSettle();
+
+    // Verify persisted
+    expect(prefService.userFitnessLevel, 'expert');
+    expect(prefService.userBirthDate, isNotNull);
+    expect(find.text('Expert'), findsOneWidget);
   });
 }
 
