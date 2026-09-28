@@ -637,4 +637,74 @@ class AppLocalizationsId extends AppLocalizations {
   String secondsUnit(int seconds) {
     return '$seconds Detik';
   }
+
+  @override
+  String get setupTitle => 'Personalisasi Profil';
+
+  @override
+  String get continueToApp => 'Lanjutkan ke Beranda';
+
+  @override
+  String get languageChoice => 'Bahasa';
+
+  @override
+  String get birthdayLabel => 'Tanggal Lahir';
+
+  @override
+  String get birthYearLabel => 'Tahun Lahir';
+
+  @override
+  String get yearsOldLabel => 'tahun';
+
+  @override
+  String get fitnessLevelLabel => 'Tingkat Kebugaran';
+
+  @override
+  String get beginner => 'Pemula';
+
+  @override
+  String get beginnerDesc => 'Pemula atau baru kembali berolahraga';
+
+  @override
+  String get intermediate => 'Menengah';
+
+  @override
+  String get intermediateDesc => 'Rutin berolahraga dan terbiasa latihan fisik';
+
+  @override
+  String get expert => 'Mahir';
+
+  @override
+  String get expertDesc => 'Daya tahan dan kekuatan fisik tinggi';
+
+  @override
+  String get bmiLabel => 'BMI';
+
+  @override
+  String get bmiUnderweight => 'Kurang Berat Badan';
+
+  @override
+  String get bmiNormal => 'Normal';
+
+  @override
+  String get bmiOverweight => 'Kelebihan Berat Badan';
+
+  @override
+  String get bmiObese => 'Obesitas';
+
+  @override
+  String get jointSafetyWarningTitle => 'Perhatian Beban Sendi ⚠️';
+
+  @override
+  String get jointSafetyWarningDesc =>
+      'Gerakan ini memberikan beban benturan tinggi atau beban tubuh penuh pada sendi lutut, pergelangan kaki, atau bahu. Pemula atau pengguna dengan berat badan berlebih disarankan menggunakan alternatif berisiko rendah.';
+
+  @override
+  String get useSafeAlternative => 'Gunakan Alternatif Aman';
+
+  @override
+  String get proceedAnyway => 'Tetap Lanjutkan';
+
+  @override
+  String get recommendedAlternativeLabel => 'Alternatif yang Disarankan';
 }

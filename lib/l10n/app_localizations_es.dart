@@ -34,7 +34,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get next => 'Siguiente';
 
   @override
-  String get skip => 'Omitir';
+  String get skip => 'Saltar';
 
   @override
   String get startJourney => 'Comenzar Viaje';
@@ -639,4 +639,75 @@ class AppLocalizationsEs extends AppLocalizations {
   String secondsUnit(int seconds) {
     return '$seconds Segundos';
   }
+
+  @override
+  String get setupTitle => 'Personaliza tu viaje';
+
+  @override
+  String get continueToApp => 'Continuar a la app';
+
+  @override
+  String get languageChoice => 'Idioma';
+
+  @override
+  String get birthdayLabel => 'Cumpleaños';
+
+  @override
+  String get birthYearLabel => 'Año de nacimiento';
+
+  @override
+  String get yearsOldLabel => 'años';
+
+  @override
+  String get fitnessLevelLabel => 'Nivel de condición física';
+
+  @override
+  String get beginner => 'Principiante';
+
+  @override
+  String get beginnerDesc => 'Principiante o volviendo tras una pausa';
+
+  @override
+  String get intermediate => 'Intermedio';
+
+  @override
+  String get intermediateDesc =>
+      'Activo regularmente y acostumbrado a ejercicios con peso corporal';
+
+  @override
+  String get expert => 'Experto';
+
+  @override
+  String get expertDesc => 'Entrenamiento de alta fuerza y resistencia';
+
+  @override
+  String get bmiLabel => 'IMC';
+
+  @override
+  String get bmiUnderweight => 'Bajo peso';
+
+  @override
+  String get bmiNormal => 'Normal';
+
+  @override
+  String get bmiOverweight => 'Sobrepeso';
+
+  @override
+  String get bmiObese => 'Obesidad';
+
+  @override
+  String get jointSafetyWarningTitle => 'Atención: Cuidado Articular ⚠️';
+
+  @override
+  String get jointSafetyWarningDesc =>
+      'Este movimiento ejerce un alto impacto o presión del peso corporal completo sobre las articulaciones de rodilla, tobillo o hombro. Se recomienda a principiantes o personas con masa corporal elevada usar alternativas de bajo impacto.';
+
+  @override
+  String get useSafeAlternative => 'Usar alternativa segura';
+
+  @override
+  String get proceedAnyway => 'Continuar de todos modos';
+
+  @override
+  String get recommendedAlternativeLabel => 'Alternativa recomendada';
 }

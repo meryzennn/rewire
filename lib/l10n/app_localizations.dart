@@ -1271,6 +1271,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{seconds} Seconds'**
   String secondsUnit(int seconds);
+
+  /// No description provided for @setupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalize Your Journey'**
+  String get setupTitle;
+
+  /// No description provided for @continueToApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to App'**
+  String get continueToApp;
+
+  /// No description provided for @languageChoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageChoice;
+
+  /// No description provided for @birthdayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get birthdayLabel;
+
+  /// No description provided for @birthYearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Birth Year'**
+  String get birthYearLabel;
+
+  /// No description provided for @yearsOldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'years old'**
+  String get yearsOldLabel;
+
+  /// No description provided for @fitnessLevelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fitness Level'**
+  String get fitnessLevelLabel;
+
+  /// No description provided for @beginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get beginner;
+
+  /// No description provided for @beginnerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'New to fitness or returning after a break'**
+  String get beginnerDesc;
+
+  /// No description provided for @intermediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get intermediate;
+
+  /// No description provided for @intermediateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Active regularly and comfortable with bodyweight exercises'**
+  String get intermediateDesc;
+
+  /// No description provided for @expert.
+  ///
+  /// In en, this message translates to:
+  /// **'Expert'**
+  String get expert;
+
+  /// No description provided for @expertDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'High strength and endurance training routine'**
+  String get expertDesc;
+
+  /// No description provided for @bmiLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'BMI'**
+  String get bmiLabel;
+
+  /// No description provided for @bmiUnderweight.
+  ///
+  /// In en, this message translates to:
+  /// **'Underweight'**
+  String get bmiUnderweight;
+
+  /// No description provided for @bmiNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get bmiNormal;
+
+  /// No description provided for @bmiOverweight.
+  ///
+  /// In en, this message translates to:
+  /// **'Overweight'**
+  String get bmiOverweight;
+
+  /// No description provided for @bmiObese.
+  ///
+  /// In en, this message translates to:
+  /// **'Obese'**
+  String get bmiObese;
+
+  /// No description provided for @jointSafetyWarningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Joint Safety Caution ⚠️'**
+  String get jointSafetyWarningTitle;
+
+  /// No description provided for @jointSafetyWarningDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'This movement puts high impact or full bodyweight pressure on knee, ankle, or shoulder joints. Beginners or individuals with elevated body mass are advised to use low-impact alternatives.'**
+  String get jointSafetyWarningDesc;
+
+  /// No description provided for @useSafeAlternative.
+  ///
+  /// In en, this message translates to:
+  /// **'Use Safe Alternative'**
+  String get useSafeAlternative;
+
+  /// No description provided for @proceedAnyway.
+  ///
+  /// In en, this message translates to:
+  /// **'Proceed Anyway'**
+  String get proceedAnyway;
+
+  /// No description provided for @recommendedAlternativeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Alternative'**
+  String get recommendedAlternativeLabel;
 }
 
 class _AppLocalizationsDelegate

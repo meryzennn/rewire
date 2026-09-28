@@ -637,4 +637,75 @@ class AppLocalizationsEn extends AppLocalizations {
   String secondsUnit(int seconds) {
     return '$seconds Seconds';
   }
+
+  @override
+  String get setupTitle => 'Personalize Your Journey';
+
+  @override
+  String get continueToApp => 'Continue to App';
+
+  @override
+  String get languageChoice => 'Language';
+
+  @override
+  String get birthdayLabel => 'Birthday';
+
+  @override
+  String get birthYearLabel => 'Birth Year';
+
+  @override
+  String get yearsOldLabel => 'years old';
+
+  @override
+  String get fitnessLevelLabel => 'Fitness Level';
+
+  @override
+  String get beginner => 'Beginner';
+
+  @override
+  String get beginnerDesc => 'New to fitness or returning after a break';
+
+  @override
+  String get intermediate => 'Intermediate';
+
+  @override
+  String get intermediateDesc =>
+      'Active regularly and comfortable with bodyweight exercises';
+
+  @override
+  String get expert => 'Expert';
+
+  @override
+  String get expertDesc => 'High strength and endurance training routine';
+
+  @override
+  String get bmiLabel => 'BMI';
+
+  @override
+  String get bmiUnderweight => 'Underweight';
+
+  @override
+  String get bmiNormal => 'Normal';
+
+  @override
+  String get bmiOverweight => 'Overweight';
+
+  @override
+  String get bmiObese => 'Obese';
+
+  @override
+  String get jointSafetyWarningTitle => 'Joint Safety Caution ⚠️';
+
+  @override
+  String get jointSafetyWarningDesc =>
+      'This movement puts high impact or full bodyweight pressure on knee, ankle, or shoulder joints. Beginners or individuals with elevated body mass are advised to use low-impact alternatives.';
+
+  @override
+  String get useSafeAlternative => 'Use Safe Alternative';
+
+  @override
+  String get proceedAnyway => 'Proceed Anyway';
+
+  @override
+  String get recommendedAlternativeLabel => 'Recommended Alternative';
 }

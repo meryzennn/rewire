@@ -629,4 +629,74 @@ class AppLocalizationsJa extends AppLocalizations {
   String secondsUnit(int seconds) {
     return '$seconds 秒';
   }
+
+  @override
+  String get setupTitle => 'プロフィール設定';
+
+  @override
+  String get continueToApp => 'アプリを開始';
+
+  @override
+  String get languageChoice => '言語';
+
+  @override
+  String get birthdayLabel => '生年月日';
+
+  @override
+  String get birthYearLabel => '生まれ年';
+
+  @override
+  String get yearsOldLabel => '歳';
+
+  @override
+  String get fitnessLevelLabel => 'フィットネスレベル';
+
+  @override
+  String get beginner => '初級';
+
+  @override
+  String get beginnerDesc => '運動初心者または久しぶりの運動';
+
+  @override
+  String get intermediate => '中級';
+
+  @override
+  String get intermediateDesc => '定期的に運動し自重トレーニングに慣れている';
+
+  @override
+  String get expert => '上級';
+
+  @override
+  String get expertDesc => '高い筋力と持久力を持つアスリート';
+
+  @override
+  String get bmiLabel => 'BMI';
+
+  @override
+  String get bmiUnderweight => '低体重';
+
+  @override
+  String get bmiNormal => '普通体重';
+
+  @override
+  String get bmiOverweight => '肥満（1度）';
+
+  @override
+  String get bmiObese => '肥満（2度以上）';
+
+  @override
+  String get jointSafetyWarningTitle => '関節の保護注意 ⚠️';
+
+  @override
+  String get jointSafetyWarningDesc =>
+      'この運動は膝、足首、肩関節に強い衝撃や全自重の負担をかけます。初心者や高体重の方は低負荷の代替種目を推奨します。';
+
+  @override
+  String get useSafeAlternative => '安全な代替種目を使用';
+
+  @override
+  String get proceedAnyway => 'そのまま続行';
+
+  @override
+  String get recommendedAlternativeLabel => '推奨される代替種目';
 }

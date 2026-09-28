@@ -279,5 +279,29 @@
     "placeholders": {
       "seconds": { "type": "int" }
     }
-  }
+  },
+  "setupTitle": "Personalize Your Journey",
+  "skip": "Skip",
+  "continueToApp": "Continue to App",
+  "languageChoice": "Language",
+  "birthdayLabel": "Birthday",
+  "birthYearLabel": "Birth Year",
+  "yearsOldLabel": "years old",
+  "fitnessLevelLabel": "Fitness Level",
+  "beginner": "Beginner",
+  "beginnerDesc": "New to fitness or returning after a break",
+  "intermediate": "Intermediate",
+  "intermediateDesc": "Active regularly and comfortable with bodyweight exercises",
+  "expert": "Expert",
+  "expertDesc": "High strength and endurance training routine",
+  "bmiLabel": "BMI",
+  "bmiUnderweight": "Underweight",
+  "bmiNormal": "Normal",
+  "bmiOverweight": "Overweight",
+  "bmiObese": "Obese",
+  "jointSafetyWarningTitle": "Joint Safety Caution ⚠️",
+  "jointSafetyWarningDesc": "This movement puts high impact or full bodyweight pressure on knee, ankle, or shoulder joints. Beginners or individuals with elevated body mass are advised to use low-impact alternatives.",
+  "useSafeAlternative": "Use Safe Alternative",
+  "proceedAnyway": "Proceed Anyway",
+  "recommendedAlternativeLabel": "Recommended Alternative"
 }
