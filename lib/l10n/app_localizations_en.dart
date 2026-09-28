@@ -708,4 +708,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recommendedAlternativeLabel => 'Recommended Alternative';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to Rewire';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Start your brain rewiring journey today.';
+
+  @override
+  String get onboardingPillarsTitle => 'Three Pillars of Rewire';
+
+  @override
+  String get onboardingPillarsDesc =>
+      'Track your recovery progress, calm your mind with meditation, and move with home workouts.';
+
+  @override
+  String get onboardingLevelUpTitle => 'Level Up Your Brain';
+
+  @override
+  String get onboardingLevelUpDesc =>
+      'Positive activities earn you XP. As you progress, your brain evolves through five stages.';
+
+  @override
+  String get onboardingRemindersTitle => 'Set Daily Reminders';
+
+  @override
+  String get onboardingRemindersDesc =>
+      'Choose your daily check-in time. Meditation and workout reminders can also be set later.';
+
+  @override
+  String onboardingStepSemantics(int current, int total) {
+    return 'Page $current of $total';
+  }
 }

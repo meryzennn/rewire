@@ -218,5 +218,14 @@
   "jointSafetyWarningDesc": "Gerakan ini memberikan beban benturan tinggi atau beban tubuh penuh pada sendi lutut, pergelangan kaki, atau bahu. Pemula atau pengguna dengan berat badan berlebih disarankan menggunakan alternatif berisiko rendah.",
   "useSafeAlternative": "Gunakan Alternatif Aman",
   "proceedAnyway": "Tetap Lanjutkan",
-  "recommendedAlternativeLabel": "Alternatif yang Disarankan"
+  "recommendedAlternativeLabel": "Alternatif yang Disarankan",
+  "onboardingWelcomeTitle": "Selamat Datang di Rewire",
+  "onboardingWelcomeDesc": "Mulai perjalanan rewiring otakmu hari ini.",
+  "onboardingPillarsTitle": "Tiga Pilar Rewire",
+  "onboardingPillarsDesc": "Catat progres pemulihanmu, tenangkan pikiran lewat meditasi, dan bergerak dengan olahraga rumahan.",
+  "onboardingLevelUpTitle": "Level Up Otakmu",
+  "onboardingLevelUpDesc": "Aktivitas positif memberimu XP. Seiring progres, otakmu berkembang melalui lima tahap.",
+  "onboardingRemindersTitle": "Atur Pengingat Harian",
+  "onboardingRemindersDesc": "Pilih waktu pengingat check-in. Pengingat meditasi dan olahraga juga bisa diatur nanti.",
+  "onboardingStepSemantics": "Halaman {current} dari {total}"
 }

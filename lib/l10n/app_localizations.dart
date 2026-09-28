@@ -1409,6 +1409,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recommended Alternative'**
   String get recommendedAlternativeLabel;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Rewire'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Start your brain rewiring journey today.'**
+  String get onboardingWelcomeDesc;
+
+  /// No description provided for @onboardingPillarsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Three Pillars of Rewire'**
+  String get onboardingPillarsTitle;
+
+  /// No description provided for @onboardingPillarsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your recovery progress, calm your mind with meditation, and move with home workouts.'**
+  String get onboardingPillarsDesc;
+
+  /// No description provided for @onboardingLevelUpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Level Up Your Brain'**
+  String get onboardingLevelUpTitle;
+
+  /// No description provided for @onboardingLevelUpDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Positive activities earn you XP. As you progress, your brain evolves through five stages.'**
+  String get onboardingLevelUpDesc;
+
+  /// No description provided for @onboardingRemindersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Daily Reminders'**
+  String get onboardingRemindersTitle;
+
+  /// No description provided for @onboardingRemindersDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your daily check-in time. Meditation and workout reminders can also be set later.'**
+  String get onboardingRemindersDesc;
+
+  /// No description provided for @onboardingStepSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {current} of {total}'**
+  String onboardingStepSemantics(int current, int total);
 }
 
 class _AppLocalizationsDelegate

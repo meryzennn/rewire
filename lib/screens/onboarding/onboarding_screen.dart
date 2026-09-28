@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
+import '../../l10n/app_localizations.dart';
 import '../../services/preference_service.dart';
 
 /// First-run onboarding: a four-page swipe carousel (content carried over from
@@ -31,47 +32,49 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _page = 0;
   double _dragDistance = 0;
 
-  // Copy is authoritative from docs/UI.md and Task 1 (Indonesian); Stitch drives
-  // only the visual chrome. Kept verbatim, including the welcome brain asset.
-  static const _pages = [
-    _OnboardingPage(
-      title: 'Welcome to Rewire',
-      description: 'Mulai perjalanan rewiring otakmu hari ini.',
-      image: 'assets/images/onboarding/welcome_brain.png',
-      imageLabel: 'Ilustrasi otak Rewire',
-    ),
-    _OnboardingPage(
-      title: 'Tiga Pilar Rewire',
-      description: 'Catat progres pemulihanmu, tenangkan pikiran lewat meditasi, dan bergerak dengan olahraga rumahan.',
-      icon: Icons.self_improvement_rounded,
-      iconLabel: 'Meditasi dan kebugaran',
-    ),
-    _OnboardingPage(
-      title: 'Level Up Otakmu',
-      description: 'Aktivitas positif memberimu XP. Seiring progres, otakmu berkembang melalui lima tahap.',
-      icon: Icons.psychology_alt_rounded,
-      iconLabel: 'Perkembangan otak',
-    ),
-    _OnboardingPage(
-      title: 'Atur Pengingat Harian',
-      description: 'Pilih waktu pengingat check-in. Pengingat meditasi dan olahraga juga bisa diatur nanti.',
-      icon: Icons.notifications_active_rounded,
-      iconLabel: 'Pengingat Rewire',
-    ),
-  ];
+  List<_OnboardingPage> _getPages(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return [
+      _OnboardingPage(
+        title: l10n?.onboardingWelcomeTitle ?? 'Welcome to Rewire',
+        description: l10n?.onboardingWelcomeDesc ??
+            'Start your brain rewiring journey today.',
+        image: 'assets/images/onboarding/welcome_brain.png',
+        imageLabel: 'Rewire brain illustration',
+      ),
+      _OnboardingPage(
+        title: l10n?.onboardingPillarsTitle ?? 'Three Pillars of Rewire',
+        description: l10n?.onboardingPillarsDesc ??
+            'Track your recovery progress, calm your mind with meditation, and move with home workouts.',
+        icon: Icons.self_improvement_rounded,
+        iconLabel: 'Meditation and fitness',
+      ),
+      _OnboardingPage(
+        title: l10n?.onboardingLevelUpTitle ?? 'Level Up Your Brain',
+        description: l10n?.onboardingLevelUpDesc ??
+            'Positive activities earn you XP. As you progress, your brain evolves through five stages.',
+        icon: Icons.psychology_alt_rounded,
+        iconLabel: 'Brain progression',
+      ),
+      _OnboardingPage(
+        title: l10n?.onboardingRemindersTitle ?? 'Set Daily Reminders',
+        description: l10n?.onboardingRemindersDesc ??
+            'Choose your daily check-in time. Meditation and workout reminders can also be set later.',
+        icon: Icons.notifications_active_rounded,
+        iconLabel: 'Daily reminders',
+      ),
+    ];
+  }
 
-  bool get _isLastPage => _page == _pages.length - 1;
+  void _goTo(int page, int total) =>
+      setState(() => _page = page.clamp(0, total - 1));
 
-  void _goTo(int page) => setState(() => _page = page);
-
-  void _handleSwipe(DragEndDetails details) {
+  void _handleSwipe(DragEndDetails details, int total) {
     final velocity = details.primaryVelocity ?? 0;
     if (_dragDistance.abs() < 48 && velocity.abs() < 100) return;
     _goTo(
-      (_page + (_dragDistance < 0 || velocity < -100 ? 1 : -1)).clamp(
-        0,
-        _pages.length - 1,
-      ),
+      _page + (_dragDistance < 0 || velocity < -100 ? 1 : -1),
+      total,
     );
     _dragDistance = 0;
   }
@@ -82,79 +85,86 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: SafeArea(
-      child: LayoutBuilder(
-        builder: (context, constraints) => Padding(
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-          child: Column(
-            children: [
-              _BrandHeader(step: _page + 1, total: _pages.length),
-              Expanded(
-                child: GestureDetector(
-                  key: const Key('onboarding-pages'),
-                  behavior: HitTestBehavior.opaque,
-                  onHorizontalDragStart: (_) => _dragDistance = 0,
-                  onHorizontalDragUpdate: (details) =>
-                      _dragDistance += details.delta.dx,
-                  onHorizontalDragEnd: _handleSwipe,
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 220),
-                    switchInCurve: Curves.easeOut,
-                    switchOutCurve: Curves.easeIn,
-                    transitionBuilder: (child, animation) =>
-                        FadeTransition(opacity: animation, child: child),
-                    child: _PageContent(
-                      key: ValueKey(_page),
-                      page: _pages[_page],
-                      compact: constraints.maxHeight < 700,
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final pages = _getPages(context);
+    final isLastPage = _page == pages.length - 1;
+
+    return Scaffold(
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) => Padding(
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+            child: Column(
+              children: [
+                _BrandHeader(step: _page + 1, total: pages.length),
+                Expanded(
+                  child: GestureDetector(
+                    key: const Key('onboarding-pages'),
+                    behavior: HitTestBehavior.opaque,
+                    onHorizontalDragStart: (_) => _dragDistance = 0,
+                    onHorizontalDragUpdate: (details) =>
+                        _dragDistance += details.delta.dx,
+                    onHorizontalDragEnd: (details) =>
+                        _handleSwipe(details, pages.length),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 220),
+                      switchInCurve: Curves.easeOut,
+                      switchOutCurve: Curves.easeIn,
+                      transitionBuilder: (child, animation) =>
+                          FadeTransition(opacity: animation, child: child),
+                      child: _PageContent(
+                        key: ValueKey(_page),
+                        page: pages[_page],
+                        compact: constraints.maxHeight < 700,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Semantics(
-                label: 'Halaman ${_page + 1} dari ${_pages.length}',
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    _pages.length,
-                    (index) => _PageDot(active: index == _page),
+                Semantics(
+                  label: l10n?.onboardingStepSemantics(
+                          _page + 1, pages.length) ??
+                      'Page ${_page + 1} of ${pages.length}',
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      pages.length,
+                      (index) => _PageDot(active: index == _page),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: _isLastPage
-                    ? ElevatedButton.icon(
-                        onPressed: _complete,
-                        // Arrow marks the one forward-completion action (R-08).
-                        icon: const Text('Mulai Perjalanan'),
-                        label: const Icon(
-                          Icons.arrow_forward_rounded,
-                          size: 20,
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: isLastPage
+                      ? ElevatedButton.icon(
+                          onPressed: _complete,
+                          icon: Text(l10n?.startJourney ?? 'Start Journey'),
+                          label: const Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 20,
+                          ),
+                        )
+                      : ElevatedButton(
+                          onPressed: () => _goTo(_page + 1, pages.length),
+                          child: Text(l10n?.next ?? 'Next'),
                         ),
-                      )
-                    : ElevatedButton(
-                        onPressed: () => _goTo(_page + 1),
-                        child: const Text('Selanjutnya'),
-                      ),
-              ),
-              const SizedBox(height: 4),
-              // Skip completes onboarding too (no restore/import in v1).
-              TextButton(
-                onPressed: _complete,
-                child: const SizedBox(
-                  height: 44,
-                  child: Center(child: Text('Lewati')),
                 ),
-              ),
-            ],
+                const SizedBox(height: 4),
+                TextButton(
+                  onPressed: _complete,
+                  child: SizedBox(
+                    height: 44,
+                    child: Center(child: Text(l10n?.skip ?? 'Skip')),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 /// Top brand cue plus a step pill, from the Stitch onboarding header.

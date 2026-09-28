@@ -36,34 +36,34 @@ void main() {
 
     expect(find.text('Welcome to Rewire'), findsOneWidget);
     expect(find.byKey(const Key('welcome-brain')), findsOneWidget);
-    expect(find.text('Selanjutnya'), findsOneWidget);
-    expect(find.text('Mulai Perjalanan'), findsNothing);
+    expect(find.text('Next'), findsOneWidget);
+    expect(find.text('Start Journey'), findsNothing);
     // Skip is available from the first page.
-    expect(find.text('Lewati'), findsOneWidget);
+    expect(find.text('Skip'), findsOneWidget);
 
     await tester.drag(
       find.byKey(const Key('onboarding-pages')),
       const Offset(-700, 0),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Tiga Pilar Rewire'), findsOneWidget);
-    expect(find.text('Mulai Perjalanan'), findsNothing);
+    expect(find.text('Three Pillars of Rewire'), findsOneWidget);
+    expect(find.text('Start Journey'), findsNothing);
 
     await tester.drag(
       find.byKey(const Key('onboarding-pages')),
       const Offset(-700, 0),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Level Up Otakmu'), findsOneWidget);
+    expect(find.text('Level Up Your Brain'), findsOneWidget);
 
     await tester.drag(
       find.byKey(const Key('onboarding-pages')),
       const Offset(-700, 0),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Atur Pengingat Harian'), findsOneWidget);
-    expect(find.text('Mulai Perjalanan'), findsOneWidget);
-    expect(find.text('Selanjutnya'), findsNothing);
+    expect(find.text('Set Daily Reminders'), findsOneWidget);
+    expect(find.text('Start Journey'), findsOneWidget);
+    expect(find.text('Next'), findsNothing);
   });
 
   testWidgets('swipe keeps each slide whole until the fade transition', (
@@ -77,11 +77,11 @@ void main() {
     await tester.pump();
 
     expect(find.text('Welcome to Rewire'), findsOneWidget);
-    expect(find.text('Tiga Pilar Rewire'), findsNothing);
+    expect(find.text('Three Pillars of Rewire'), findsNothing);
 
     await gesture.up();
     await tester.pumpAndSettle();
-    expect(find.text('Tiga Pilar Rewire'), findsOneWidget);
+    expect(find.text('Three Pillars of Rewire'), findsOneWidget);
     expect(find.text('Welcome to Rewire'), findsNothing);
   });
 
@@ -90,8 +90,8 @@ void main() {
   ) async {
     await _pumpOnboarding(tester);
 
-    for (final title in ['Tiga Pilar Rewire', 'Level Up Otakmu']) {
-      await tester.tap(find.text('Selanjutnya'));
+    for (final title in ['Three Pillars of Rewire', 'Level Up Your Brain']) {
+      await tester.tap(find.text('Next'));
       await tester.pumpAndSettle();
       expect(find.text(title), findsOneWidget);
     }

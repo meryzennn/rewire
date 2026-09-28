@@ -707,4 +707,37 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get recommendedAlternativeLabel => 'Alternatif yang Disarankan';
+
+  @override
+  String get onboardingWelcomeTitle => 'Selamat Datang di Rewire';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Mulai perjalanan rewiring otakmu hari ini.';
+
+  @override
+  String get onboardingPillarsTitle => 'Tiga Pilar Rewire';
+
+  @override
+  String get onboardingPillarsDesc =>
+      'Catat progres pemulihanmu, tenangkan pikiran lewat meditasi, dan bergerak dengan olahraga rumahan.';
+
+  @override
+  String get onboardingLevelUpTitle => 'Level Up Otakmu';
+
+  @override
+  String get onboardingLevelUpDesc =>
+      'Aktivitas positif memberimu XP. Seiring progres, otakmu berkembang melalui lima tahap.';
+
+  @override
+  String get onboardingRemindersTitle => 'Atur Pengingat Harian';
+
+  @override
+  String get onboardingRemindersDesc =>
+      'Pilih waktu pengingat check-in. Pengingat meditasi dan olahraga juga bisa diatur nanti.';
+
+  @override
+  String onboardingStepSemantics(int current, int total) {
+    return 'Halaman $current dari $total';
+  }
 }

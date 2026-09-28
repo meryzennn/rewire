@@ -218,5 +218,14 @@
   "jointSafetyWarningDesc": "この運動は膝、足首、肩関節に強い衝撃や全自重の負担をかけます。初心者や高体重の方は低負荷の代替種目を推奨します。",
   "useSafeAlternative": "安全な代替種目を使用",
   "proceedAnyway": "そのまま続行",
-  "recommendedAlternativeLabel": "推奨される代替種目"
+  "recommendedAlternativeLabel": "推奨される代替種目",
+  "onboardingWelcomeTitle": "Rewireへようこそ",
+  "onboardingWelcomeDesc": "今日から脳の再配線（リワイヤ）の旅を始めましょう。",
+  "onboardingPillarsTitle": "Rewireの3つの柱",
+  "onboardingPillarsDesc": "回復の進捗を記録し、瞑想で心を落ち着かせ、自宅での運動で体を動かしましょう。",
+  "onboardingLevelUpTitle": "脳をレベルアップ",
+  "onboardingLevelUpDesc": "ポジティブな活動でXPを獲得。進捗に応じて、あなたの脳は5つのステージを通じて進化します。",
+  "onboardingRemindersTitle": "毎日のリマインダーを設定",
+  "onboardingRemindersDesc": "毎日のチェックイン時間を選択。瞑想や運動のリマインダーも後から設定できます。",
+  "onboardingStepSemantics": "ページ {current} / {total}"
 }

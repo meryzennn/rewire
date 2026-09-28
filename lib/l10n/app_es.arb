@@ -218,5 +218,14 @@
   "jointSafetyWarningDesc": "Este movimiento ejerce un alto impacto o presión del peso corporal completo sobre las articulaciones de rodilla, tobillo o hombro. Se recomienda a principiantes o personas con masa corporal elevada usar alternativas de bajo impacto.",
   "useSafeAlternative": "Usar alternativa segura",
   "proceedAnyway": "Continuar de todos modos",
-  "recommendedAlternativeLabel": "Alternativa recomendada"
+  "recommendedAlternativeLabel": "Alternativa recomendada",
+  "onboardingWelcomeTitle": "Bienvenido a Rewire",
+  "onboardingWelcomeDesc": "Comienza tu viaje de reconexión cerebral hoy.",
+  "onboardingPillarsTitle": "Tres Pilares de Rewire",
+  "onboardingPillarsDesc": "Registra tu progreso de recuperación, calma tu mente con meditación y mantente activo con ejercicios en casa.",
+  "onboardingLevelUpTitle": "Sube el Nivel de tu Mente",
+  "onboardingLevelUpDesc": "Las actividades positivas te dan XP. Con tu progreso, tu cerebro evoluciona a través de cinco etapas.",
+  "onboardingRemindersTitle": "Configura Recordatorios Diarios",
+  "onboardingRemindersDesc": "Elige la hora de tu check-in diario. Los recordatorios de meditación y ejercicio se pueden configurar más tarde.",
+  "onboardingStepSemantics": "Página {current} de {total}"
 }

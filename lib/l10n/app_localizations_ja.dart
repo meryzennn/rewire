@@ -699,4 +699,35 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get recommendedAlternativeLabel => '推奨される代替種目';
+
+  @override
+  String get onboardingWelcomeTitle => 'Rewireへようこそ';
+
+  @override
+  String get onboardingWelcomeDesc => '今日から脳の再配線（リワイヤ）の旅を始めましょう。';
+
+  @override
+  String get onboardingPillarsTitle => 'Rewireの3つの柱';
+
+  @override
+  String get onboardingPillarsDesc => '回復の進捗を記録し、瞑想で心を落ち着かせ、自宅での運動で体を動かしましょう。';
+
+  @override
+  String get onboardingLevelUpTitle => '脳をレベルアップ';
+
+  @override
+  String get onboardingLevelUpDesc =>
+      'ポジティブな活動でXPを獲得。進捗に応じて、あなたの脳は5つのステージを通じて進化します。';
+
+  @override
+  String get onboardingRemindersTitle => '毎日のリマインダーを設定';
+
+  @override
+  String get onboardingRemindersDesc =>
+      '毎日のチェックイン時間を選択。瞑想や運動のリマインダーも後から設定できます。';
+
+  @override
+  String onboardingStepSemantics(int current, int total) {
+    return 'ページ $current / $total';
+  }
 }
