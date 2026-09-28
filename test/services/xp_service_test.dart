@@ -56,6 +56,15 @@ void main() {
     expect(profile.brainStage, 'awakening');
   });
 
+  test('revert deducts XP and updates level/brain stage', () async {
+    await xp.award(100);
+    expect((await users.getProfile())!.totalXp, 100);
+
+    await xp.revert(20);
+    final profile = await users.getProfile();
+    expect(profile!.totalXp, 80);
+  });
+
   group('awardDailyCheckin', () {
     final day = DateTime(2026, 9, 27);
 

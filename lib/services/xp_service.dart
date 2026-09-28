@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 
 import '../core/utils/date_utils.dart';
@@ -75,6 +77,31 @@ class XpService extends ChangeNotifier {
       levelBefore: levelBefore,
       levelAfter: levelAfter,
     );
+  }
+
+  /// Deducts [amount] XP (e.g. when a clean check-in is revised to relapse),
+  /// recomputes level/stage, and persists to profile.
+  Future<void> revert(int amount) async {
+    if (amount <= 0) return;
+    final before = await _users.getOrCreateProfile();
+    final totalAfter = math.max(0, before.totalXp - amount);
+    final levelAfter = levelForXp(totalAfter);
+    final stageAfter = brainStageForLevel(levelAfter);
+
+    await _users.updateProfile(
+      UserProfile(
+        id: before.id,
+        level: levelAfter,
+        totalXp: totalAfter,
+        currentStreak: before.currentStreak,
+        longestStreak: before.longestStreak,
+        streakStartDate: before.streakStartDate,
+        brainStage: stageAfter,
+        createdAt: before.createdAt,
+      ),
+    );
+
+    notifyListeners();
   }
 
   /// Awards the daily +20 for a clean check-in, at most once per calendar day.

@@ -96,13 +96,14 @@ class CheckinProvider extends ChangeNotifier {
     final dateStr = formatLocalDate(targetDate);
     final existing = await _checkins.getByDate(targetDate);
     final isFirstToday = existing == null;
+    final int xpEarned = status == 'clean' ? (existing?.xpEarned ?? 0) : 0;
 
     final checkinToSave = DailyCheckin(
       date: dateStr,
       status: status,
       mood: mood,
       notes: notes,
-      xpEarned: existing?.xpEarned ?? 0,
+      xpEarned: xpEarned,
     );
 
     // Save checkin & triggers atomically
@@ -201,12 +202,17 @@ class CheckinProvider extends ChangeNotifier {
         }
       } else {
         // status == 'relapse'
-        if (profile.currentStreak > 0) {
+        if (existing != null && existing.status == 'clean' && existing.xpEarned > 0) {
+          await _xp.revert(existing.xpEarned);
+        }
+
+        final currentProfile = await u.getOrCreateProfile();
+        if (currentProfile.currentStreak > 0) {
           await _checkins.insertStreak(
             Streak(
-              startDate: profile.streakStartDate ?? dateStr,
+              startDate: currentProfile.streakStartDate ?? dateStr,
               endDate: dateStr,
-              length: profile.currentStreak,
+              length: currentProfile.currentStreak,
               endedBy: 'relapse',
             ),
           );
@@ -215,19 +221,19 @@ class CheckinProvider extends ChangeNotifier {
         // Reset streak to 0, preserve lifetime total_xp, level, and longestStreak
         await u.updateProfile(
           UserProfile(
-            id: profile.id,
-            level: profile.level,
-            totalXp: profile.totalXp,
+            id: currentProfile.id,
+            level: currentProfile.level,
+            totalXp: currentProfile.totalXp,
             currentStreak: 0,
-            longestStreak: profile.longestStreak,
+            longestStreak: currentProfile.longestStreak,
             streakStartDate: null,
-            brainStage: profile.brainStage,
-            createdAt: profile.createdAt,
+            brainStage: currentProfile.brainStage,
+            createdAt: currentProfile.createdAt,
           ),
         );
 
         _currentStreak = 0;
-        _longestStreak = profile.longestStreak;
+        _longestStreak = currentProfile.longestStreak;
 
         // Quests
         final q = quests;

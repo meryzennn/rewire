@@ -145,6 +145,30 @@ void main() {
     expect(streaks.any((s) => s.endedBy == 'relapse' && s.length == 2), isTrue);
   });
 
+  test('revising same-day check-in from clean to relapse reverts clean XP and resets streak', () async {
+    // Check in clean in the morning -> gets +20 XP
+    await provider.submitCheckin(status: 'clean', now: day1);
+    expect(provider.currentStreak, 1);
+    expect((await users.getProfile())!.totalXp, 20);
+    expect((await checkins.getByDate(day1))!.xpEarned, 20);
+
+    // Revise to relapse at night
+    final updated = await provider.submitCheckin(
+      status: 'relapse',
+      triggers: ['Stres'],
+      now: day1,
+    );
+
+    expect(updated.status, 'relapse');
+    expect(updated.xpEarned, 0);
+    expect(provider.currentStreak, 0);
+
+    final profile = await users.getProfile();
+    expect(profile!.currentStreak, 0);
+    expect(profile.totalXp, 0, reason: 'Morning clean XP was reverted');
+    expect((await checkins.getByDate(day1))!.xpEarned, 0);
+  });
+
   test('triggers are saved atomically and advance trigger quests', () async {
     await questService.refreshIfNeeded(day1);
 
