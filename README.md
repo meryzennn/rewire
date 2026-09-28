@@ -2,7 +2,7 @@
 
 Rewire is an offline-first habit recovery and wellbeing mobile app built with Flutter. It is designed to assist users in overcoming pornography and masturbation addiction (PMO) through a structured three-pillar methodology: **streak tracking**, **ambient meditation**, and **calisthenics/bodyweight training**.
 
-100% offline — all data is stored locally on the device using SQLite and SharedPreferences. No sign-up, no user accounts, no telemetries, and no network connection required.
+100% offline: all data is stored locally on the device using SQLite and SharedPreferences. No sign-up, no user accounts, no telemetry, and no network connection required.
 
 ---
 
@@ -74,7 +74,7 @@ lib/
 
 Pre-built release APKs for Android (Android 5.0+) are available directly on GitHub:
 
-👉 **[Download APK from GitHub Releases](https://github.com/meryzennn/rewire/releases)**
+**[Download APK from GitHub Releases](https://github.com/meryzennn/rewire/releases)**
 
 Download `app-release.apk` from the latest release.
 
