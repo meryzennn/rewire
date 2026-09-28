@@ -8,7 +8,13 @@ import 'package:provider/provider.dart';
 
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/provider_utils.dart';
+import '../../providers/achievement_provider.dart';
+import '../../providers/checkin_provider.dart';
+import '../../providers/meditation_provider.dart';
+import '../../providers/quest_provider.dart';
 import '../../providers/user_provider.dart';
+import '../../providers/workout_provider.dart';
 import '../../services/notification_service.dart';
 import '../../services/preference_service.dart';
 
@@ -715,12 +721,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
     if (confirmed != true) return;
 
+    final userProvider = context.readOrNull<UserProvider>();
+    final checkinProvider = context.readOrNull<CheckinProvider>();
+    final meditationProvider = context.readOrNull<MeditationProvider>();
+    final workoutProvider = context.readOrNull<WorkoutProvider>();
+    final questProvider = context.readOrNull<QuestProvider>();
+    final achievementProvider = context.readOrNull<AchievementProvider>();
+
+    final pfpPath = _prefs.userPfpPath;
+    if (pfpPath != null) {
+      try {
+        final file = File(pfpPath);
+        if (file.existsSync()) {
+          await file.delete();
+        }
+      } catch (_) {}
+    }
+
     await widget.onResetData();
     await widget.notificationService?.cancelAll();
     await _prefs.resetAll();
 
+    _cachedPfpPath = null;
+    _pfpFileExists = false;
+
+    await Future.wait([
+      if (userProvider != null) userProvider.loadProfile(),
+      if (checkinProvider != null) checkinProvider.loadToday(),
+      if (meditationProvider != null) meditationProvider.loadStats(),
+      if (workoutProvider != null) workoutProvider.loadStats(),
+      if (questProvider != null) questProvider.loadAllQuests(),
+      if (achievementProvider != null) achievementProvider.loadAchievements(),
+    ]);
+
     if (!mounted) return;
-    context.go(Routes.onboarding);
+    final router = GoRouter.maybeOf(context);
+    if (router != null) {
+      router.go(Routes.onboarding);
+    }
   }
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:rewire/core/theme/app_theme.dart';
+import 'package:rewire/providers/user_provider.dart';
 import 'package:rewire/screens/profile/profile_screen.dart';
 import 'package:rewire/services/preference_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -149,4 +150,86 @@ void main() {
     expect(find.text('Budi Prakoso'), findsOneWidget);
     expect(prefService.userName, 'Budi Prakoso');
   });
+
+  testWidgets('reset all data reloads in-memory UserProvider and resets stats', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'user_name': 'Budi',
+      'user_age': 25,
+      'onboarding_completed': true,
+    });
+    final prefs = await SharedPreferences.getInstance();
+    final prefService = PreferenceService(prefs);
+    final userProvider = _TestUserProvider();
+    var resetDbCalled = false;
+
+    await tester.pumpWidget(
+      ChangeNotifierProvider<UserProvider?>.value(
+        value: userProvider,
+        child: MaterialApp(
+          theme: buildLightTheme(),
+          home: Scaffold(
+            body: ProfileScreen(
+              preferences: prefService,
+              onResetData: () async {
+                resetDbCalled = true;
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Initial state: Level 5, 10 Hari streak
+    expect(find.text('Level 5'), findsOneWidget);
+    expect(find.text('10 Hari'), findsOneWidget);
+
+    // Scroll to and tap Reset Semua Data
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('reset-data')),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('reset-data')));
+    await tester.pumpAndSettle();
+
+    // Confirm dialog
+    expect(find.text('Reset Semua Data?'), findsOneWidget);
+    await tester.tap(find.text('Reset'));
+    await tester.pumpAndSettle();
+
+    // Verify DB wiped, provider reloaded, preferences cleared
+    expect(resetDbCalled, isTrue);
+    expect(userProvider.loadProfileCalls, 1);
+    expect(userProvider.level, 1);
+    expect(userProvider.currentStreak, 0);
+    expect(userProvider.totalXp, 0);
+    expect(prefService.onboardingCompleted, isFalse);
+    expect(prefService.userName, isEmpty);
+  });
 }
+
+class _TestUserProvider extends ChangeNotifier implements UserProvider {
+  int loadProfileCalls = 0;
+  @override
+  int level = 5;
+  @override
+  int currentStreak = 10;
+  @override
+  int totalXp = 500;
+
+  @override
+  Future<void> loadProfile() async {
+    loadProfileCalls++;
+    level = 1;
+    currentStreak = 0;
+    totalXp = 0;
+    notifyListeners();
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
