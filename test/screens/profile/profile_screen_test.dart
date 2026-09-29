@@ -34,6 +34,13 @@ void main() {
     expect(find.text('Ahmad'), findsOneWidget);
     expect(find.byKey(const Key('btn-change-pfp')), findsOneWidget);
 
+    final avatarFinder = find.byType(CircleAvatar).first;
+    final nameFinder = find.text('Ahmad');
+    expect(
+      tester.getCenter(nameFinder).dx,
+      closeTo(tester.getCenter(avatarFinder).dx, 1.0),
+    );
+
     // Physical Stats
     expect(find.text('DATA FISIK'), findsOneWidget);
     expect(find.text('25 Thn'), findsOneWidget);

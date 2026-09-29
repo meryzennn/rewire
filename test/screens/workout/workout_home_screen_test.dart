@@ -119,4 +119,259 @@ void main() {
     expect(find.text('Knee Push-up'), findsOneWidget);
     expect(find.text('Squat'), findsNothing);
   });
+
+  testWidgets('Push-up exercise item displays pushup-5.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final pushupImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/pushup/pushup-5.png',
+    );
+    expect(pushupImage, findsOneWidget);
+  });
+
+  testWidgets('Knee Push-up exercise item displays knee-pushup_1.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final kneePushupImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/knee-pushup/knee-pushup_1.png',
+    );
+    expect(kneePushupImage, findsOneWidget);
+  });
+
+  testWidgets('Diamond Push-up exercise item displays diamond-pushup_2.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final diamondPushupImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/diamond-pushup/diamond-pushup_2.png',
+    );
+    expect(diamondPushupImage, findsOneWidget);
+  });
+
+  testWidgets('Pike Push-up exercise item displays pike-pushup_2.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final pikePushupImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/pike-pushup/pike-pushup_2.png',
+    );
+    expect(pikePushupImage, findsOneWidget);
+  });
+
+  testWidgets('Squat exercise item displays squat_4.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final squatImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/squat/squat_4.png',
+    );
+    expect(squatImage, findsOneWidget);
+  });
+
+  testWidgets('Lunge exercise item displays lunge_3.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final lungeImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/lunge/lunge_3.png',
+    );
+    expect(lungeImage, findsOneWidget);
+  });
+
+  testWidgets('Jump Squat exercise item displays jump-squat_3.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final jumpSquatImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/jump-squat/jump-squat_3.png',
+    );
+    expect(jumpSquatImage, findsOneWidget);
+  });
+
+  testWidgets('Wall Sit exercise item displays wallsit_3.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final wallSitImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/wallsit/wallsit_3.png',
+    );
+    expect(wallSitImage, findsOneWidget);
+  });
+
+  testWidgets('Plank exercise item displays plank_2.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final plankImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/plank/plank_2.png',
+    );
+    expect(plankImage, findsOneWidget);
+  });
+
+  testWidgets('Crunch exercise item displays crunch_3.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final crunchImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/crunch/crunch_3.png',
+    );
+    expect(crunchImage, findsOneWidget);
+  });
+
+  testWidgets('Mountain Climber exercise item displays mountain-climber_6.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final mountainClimberImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/mountain-climber/mountain-climber_6.png',
+    );
+    expect(mountainClimberImage, findsOneWidget);
+  });
+
+  testWidgets('Bicycle Crunch exercise item displays bicycle-crunch_5.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final bicycleCrunchImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/bicycle-crunch/bicycle-crunch_5.png',
+    );
+    expect(bicycleCrunchImage, findsOneWidget);
+  });
+
+  testWidgets('Jumping Jack exercise item displays jumping-jack_2.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final jumpingJackImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/jumping-jack/jumping-jack_2.png',
+    );
+    expect(jumpingJackImage, findsOneWidget);
+  });
+
+  testWidgets('High Knees exercise item displays high-knee_2.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final highKneesImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/high-knee/high-knee_2.png',
+    );
+    expect(highKneesImage, findsOneWidget);
+  });
+
+  testWidgets('Burpee exercise item displays burpee_6.png thumbnail', (tester) async {
+    setViewport(tester);
+    final provider = FakeWorkoutProvider();
+
+    await tester.pumpWidget(buildScreen(provider));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final burpeeImage = find.byWidgetPredicate(
+      (widget) =>
+          widget is Image &&
+          widget.image is AssetImage &&
+          (widget.image as AssetImage).assetName ==
+              'assets/images/exercises/burpee/burpee_6.png',
+    );
+    expect(burpeeImage, findsOneWidget);
+  });
 }

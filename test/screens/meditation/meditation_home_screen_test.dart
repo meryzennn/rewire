@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:rewire/data/meditation_definitions.dart';
+import 'package:rewire/l10n/app_localizations.dart';
 import 'package:rewire/providers/meditation_provider.dart';
 import 'package:rewire/screens/meditation/meditation_home_screen.dart';
 
@@ -175,5 +176,27 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
 
     expect(provider.selectedBreathingId, '478');
+  });
+
+  testWidgets('renders session completed summary in English when en locale', (
+    tester,
+  ) async {
+    setViewport(tester);
+    final provider = FakeMeditationProvider(totalMinutes: 1, sessionCount: 1);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('en'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: ChangeNotifierProvider<MeditationProvider>.value(
+          value: provider,
+          child: MeditationHomeScreen(provider: provider),
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(find.text('🧘 1 min · 1 sessions completed'), findsOneWidget);
   });
 }

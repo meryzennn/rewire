@@ -10,6 +10,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/health_utils.dart';
 import '../../core/utils/l10n_utils.dart';
 import '../../services/preference_service.dart';
+import '../../widgets/avatar_crop_dialog.dart';
 
 /// Post-onboarding initial profile customization screen (spec §4).
 ///
@@ -124,13 +125,17 @@ class _InitialSetupScreenState extends State<InitialSetupScreen> {
         return;
       }
 
-      final appDir = await getApplicationDocumentsDirectory();
-      final targetPath =
-          '${appDir.path}/pfp_${DateTime.now().millisecondsSinceEpoch}.$ext';
-      await File(picked.path).copy(targetPath);
-      await _prefs.setUserPfpPath(targetPath);
+      if (!mounted) return;
+      final cropped = await showDialog<File?>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => AvatarCropDialog(imageFile: File(picked.path)),
+      );
+      if (cropped == null) return;
+
+      await _prefs.setUserPfpPath(cropped.path);
       if (mounted) {
-        setState(() => _pfpPath = targetPath);
+        setState(() => _pfpPath = cropped.path);
       }
     } catch (_) {
       // Graceful fallback for environments without gallery picker

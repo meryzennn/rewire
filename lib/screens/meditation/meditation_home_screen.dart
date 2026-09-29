@@ -291,7 +291,9 @@ class _MeditationHomeScreenState extends State<MeditationHomeScreen>
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          '🧘 $totalMinutes menit · $sessionCount sesi selesai',
+                          l10n != null
+                              ? '🧘 ${l10n.meditationSessionsCompletedSummary(totalMinutes, sessionCount)}'
+                              : '🧘 $totalMinutes menit · $sessionCount sesi selesai',
                           style: theme.textTheme.labelMedium?.copyWith(
                             color: textSecondary,
                             fontWeight: FontWeight.w600,

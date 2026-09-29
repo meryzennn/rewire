@@ -230,5 +230,10 @@
   "onboardingStepSemantics": "ページ {current} / {total}",
   "nameLabel": "名前",
   "bodyMetricsTitle": "身体データ",
-  "profileSectionTitle": "プロフィール"
+  "profileSectionTitle": "プロフィール",
+  "meditationFinishedHeadline": "セッション完了！🧘",
+  "meditationFinishedDuration": "{minutes}分の瞑想が完了しました",
+  "meditationSessionsCompletedSummary": "{minutes}分 · {sessions}セッション完了",
+  "cropPhotoTitle": "写真を調整",
+  "cropPhotoHint": "ピンチまたはドラッグしてズームと位置を調整"
 }

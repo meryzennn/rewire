@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:rewire/data/routines.dart';
 import 'package:rewire/providers/workout_provider.dart';
 import 'package:rewire/screens/workout/active_workout_screen.dart';
+import 'package:rewire/screens/workout/widgets/animated_exercise_illustration.dart';
 import 'package:rewire/services/xp_service.dart';
 
 class FakeActiveWorkoutProvider extends ChangeNotifier
@@ -78,6 +79,8 @@ void main() {
       expect(find.text('Gerakan 1 / 6'), findsOneWidget);
       expect(find.text('Jumping Jack'), findsOneWidget);
       expect(find.text('Set 1 / 3'), findsOneWidget);
+      expect(find.byType(AnimatedExerciseIllustration), findsOneWidget);
+      expect(find.byIcon(Icons.fitness_center), findsNothing);
       expect(
         find.byKey(const Key('active-workout-complete-set-button')),
         findsOneWidget,

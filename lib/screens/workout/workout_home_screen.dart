@@ -472,11 +472,29 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                                 color: accent.withValues(alpha: 0.12),
                                 borderRadius: BorderRadius.circular(14),
                               ),
-                              child: Icon(
-                                _iconForCategory(exercise.category),
-                                color: accent,
-                                size: 26,
-                              ),
+                              clipBehavior: Clip.antiAlias,
+                              child: exercise.iconAssetPath != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(4),
+                                      child: Image.asset(
+                                        exercise.iconAssetPath!,
+                                        fit: BoxFit.contain,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Icon(
+                                                  _iconForCategory(
+                                                    exercise.category,
+                                                  ),
+                                                  color: accent,
+                                                  size: 26,
+                                                ),
+                                      ),
+                                    )
+                                  : Icon(
+                                      _iconForCategory(exercise.category),
+                                      color: accent,
+                                      size: 26,
+                                    ),
                             ),
                             const SizedBox(width: 14),
 

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../app.dart';
 import '../../core/theme/app_colors.dart';
+import '../../l10n/app_localizations.dart';
 import '../../services/xp_service.dart';
 import '../../widgets/celebration_overlay.dart';
 import '../../widgets/xp_chip.dart';
@@ -21,6 +22,7 @@ class MeditationCompleteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final bg = theme.scaffoldBackgroundColor;
@@ -72,7 +74,7 @@ class MeditationCompleteScreen extends StatelessWidget {
 
                   // Headline
                   Text(
-                    'Sesi Selesai! 🧘',
+                    l10n?.meditationFinishedHeadline ?? 'Sesi Selesai! 🧘',
                     style: theme.textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: textPrimary,
@@ -83,7 +85,8 @@ class MeditationCompleteScreen extends StatelessWidget {
 
                   // Duration text
                   Text(
-                    '$durationMinutes menit meditasi terlewati',
+                    l10n?.meditationFinishedDuration(durationMinutes) ??
+                        '$durationMinutes menit meditasi terlewati',
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: textSecondary,
                     ),
@@ -115,7 +118,8 @@ class MeditationCompleteScreen extends StatelessWidget {
                           Icon(Icons.stars, color: AppColors.warning, size: 20),
                           const SizedBox(width: 8),
                           Text(
-                            'Level Up! Kamu mencapai Level ${xpAward.levelAfter}',
+                            l10n?.levelUpNotification(xpAward.levelAfter) ??
+                                'Level Up! Kamu mencapai Level ${xpAward.levelAfter}',
                             style: theme.textTheme.labelLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: isDark
@@ -148,9 +152,9 @@ class MeditationCompleteScreen extends StatelessWidget {
                         context.go(Routes.meditation);
                       }
                     },
-                    child: const Text(
-                      'Selesai',
-                      style: TextStyle(
+                    child: Text(
+                      l10n?.done ?? 'Selesai',
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),

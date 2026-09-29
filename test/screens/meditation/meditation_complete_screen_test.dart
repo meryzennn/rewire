@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rewire/l10n/app_localizations.dart';
 import 'package:rewire/screens/meditation/meditation_complete_screen.dart';
 import 'package:rewire/services/xp_service.dart';
 
@@ -41,6 +42,34 @@ void main() {
 
     // Selesai button
     expect(find.text('Selesai'), findsOneWidget);
+  });
+
+  testWidgets('renders in English when locale is set to en', (tester) async {
+    const award = XpAward(
+      amount: 20,
+      totalXpBefore: 30,
+      totalXpAfter: 50,
+      levelBefore: 1,
+      levelAfter: 2,
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('en'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const MeditationCompleteScreen(
+          durationMinutes: 15,
+          xpAward: award,
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(find.text('Session Completed! 🧘'), findsOneWidget);
+    expect(find.text('15 min of meditation completed'), findsOneWidget);
+    expect(find.text('Level Up! You reached Level 2'), findsOneWidget);
+    expect(find.text('Done'), findsOneWidget);
   });
 
   testWidgets('does not show level up banner when no level up occurs', (

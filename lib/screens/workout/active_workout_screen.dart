@@ -15,6 +15,7 @@ import '../../providers/workout_provider.dart';
 import '../../services/xp_service.dart';
 import 'rest_timer_screen.dart';
 import 'workout_complete_screen.dart';
+import 'widgets/animated_exercise_illustration.dart';
 
 bool get _isTestEnvironment {
   if (kIsWeb) return false;
@@ -224,21 +225,6 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
     }
   }
 
-  IconData _iconForCategory(String category) {
-    switch (category.toLowerCase()) {
-      case 'upper':
-        return Icons.fitness_center;
-      case 'lower':
-        return Icons.accessibility_new;
-      case 'core':
-        return Icons.self_improvement;
-      case 'cardio':
-        return Icons.directions_run;
-      default:
-        return Icons.sports_gymnastics;
-    }
-  }
-
   String _getNextExerciseInfo(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final langCode = getAppLanguageCode(context);
@@ -384,7 +370,7 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Current Exercise Illustration / Fallback
+              // Current Exercise Illustration
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -394,34 +380,11 @@ class _ActiveWorkoutScreenState extends State<ActiveWorkoutScreen> {
                     border: Border.all(color: dividerColor),
                   ),
                   clipBehavior: Clip.antiAlias,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            _iconForCategory(_currentExercise.category),
-                            size: 80,
-                            color: accent.withValues(alpha: 0.6),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            categoryLabel,
-                            style: theme.textTheme.labelMedium?.copyWith(
-                              color: textSecondary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Image.asset(
-                        _currentExercise.imageAssetPath,
-                        fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const SizedBox.shrink(),
-                      ),
-                    ],
+                  child: Center(
+                    child: AnimatedExerciseIllustration(
+                      exercise: _currentExercise,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),
