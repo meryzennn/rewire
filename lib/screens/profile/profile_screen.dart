@@ -1080,6 +1080,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final questProvider = context.readOrNull<QuestProvider>();
     final achievementProvider = context.readOrNull<AchievementProvider>();
 
+    // 1. Delete profile picture files from storage
     final pfpPath = _prefs.userPfpPath;
     if (pfpPath != null) {
       try {
@@ -1090,22 +1091,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
       } catch (_) {}
     }
 
-    await widget.onResetData();
-    await widget.notificationService?.cancelAll();
-    await _prefs.resetAll();
+    // 2. Wipe database
+    try {
+      await widget.onResetData();
+    } catch (e) {
+      debugPrint('Reset database error: $e');
+    }
+
+    // 3. Cancel notifications (safe on Android 13/14/15 when permission is restricted)
+    try {
+      await widget.notificationService?.cancelAll();
+    } catch (e) {
+      debugPrint('Cancel notifications warning: $e');
+    }
+
+    // 4. Wipe preferences
+    try {
+      await _prefs.resetAll();
+    } catch (e) {
+      debugPrint('Reset preferences error: $e');
+    }
 
     _cachedPfpPath = null;
     _pfpFileExists = false;
 
-    await Future.wait([
-      if (userProvider != null) userProvider.loadProfile(),
-      if (checkinProvider != null) checkinProvider.loadToday(),
-      if (meditationProvider != null) meditationProvider.loadStats(),
-      if (workoutProvider != null) workoutProvider.loadStats(),
-      if (questProvider != null) questProvider.loadAllQuests(),
-      if (achievementProvider != null) achievementProvider.loadAchievements(),
-    ]);
+    // 5. Reload in-memory providers safely without concurrent lock
+    try {
+      if (userProvider != null) await userProvider.loadProfile();
+      if (checkinProvider != null) await checkinProvider.loadToday();
+      if (meditationProvider != null) await meditationProvider.loadStats();
+      if (workoutProvider != null) await workoutProvider.loadStats();
+      if (questProvider != null) await questProvider.loadAllQuests();
+      if (achievementProvider != null) await achievementProvider.loadAchievements();
+    } catch (e) {
+      debugPrint('Reload providers warning: $e');
+    }
 
+    // 6. Navigate to onboarding
     if (!mounted) return;
     final router = GoRouter.maybeOf(context);
     if (router != null) {

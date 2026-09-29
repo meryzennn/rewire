@@ -26,6 +26,9 @@ Future<void> clearAllData(Database db) async {
   for (final table in kTableNames) {
     batch.delete(table);
   }
+  try {
+    batch.rawDelete('DELETE FROM sqlite_sequence');
+  } catch (_) {}
   await batch.commit(noResult: true);
 }
 

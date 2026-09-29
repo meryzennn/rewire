@@ -198,6 +198,7 @@ class PreferenceService extends ChangeNotifier {
   /// Clears every app-owned pref (§2.5). The DB wipe is a separate step owned
   /// by the caller; this only touches preferences.
   Future<void> resetAll() async {
+    await _prefs.clear();
     for (final key in PrefKeys.all) {
       await _prefs.remove(key);
     }
