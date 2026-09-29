@@ -14,6 +14,8 @@ class Exercise {
     required this.description,
     required this.targetMuscles,
     required this.imageAssetPath,
+    this.iconAssetPath,
+    this.animationFrames = const [],
   });
 
   final String id;
@@ -27,6 +29,8 @@ class Exercise {
   final String description;
   final String targetMuscles;
   final String imageAssetPath;
+  final String? iconAssetPath;
+  final List<String> animationFrames;
 }
 
 const List<Exercise> kAllExercises = [
@@ -43,6 +47,15 @@ const List<Exercise> kAllExercises = [
     description: 'Latihan dasar tubuh bagian atas untuk menguatkan dada, bahu, dan trisep.',
     targetMuscles: 'Dada & Trisep',
     imageAssetPath: 'assets/images/exercises/pushup.png',
+    iconAssetPath: 'assets/images/exercises/pushup/pushup-5.png',
+    animationFrames: [
+      'assets/images/exercises/pushup/pushup-1.png',
+      'assets/images/exercises/pushup/pushup-2.png',
+      'assets/images/exercises/pushup/pushup-3.png',
+      'assets/images/exercises/pushup/pushup-4.png',
+      'assets/images/exercises/pushup/pushup-5.png',
+      'assets/images/exercises/pushup/pushup-6.png',
+    ],
   ),
   Exercise(
     id: 'knee_pushup',
@@ -57,6 +70,15 @@ const List<Exercise> kAllExercises = [
         'Variasi push-up bertumpu pada lutut untuk membangun kekuatan dasar.',
     targetMuscles: 'Dada & Lengan',
     imageAssetPath: 'assets/images/exercises/knee_pushup.png',
+    iconAssetPath: 'assets/images/exercises/knee-pushup/knee-pushup_1.png',
+    animationFrames: [
+      'assets/images/exercises/knee-pushup/knee-pushup_1.png',
+      'assets/images/exercises/knee-pushup/knee-pushup_2.png',
+      'assets/images/exercises/knee-pushup/knee-pushup_3.png',
+      'assets/images/exercises/knee-pushup/knee-pushup_4.png',
+      'assets/images/exercises/knee-pushup/knee-pushup_5.png',
+      'assets/images/exercises/knee-pushup/knee-pushup_6.png',
+    ],
   ),
   Exercise(
     id: 'diamond_pushup',
@@ -70,6 +92,15 @@ const List<Exercise> kAllExercises = [
     description: 'Push-up dengan tangan membentuk wajik di bawah dada untuk aktivasi trisep maksimal.',
     targetMuscles: 'Trisep & Dada Bagian Dalam',
     imageAssetPath: 'assets/images/exercises/diamond_pushup.png',
+    iconAssetPath: 'assets/images/exercises/diamond-pushup/diamond-pushup_2.png',
+    animationFrames: [
+      'assets/images/exercises/diamond-pushup/diamond-pushup_1.png',
+      'assets/images/exercises/diamond-pushup/diamond-pushup_2.png',
+      'assets/images/exercises/diamond-pushup/diamond-pushup_3.png',
+      'assets/images/exercises/diamond-pushup/diamond-pushup_4.png',
+      'assets/images/exercises/diamond-pushup/diamond-pushup_5.png',
+      'assets/images/exercises/diamond-pushup/diamond-pushup_6.png',
+    ],
   ),
   Exercise(
     id: 'pike_pushup',
@@ -83,6 +114,15 @@ const List<Exercise> kAllExercises = [
     description: 'Gerakan tubuh bagian atas membentuk segitiga untuk melatih kekuatan bahu.',
     targetMuscles: 'Bahu & Punggung Atas',
     imageAssetPath: 'assets/images/exercises/pike_pushup.png',
+    iconAssetPath: 'assets/images/exercises/pike-pushup/pike-pushup_2.png',
+    animationFrames: [
+      'assets/images/exercises/pike-pushup/pike-pushup_1.png',
+      'assets/images/exercises/pike-pushup/pike-pushup_2.png',
+      'assets/images/exercises/pike-pushup/pike-pushup_3.png',
+      'assets/images/exercises/pike-pushup/pike-pushup_4.png',
+      'assets/images/exercises/pike-pushup/pike-pushup_5.png',
+      'assets/images/exercises/pike-pushup/pike-pushup_6.png',
+    ],
   ),
 
   // Lower Body
@@ -98,6 +138,15 @@ const List<Exercise> kAllExercises = [
     description: 'Gerakan dasar tubuh bagian bawah untuk memperkuat paha depan dan bokong.',
     targetMuscles: 'Paha & Bokong',
     imageAssetPath: 'assets/images/exercises/squat.png',
+    iconAssetPath: 'assets/images/exercises/squat/squat_4.png',
+    animationFrames: [
+      'assets/images/exercises/squat/squat_1.png',
+      'assets/images/exercises/squat/squat_2.png',
+      'assets/images/exercises/squat/squat_3.png',
+      'assets/images/exercises/squat/squat_4.png',
+      'assets/images/exercises/squat/squat_5.png',
+      'assets/images/exercises/squat/squat_6.png',
+    ],
   ),
   Exercise(
     id: 'lunge',
@@ -112,6 +161,15 @@ const List<Exercise> kAllExercises = [
         'Langkah maju teratur melatih kestabilan kaki, paha, dan pinggul.',
     targetMuscles: 'Paha Depan & Keseimbangan',
     imageAssetPath: 'assets/images/exercises/lunge.png',
+    iconAssetPath: 'assets/images/exercises/lunge/lunge_3.png',
+    animationFrames: [
+      'assets/images/exercises/lunge/lunge_1.png',
+      'assets/images/exercises/lunge/lunge_2.png',
+      'assets/images/exercises/lunge/lunge_3.png',
+      'assets/images/exercises/lunge/lunge_4.png',
+      'assets/images/exercises/lunge/lunge_5.png',
+      'assets/images/exercises/lunge/lunge_6.png',
+    ],
   ),
   Exercise(
     id: 'jump_squat',
@@ -125,6 +183,15 @@ const List<Exercise> kAllExercises = [
     description: 'Squat eksplosif dengan lompatan untuk kekuatan otot kaki dan pembakaran kalori.',
     targetMuscles: 'Daya Ledak Kaki & Betis',
     imageAssetPath: 'assets/images/exercises/jump_squat.png',
+    iconAssetPath: 'assets/images/exercises/jump-squat/jump-squat_3.png',
+    animationFrames: [
+      'assets/images/exercises/jump-squat/jump-squat_1.png',
+      'assets/images/exercises/jump-squat/jump-squat_2.png',
+      'assets/images/exercises/jump-squat/jump-squat_3.png',
+      'assets/images/exercises/jump-squat/jump-squat_4.png',
+      'assets/images/exercises/jump-squat/jump-squat_5.png',
+      'assets/images/exercises/jump-squat/jump-squat_6.png',
+    ],
   ),
   Exercise(
     id: 'wall_sit',
@@ -138,6 +205,15 @@ const List<Exercise> kAllExercises = [
     description: 'Menahan posisi duduk bersandar pada dinding untuk melatih daya tahan isometrik.',
     targetMuscles: 'Ketahanan Paha Depan',
     imageAssetPath: 'assets/images/exercises/wall_sit.png',
+    iconAssetPath: 'assets/images/exercises/wallsit/wallsit_3.png',
+    animationFrames: [
+      'assets/images/exercises/wallsit/wallsit_1.png',
+      'assets/images/exercises/wallsit/wallsit_2.png',
+      'assets/images/exercises/wallsit/wallsit_3.png',
+      'assets/images/exercises/wallsit/wallsit_4.png',
+      'assets/images/exercises/wallsit/wallsit_5.png',
+      'assets/images/exercises/wallsit/wallsit_6.png',
+    ],
   ),
 
   // Core
@@ -153,6 +229,15 @@ const List<Exercise> kAllExercises = [
     description: 'Tahan posisi lurus dengan siku untuk memperkuat seluruh otot inti tubuh.',
     targetMuscles: 'Otot Inti & Postur',
     imageAssetPath: 'assets/images/exercises/plank.png',
+    iconAssetPath: 'assets/images/exercises/plank/plank_2.png',
+    animationFrames: [
+      'assets/images/exercises/plank/plank_1.png',
+      'assets/images/exercises/plank/plank_2.png',
+      'assets/images/exercises/plank/plank_3.png',
+      'assets/images/exercises/plank/plank_4.png',
+      'assets/images/exercises/plank/plank_5.png',
+      'assets/images/exercises/plank/plank_6.png',
+    ],
   ),
   Exercise(
     id: 'crunch',
@@ -166,6 +251,15 @@ const List<Exercise> kAllExercises = [
     description: 'Gerakan mengangkat punggung atas dari lantai untuk aktivasi perut bagian atas.',
     targetMuscles: 'Perut Bagian Atas',
     imageAssetPath: 'assets/images/exercises/crunch.png',
+    iconAssetPath: 'assets/images/exercises/crunch/crunch_3.png',
+    animationFrames: [
+      'assets/images/exercises/crunch/crunch_1.png',
+      'assets/images/exercises/crunch/crunch_2.png',
+      'assets/images/exercises/crunch/crunch_3.png',
+      'assets/images/exercises/crunch/crunch_4.png',
+      'assets/images/exercises/crunch/crunch_5.png',
+      'assets/images/exercises/crunch/crunch_6.png',
+    ],
   ),
   Exercise(
     id: 'mountain_climber',
@@ -179,6 +273,15 @@ const List<Exercise> kAllExercises = [
     description: 'Dari posisi push-up menarik lutut bergantian secara cepat, melatih inti dan cardio.',
     targetMuscles: 'Perut Bawah & Cardio Inti',
     imageAssetPath: 'assets/images/exercises/mountain_climber.png',
+    iconAssetPath: 'assets/images/exercises/mountain-climber/mountain-climber_6.png',
+    animationFrames: [
+      'assets/images/exercises/mountain-climber/mountain-climber_1.png',
+      'assets/images/exercises/mountain-climber/mountain-climber_2.png',
+      'assets/images/exercises/mountain-climber/mountain-climber_3.png',
+      'assets/images/exercises/mountain-climber/mountain-climber_4.png',
+      'assets/images/exercises/mountain-climber/mountain-climber_5.png',
+      'assets/images/exercises/mountain-climber/mountain-climber_6.png',
+    ],
   ),
   Exercise(
     id: 'bicycle_crunch',
@@ -192,6 +295,15 @@ const List<Exercise> kAllExercises = [
     description: 'Gerakan mengayuh sepeda terlentang untuk menargetkan otot samping perut (obliques).',
     targetMuscles: 'Perut Samping (Obliques)',
     imageAssetPath: 'assets/images/exercises/bicycle_crunch.png',
+    iconAssetPath: 'assets/images/exercises/bicycle-crunch/bicycle-crunch_5.png',
+    animationFrames: [
+      'assets/images/exercises/bicycle-crunch/bicycle-crunch_1.png',
+      'assets/images/exercises/bicycle-crunch/bicycle-crunch_2.png',
+      'assets/images/exercises/bicycle-crunch/bicycle-crunch_3.png',
+      'assets/images/exercises/bicycle-crunch/bicycle-crunch_4.png',
+      'assets/images/exercises/bicycle-crunch/bicycle-crunch_5.png',
+      'assets/images/exercises/bicycle-crunch/bicycle-crunch_6.png',
+    ],
   ),
 
   // Cardio
@@ -207,6 +319,15 @@ const List<Exercise> kAllExercises = [
     description: 'Melompat membuka kaki dan merentangkan tangan ke atas untuk pemanasan kardio.',
     targetMuscles: 'Kardiovaskular & Seluruh Tubuh',
     imageAssetPath: 'assets/images/exercises/jumping_jack.png',
+    iconAssetPath: 'assets/images/exercises/jumping-jack/jumping-jack_2.png',
+    animationFrames: [
+      'assets/images/exercises/jumping-jack/jumping-jack_1.png',
+      'assets/images/exercises/jumping-jack/jumping-jack_2.png',
+      'assets/images/exercises/jumping-jack/jumping-jack_3.png',
+      'assets/images/exercises/jumping-jack/jumping-jack_4.png',
+      'assets/images/exercises/jumping-jack/jumping-jack_5.png',
+      'assets/images/exercises/jumping-jack/jumping-jack_6.png',
+    ],
   ),
   Exercise(
     id: 'high_knees',
@@ -220,6 +341,15 @@ const List<Exercise> kAllExercises = [
     description: 'Lari di tempat dengan mengangkat lutut setinggi pinggang secara dinamis.',
     targetMuscles: 'Ketahanan & Fleksor Pinggul',
     imageAssetPath: 'assets/images/exercises/high_knees.png',
+    iconAssetPath: 'assets/images/exercises/high-knee/high-knee_2.png',
+    animationFrames: [
+      'assets/images/exercises/high-knee/high-knee_1.png',
+      'assets/images/exercises/high-knee/high-knee_2.png',
+      'assets/images/exercises/high-knee/high-knee_3.png',
+      'assets/images/exercises/high-knee/high-knee_4.png',
+      'assets/images/exercises/high-knee/high-knee_5.png',
+      'assets/images/exercises/high-knee/high-knee_6.png',
+    ],
   ),
   Exercise(
     id: 'burpee',
@@ -233,6 +363,15 @@ const List<Exercise> kAllExercises = [
     description: 'Gerakan squat, plank, push-up, dan lompat dalam satu siklus pembakaran energi penuh.',
     targetMuscles: 'Seluruh Tubuh & Daya Tahan',
     imageAssetPath: 'assets/images/exercises/burpee.png',
+    iconAssetPath: 'assets/images/exercises/burpee/burpee_6.png',
+    animationFrames: [
+      'assets/images/exercises/burpee/burpee_1.png',
+      'assets/images/exercises/burpee/burpee_2.png',
+      'assets/images/exercises/burpee/burpee_3.png',
+      'assets/images/exercises/burpee/burpee_4.png',
+      'assets/images/exercises/burpee/burpee_5.png',
+      'assets/images/exercises/burpee/burpee_6.png',
+    ],
   ),
 ];
 

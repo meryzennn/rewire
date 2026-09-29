@@ -19,6 +19,7 @@ import '../../providers/user_provider.dart';
 import '../../providers/workout_provider.dart';
 import '../../services/notification_service.dart';
 import '../../services/preference_service.dart';
+import '../../widgets/avatar_crop_dialog.dart';
 
 /// Combined Profile and Settings screen.
 ///
@@ -78,11 +79,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return;
       }
 
-      final appDir = await getApplicationDocumentsDirectory();
-      final targetPath =
-          '${appDir.path}/pfp_${DateTime.now().millisecondsSinceEpoch}.$ext';
-      await File(picked.path).copy(targetPath);
-      await _prefs.setUserPfpPath(targetPath);
+      if (!mounted) return;
+      final cropped = await showDialog<File?>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => AvatarCropDialog(imageFile: File(picked.path)),
+      );
+      if (cropped == null) return;
+
+      await _prefs.setUserPfpPath(cropped.path);
+      _cachedPfpPath = null;
       if (mounted) setState(() {});
     } catch (e) {
       if (mounted) {
@@ -547,6 +553,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(width: 24),
                   Flexible(
                     child: Text(
                       displayName,
@@ -554,6 +561,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                       overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   const SizedBox(width: 6),
@@ -1011,7 +1019,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: Icons.info_rounded,
                     tint: _Tint.neutral,
                     title: l10n?.appVersion ?? 'Versi Aplikasi',
-                    trailing: '1.1.0',
+                    trailing: '1.2.0',
                   ),
                 ],
               ),

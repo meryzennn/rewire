@@ -750,4 +750,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileSectionTitle => 'Profile';
+
+  @override
+  String get meditationFinishedHeadline => 'Session Completed! 🧘';
+
+  @override
+  String meditationFinishedDuration(int minutes) {
+    return '$minutes min of meditation completed';
+  }
+
+  @override
+  String meditationSessionsCompletedSummary(int minutes, int sessions) {
+    return '$minutes min · $sessions sessions completed';
+  }
+
+  @override
+  String get cropPhotoTitle => 'Adjust Photo';
+
+  @override
+  String get cropPhotoHint => 'Pinch or drag to position and zoom';
 }

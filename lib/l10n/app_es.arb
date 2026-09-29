@@ -230,5 +230,10 @@
   "onboardingStepSemantics": "Página {current} de {total}",
   "nameLabel": "Nombre",
   "bodyMetricsTitle": "Métricas Corporales",
-  "profileSectionTitle": "Perfil"
+  "profileSectionTitle": "Perfil",
+  "meditationFinishedHeadline": "¡Sesión Completada! 🧘",
+  "meditationFinishedDuration": "{minutes} min de meditación completados",
+  "meditationSessionsCompletedSummary": "{minutes} min · {sessions} sesiones completadas",
+  "cropPhotoTitle": "Ajustar Foto",
+  "cropPhotoHint": "Pellizca o arrastra para zoom y colocar"
 }

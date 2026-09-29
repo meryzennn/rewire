@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rewire/data/exercises.dart';
 import 'package:rewire/screens/workout/exercise_detail_screen.dart';
+import 'package:rewire/screens/workout/widgets/exercise_illustration_slider.dart';
 
 void main() {
   testWidgets('renders all exercise detail components', (tester) async {
@@ -13,6 +14,10 @@ void main() {
 
     // Headline and App bar
     expect(find.text('Push-up'), findsNWidgets(2)); // in AppBar and Headline
+
+    // Illustration renders ExerciseIllustrationSlider and no barbell icon
+    expect(find.byType(ExerciseIllustrationSlider), findsOneWidget);
+    expect(find.byIcon(Icons.fitness_center), findsNothing);
 
     // Category and difficulty badges
     expect(find.text('Upper'), findsWidgets);

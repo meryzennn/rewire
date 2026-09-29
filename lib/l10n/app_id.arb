@@ -230,5 +230,10 @@
   "onboardingStepSemantics": "Halaman {current} dari {total}",
   "nameLabel": "Nama",
   "bodyMetricsTitle": "Metrik Tubuh",
-  "profileSectionTitle": "Profil"
+  "profileSectionTitle": "Profil",
+  "meditationFinishedHeadline": "Sesi Selesai! 🧘",
+  "meditationFinishedDuration": "{minutes} menit meditasi terlewati",
+  "meditationSessionsCompletedSummary": "{minutes} menit · {sessions} sesi selesai",
+  "cropPhotoTitle": "Sesuaikan Foto",
+  "cropPhotoHint": "Cubit atau geser untuk zoom dan posisikan"
 }

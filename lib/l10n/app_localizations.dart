@@ -1481,6 +1481,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile'**
   String get profileSectionTitle;
+
+  /// No description provided for @meditationFinishedHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Completed! 🧘'**
+  String get meditationFinishedHeadline;
+
+  /// No description provided for @meditationFinishedDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min of meditation completed'**
+  String meditationFinishedDuration(int minutes);
+
+  /// No description provided for @meditationSessionsCompletedSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min · {sessions} sessions completed'**
+  String meditationSessionsCompletedSummary(int minutes, int sessions);
+
+  /// No description provided for @cropPhotoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust Photo'**
+  String get cropPhotoTitle;
+
+  /// No description provided for @cropPhotoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinch or drag to position and zoom'**
+  String get cropPhotoHint;
 }
 
 class _AppLocalizationsDelegate

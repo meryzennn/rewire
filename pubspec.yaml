@@ -1,7 +1,7 @@
 name: rewire
 description: Rewire, an offline-first wellbeing app.
 publish_to: none
-version: 1.1.0+2
+version: 1.2.0+3
 
 environment:
   sdk: ^3.13.2
@@ -47,5 +47,20 @@ flutter:
     - assets/audio/
     - assets/images/brain/
     - assets/images/exercises/
+    - assets/images/exercises/pushup/
+    - assets/images/exercises/knee-pushup/
+    - assets/images/exercises/diamond-pushup/
+    - assets/images/exercises/pike-pushup/
+    - assets/images/exercises/squat/
+    - assets/images/exercises/lunge/
+    - assets/images/exercises/jump-squat/
+    - assets/images/exercises/wallsit/
+    - assets/images/exercises/plank/
+    - assets/images/exercises/crunch/
+    - assets/images/exercises/mountain-climber/
+    - assets/images/exercises/bicycle-crunch/
+    - assets/images/exercises/jumping-jack/
+    - assets/images/exercises/high-knee/
+    - assets/images/exercises/burpee/
     - assets/images/onboarding/
     - assets/data/

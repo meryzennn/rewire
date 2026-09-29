@@ -321,5 +321,21 @@
   },
   "nameLabel": "Name",
   "bodyMetricsTitle": "Body Metrics",
-  "profileSectionTitle": "Profile"
+  "profileSectionTitle": "Profile",
+  "meditationFinishedHeadline": "Session Completed! 🧘",
+  "meditationFinishedDuration": "{minutes} min of meditation completed",
+  "@meditationFinishedDuration": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "meditationSessionsCompletedSummary": "{minutes} min · {sessions} sessions completed",
+  "@meditationSessionsCompletedSummary": {
+    "placeholders": {
+      "minutes": { "type": "int" },
+      "sessions": { "type": "int" }
+    }
+  },
+  "cropPhotoTitle": "Adjust Photo",
+  "cropPhotoHint": "Pinch or drag to position and zoom"
 }

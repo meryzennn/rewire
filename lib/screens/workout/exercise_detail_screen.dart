@@ -10,6 +10,7 @@ import '../../core/utils/workout_safety_utils.dart';
 import '../../data/exercises.dart';
 import '../../data/routines.dart';
 import '../../services/preference_service.dart';
+import 'widgets/exercise_illustration_slider.dart';
 
 /// Screen displaying detailed exercise instructions, form guide, and target muscles (spec §5b).
 class ExerciseDetailScreen extends StatelessWidget {
@@ -21,21 +22,6 @@ class ExerciseDetailScreen extends StatelessWidget {
 
   final Exercise exercise;
   final PreferenceService? preferences;
-
-  IconData _iconForCategory(String category) {
-    switch (category.toLowerCase()) {
-      case 'upper':
-        return Icons.fitness_center;
-      case 'lower':
-        return Icons.accessibility_new;
-      case 'core':
-        return Icons.self_improvement;
-      case 'cardio':
-        return Icons.directions_run;
-      default:
-        return Icons.sports_gymnastics;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,38 +115,11 @@ class ExerciseDetailScreen extends StatelessWidget {
                 border: Border.all(color: dividerColor),
               ),
               clipBehavior: Clip.antiAlias,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  // Fallback icon visual
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        _iconForCategory(exercise.category),
-                        size: 72,
-                        color: accent.withValues(alpha: 0.6),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        exercise.category,
-                        style: theme.textTheme.labelMedium?.copyWith(
-                          color: textSecondary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                  // Asset image if present
-                  Image.asset(
-                    exercise.imageAssetPath,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const SizedBox.shrink(),
-                  ),
-                ],
+              child: Center(
+                child: ExerciseIllustrationSlider(
+                  exercise: exercise,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             const SizedBox(height: 20),

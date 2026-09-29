@@ -8,28 +8,32 @@ Rewire is an offline-first habit recovery and wellbeing mobile app built with Fl
 
 ## Key Features
 
-### 1. Pillar 1: Streak & Relapse Tracking
+### 1. Streak & Relapse Tracking
 - **Real-Time Counter**: Tracks elapsed recovery time in days, hours, minutes, and seconds since the last reset.
 - **Relapse Logger**: Log slips with associated triggers, mood states, and reflection notes.
-- **Milestone Badges**: Automatically unlocks achievements for 1, 3, 7, 14, 30, 90, 180, and 365 clean days.
-- **Brain Recovery Stages (50 Levels)**: Visual representation of neuroplastic recovery from Level 1 (Foggy Brain) to Level 50 (Mastery / Fully Rewired).
+- **Milestone Badges**: Unlocks achievements for 1, 3, 7, 14, 30, 90, 180, and 365 clean days.
+- **Brain Recovery Stages (50 Levels)**: Tracks progress from Level 1 (Foggy Brain) to Level 50 (Mastery / Fully Rewired).
 
-### 2. Pillar 2: Mind (Ambient Meditation)
-- Ambient sound generator (rain, white noise, nature sounds) with custom session timers.
-- Wakelock integration prevents the screen from turning off during mindfulness sessions.
-- Grants XP upon completing meditation sessions.
+### 2. Mind & Ambient Soundscapes
+- Six looped ambient tracks: Rain, Waves, Forest, Campfire, Ambient Wave, and White Noise.
+- Custom session timers with continuous audio looping.
+- Wakelock integration keeps the screen active during sessions.
+- Completing sessions awards XP toward brain recovery milestones.
 
-### 3. Pillar 3: Body (Calisthenics Workouts)
-- Structured daily bodyweight exercise circuits with interval and rest timers.
-- Workout history tracking with XP reward integration.
+### 3. Bodyweight Workouts
+- Structured daily bodyweight circuits with interval and rest timers.
+- Step-by-step illustration sliders for all 15 exercises with instant swipe transitions and precached frames.
+- Joint safety guardrails that detect high-impact movements and recommend low-impact alternatives for beginners or high BMI profiles.
+- Workout history tracking with XP rewards.
 
-### 4. Emergency SOS / Panic Mode
-- Instant access to guided 4-7-8 breathing exercises to de-escalate acute urges.
+### 4. Emergency Urge Reset
+- Guided 4-7-8 breathing exercises to de-escalate acute urges.
 - Motivational friction prompts to break impulsive behavioral loops.
 
-### 5. Profile & Settings
-- **Physical Metrics**: Stores name, age, height, and weight locally.
-- **Avatar Upload**: Custom profile photo picker supporting `.png`, `.jpg`, `.jpeg`, and `.webp` formats.
+### 5. Profile & Customization
+- **Physical Metrics**: Stores age, height, weight, and calculated BMI locally.
+- **Avatar Editor**: Interactive crop, pan, and zoom dialog supporting PNG, JPG, JPEG, and WEBP formats.
+- **Localization**: Live interface language switching across English, Indonesian, Spanish, and Japanese.
 - **Reminders**: Morning and evening check-in notification scheduler.
 - **Data Management**: Local data backup, export, and reset controls.
 
@@ -37,7 +41,7 @@ Rewire is an offline-first habit recovery and wellbeing mobile app built with Fl
 
 ## Architecture & Project Structure
 
-The project follows the **Model-View-ViewModel (MVVM)** pattern using `Provider`:
+The project follows the Model-View-ViewModel (MVVM) pattern using Provider:
 
 ```
 lib/
@@ -46,6 +50,7 @@ lib/
 │   ├── database/        # SQLite helper & migration schemas
 │   ├── theme/           # AppColors, AppTypography, AppTheme
 │   └── utils/           # XP calculation engines, date/time formatting
+├── data/                # Static exercise definitions and asset frame mappings
 ├── models/              # Immutable data models (Streak, RelapseLog, Quest, Badge, Workout, etc.)
 ├── repositories/        # SQLite data access layer
 ├── services/            # Audio player, local notifications, shared preferences
@@ -72,11 +77,14 @@ lib/
 
 ## Download APK
 
-Pre-built release APKs for Android (Android 5.0+) are available directly on GitHub:
+Pre-built release APKs for Android 5.0+ are available on GitHub Releases:
 
 **[Download APK from GitHub Releases](https://github.com/meryzennn/rewire/releases)**
 
-Download `app-release.apk` from the latest release.
+Available packages per release:
+- **`app-arm64-v8a-release.apk`** (recommended): optimized for modern Android smartphones (~48 MB).
+- **`app-armeabi-v7a-release.apk`**: for older 32-bit Android devices (~46 MB).
+- **`app-x86_64-release.apk`**: for x86_64 Android tablets and emulators (~50 MB).
 
 ---
 
@@ -100,7 +108,7 @@ Download `app-release.apk` from the latest release.
    flutter pub get
    ```
 
-3. Run automated tests (200 test cases):
+3. Run automated tests (276 test cases):
    ```bash
    flutter test
    ```
@@ -110,8 +118,8 @@ Download `app-release.apk` from the latest release.
    flutter run
    ```
 
-5. Build the production release APK:
+5. Build production release APKs split by architecture:
    ```bash
-   flutter build apk --release
+   flutter build apk --split-per-abi --release
    ```
-   The generated APK will be located at `build/app/outputs/flutter-apk/app-release.apk`.
+   The generated APKs will be located at `build/app/outputs/flutter-apk/`.
